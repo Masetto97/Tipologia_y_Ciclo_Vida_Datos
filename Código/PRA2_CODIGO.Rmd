@@ -1,0 +1,48 @@
+---
+title: '¿Cómo realizar la limpieza y análisis de datos?'
+author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
+date: "Enero 2023"
+output:
+  html_document:
+    highlight: default
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    includes:
+      in_header: 75.584-PEC-header.html
+  word_document: default
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+---
+
+<style>
+body {
+text-align: justify}
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Instalamos y cargamos las librerías necesarias.
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+#Carga del fichero de datos
+
+```{r message= FALSE, warning=FALSE}
+library(readr)
+datos <- read_csv("./fichero_original_datos.csv")
+```
+
+Ahora vamos a ver las estructura del juego de datos
+
+```{r message= FALSE, warning=FALSE}
+str(datos)
+```
+
