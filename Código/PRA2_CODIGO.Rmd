@@ -29,14 +29,13 @@ knitr::opts_chunk$set(echo = TRUE)
 Instalamos y cargamos las librerías necesarias.
 
 ```{r message= FALSE, warning=FALSE}
-
+if (!require('readr')) install.packages('readr'); library('readr')
 ```
 
 
-#Carga del fichero de datos
+# CARGA DEL FICHERO DE DATOS
 
 ```{r message= FALSE, warning=FALSE}
-library(readr)
 datos <- read_csv("./fichero_original_datos.csv")
 ```
 
@@ -45,4 +44,105 @@ Ahora vamos a ver las estructura del juego de datos
 ```{r message= FALSE, warning=FALSE}
 str(datos)
 ```
+
+Vamos ahora a sacar estadísticas básicas
+  
+```{r message= FALSE, warning=FALSE}
+summary(datos)
+```
+
+# Preprocesado y gestión de características
+
+## Valores nulos del conjunto de los datos
+
+De tipo numérico
+
+```{r message= FALSE, warning=FALSE}
+colSums(is.na(datos))
+```
+
+De tipo cadena
+
+```{r message= FALSE, warning=FALSE}
+colSums(datos=="")
+```
+
+Como se puede comprobar, tenemos la “suerte” de no tener ningún valor nulo o vacío en los dos juegos de datos.
+
+## Normalización del conjunto de los datos
+
+  + **EDAD**
+
+```{r message= FALSE, warning=FALSE}
+#Histograma de la característica edad del primer conjunto de datos 
+h1 <- hist(datos$Age, xlab="Edad", col="ivory", ylab="Cantidad", main="EDAD ", ylim = c(0, 225), xlim = c(20,80))
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+```
+
+Como se puede observar, la franja de entre los 50 y 60 años son donde más datos existen, mientras que los extremos donde menos datos.
+
+
+  + **SEXO**
+  
+Normalizamos para tenerlo de tipo numérico todas la variables
+  
+```{r message= FALSE, warning=FALSE}
+#Cambiamos las letras por los números
+datos$Sex [datos$Sex == "M"] <- 1
+datos$Sex [datos$Sex == "F"] <- 0
+
+#Pasamos de carácter a numérico
+datos$Sex <- as.numeric(datos$Sex)
+```
+
+
+Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$Sex, xlab="Sexo", col=c("ivory", "lightcyan"), ylab="Cantidad", main="SEXO", breaks = 2, ylim = c(0, 750), axes = FALSE)
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0.25, 0.75), cex.axis=1, labels = c("Mujeres","Hombres" ))
+axis(2)
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
+
+```{r message= FALSE, warning=FALSE}
+
+```
+
 
