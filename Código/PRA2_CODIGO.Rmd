@@ -30,6 +30,10 @@ Instalamos y cargamos las librerías necesarias.
 
 ```{r message= FALSE, warning=FALSE}
 if (!require('readr')) install.packages('readr'); library('readr')
+if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
+if (!require('DataExplorer')) install.packages('DataExplorer'); library('DataExplorer')
+if (!require('corrplot')) install.packages("corrplot"); library(corrplot)
+if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
 ```
 
 
@@ -71,7 +75,7 @@ Como se puede comprobar, tenemos la “suerte” de no tener ningún valor nulo 
 
 ## Normalización del conjunto de los datos
 
-  + **EDAD**
+### EDAD
 
 ```{r message= FALSE, warning=FALSE}
 #Histograma de la característica edad del primer conjunto de datos 
@@ -82,7 +86,7 @@ text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 Como se puede observar, la franja de entre los 50 y 60 años son donde más datos existen, mientras que los extremos donde menos datos.
 
 
-  + **SEXO**
+### SEXO
   
 Normalizamos para tenerlo de tipo numérico todas la variables
   
@@ -105,6 +109,363 @@ axis(1, at =c(0.25, 0.75), cex.axis=1, labels = c("Mujeres","Hombres" ))
 axis(2)
 ```
 
+### TIPO DE DOLOR TORÁCICO (ChestPainType)
+
+Nos damos cuenta de que el conjunto de datos viene identificado por 4 variables categóricas (TA: angina típica, ATA: angina atípica, NAP: dolor no anginal, ASY: asintomático). Normalizamos para tenerlo de tipo numérico todas la variables:
+
+```{r message= FALSE, warning=FALSE}
+#Cambiamos las letras por los números
+datos$ChestPainType [datos$ChestPainType == "TA"]  <- 0
+datos$ChestPainType [datos$ChestPainType == "ATA"] <- 1
+datos$ChestPainType [datos$ChestPainType == "NAP"] <- 2
+datos$ChestPainType [datos$ChestPainType == "ASY"] <- 3
+
+#Pasamos de carácter a numérico
+datos$ChestPainType <- as.numeric(datos$ChestPainType)
+``` 
+
+Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$ChestPainType, xlab="Tipo de dolor torácico", col= c("ivory", "lightcyan", "ORANGE", "PINK"), ylab="Cantidad", main="TIPO DOLOR TORÁCICO", ylim = c(0, 550),axes = FALSE, breaks=seq(min(datos$ChestPainType)-0.5, max(datos$ChestPainType)+0.5, by=1) )
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0,1,2,3), cex.axis=1, labels = c("Angina típica", "Angina atípica","Dolor no anginal", "Asintomático" ))
+axis(2)
+```
+
+como se puede comprobar, tenemos mas casos de de asintomaticos que del resto.
+
+### PRESIÓN ARTERIAL EN REPOSO (RestingBP)
+  
+Como se muestran en las estadísticas esta característica es de tipo numérico y en el conjunto de datos va desde 0 hasta 200. Como se puede apreciar, tener una presión arterial de 0 es estar considerado muerto, por lo que considero que el valor 0 es un valor nulo.
+
+Lo primero que se va a hacer es obtener el número de casos que la presión arterial es 0, y se consideraran las diversas formas de tratar estos datos:
+
+```{r message= FALSE, warning=FALSE}
+#Veces que aparece el valor cero en la presion arterial
+length(datos$RestingBP[datos$RestingBP == 0])
+```
+
+Como solo aparece una vez, se le asignará un valor por defecto. El valor por defecto será el más común.
+
+```{r message= FALSE, warning=FALSE}
+#Función para calcular el valor más común
+common_value <- function(x) {
+uniqx <- unique(na.omit(x))
+uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+
+#Calculamos el valor más comun
+BP_comun <- common_value(datos$RestingBP)
+
+#Asignamos el valor
+datos$RestingBP[datos$RestingBP == 0] <- BP_comun
+
+#vemos las estaditicas del dato
+summary(datos$RestingBP)
+```
+
+Ahora ya tenemos los valores entre 80 y 200 que son un rango normal para estos valores.
+
+```{r message= FALSE, warning=FALSE}
+#Histograma de la característica Presión Arterial del primer conjunto de datos 
+h1 <- hist(datos$RestingBP, xlab="Presión Arterial", col="ivory", ylab="Cantidad", main="PRESIÓN ARTERIAL EN REPOSO", ylim = c(0, 225), xlim = c(80,200))
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+```
+
+### COLESTEROL (Cholesterol)
+  
+La siguiente característica es de tipo numérico. Al igual que en la presión arterial en reposo, que tenemos valores 0 que debemos analizar. Lo primero que se va a hacer es obtener el numero de casos que el coresterol es 0, y se consideraran las diversas formas de tratar estos datos.
+
+```{r message= FALSE, warning=FALSE}
+#Veces que aparece el valor cero en la presion arterial
+length(datos$RestingBP[datos$Cholesterol == 0])
+```
+
+Esta vez tenemos 172 casos en lo que ocurre esto (equivale a un 18% de los casos totales). Antes de ver que valor se le asignan, se va a graficar los datos para ver de manera grafica que opción tomar: el valor medio o el más común.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$Cholesterol, xlab="Coresterol", col="ivory", ylab="Cantidad", main="CORESTEROL SIN TRATAR NULOS", ylim = c(0,300), xlim = c(0, 700))
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+```
+
+Tras analizar la gráfica y para no perder estos datos, se le asignaran un valor por defecto, que será la media de los datos. Esta decisión se ha tomado ya que poner el más común, nos crearía un conjunto de datos muy distintos entre unas medidas y otras, mientras que poner la media sería un valor que tenga en cuenta el grueso de todos los datos.
+
+
+```{r message= FALSE, warning=FALSE}
+#Calculamos el valor más comun
+coresterol_media <- mean(datos$Cholesterol)
+
+#Asignamos el valor truncado para evitar decimales
+datos$Cholesterol[datos$Cholesterol == 0] <- trunc(coresterol_media)
+
+#vemos las estaditicas del dato
+summary(datos$RestingBP)
+```
+
+Ahora ya tenemos los valores entre 80 y 200 que son un rango normal para estos valores.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$Cholesterol, xlab="Coresterol", col="ivory", ylab="Cantidad", main="CORESTEROL", ylim = c(0,330), xlim = c(0, 700))
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+```
+
+### NIVEL DE AZÚCAR EN SANGRE EN AYUNAS (FastingBS)
+  
+Como se puede comprobar el conjunto de los datos puedes ser 1 o 0, es decir verdadero o falso si se cumple la siguiente condición: si nivel de azúcar en sangre en ayunas> 120 mg / dl.
+
+En esta característica no tenemos valores nulos, así que vamos a ver la distribución de las dos opciones:
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$FastingBS, xlab="¿Azúcar en sangre en ayunas> 120 mg / dl?", col=c("ivory", "lightcyan"), ylab="Cantidad", main="NIVEL DE AZÚCAR", breaks = 2, ylim = c(0, 750), axes = FALSE)
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0.25, 0.75), cex.axis=1, labels = c("NO","SI" ))
+axis(2)
+```
+
+Como se puede comprobar que hay mas casos que NO se cumple esa condición de que SÍ.
+
+### ECG EN REPOSO (RestingECG)
+
+Nos damos cuenta de que el conjunto de datos viene identificado por 3 variables categóricas:
+ + Normal: Normal, 
+ + ST: con anomalía de la onda ST-T
+ + LVH: que muestra una hipertrofia ventricular izquierda probable o definitiva según los criterios de Estes.
+Normalizamos para tenerlo de tipo numérico todas la variables:
+
+```{r message= FALSE, warning=FALSE}
+#Cambiamos las letras por los números
+datos$RestingECG [datos$RestingECG == "Normal"]  <- 0
+datos$RestingECG [datos$RestingECG == "ST"] <- 1
+datos$RestingECG [datos$RestingECG == "LVH"] <- 2
+
+#Pasamos de carácter a numérico
+datos$RestingECG <- as.numeric(datos$RestingECG)
+```
+
+Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$RestingECG, xlab="ECG en reposo", col= c("ivory", "lightcyan", "ORANGE"), ylab="Cantidad", main="ECG EN REPOSO", ylim = c(0, 600), axes = FALSE, breaks=seq(min(datos$RestingECG)-0.5, max(datos$RestingECG)+0.5, by=1) )
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0.25, 0.75, 1.75 ), cex.axis=1, labels = c("Normal","ST", "LVH"))
+axis(2)
+```
+
+### FRECUENCIA CARDÍACA MÁXIMA (MaxHR)
+
+Dicha característica es de carácter numérica y en el conjunto de datos contempla valores desde el 60 al 202 
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$MaxHR, xlab="Frecuencia Cardíaca Máxima", col="ivory", ylab="Cantidad", main="FRECUENCIA CARDÍACA MÁXIMA", ylim = c(0,140), axes = FALSE)
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(60, 70, 80,90,100,110,120,130,140,150,160,170,180,190,200,210), cex.axis=1)
+axis(2)
+```
+
+Se puede comprobar que los extremos en el conjunto de datos tienen menos valores, y que el grueso de las muestras se encuentran entre los valores centrales (desde 100 a 180).
+
+### ANGINA INDUCIDA POR EJERCICIO (ExerciseAngina)
+  
+En el  conjunto de datos tiene los valores Y: Sí, N: No. Al igual que se ha hecho con otras características, se normalizará el conjunto.
+
+```{r message= FALSE, warning=FALSE}
+#Cambiamos las letras por los números
+datos$ExerciseAngina [datos$ExerciseAngina == "N"]  <- 0
+datos$ExerciseAngina [datos$ExerciseAngina == "Y"]  <- 1
+
+#Pasamos de carácter a numérico
+datos$ExerciseAngina <- as.numeric(datos$ExerciseAngina)
+```
+
+Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$ExerciseAngina, xlab="¿Angina inducida por ejercicio?", col=c("ivory", "lightcyan"), ylab="Cantidad", main="ANGINA INDUCIDA", breaks = 2, ylim = c(0, 600), axes = FALSE)
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0.25, 0.75), cex.axis=1, labels = c("NO","SI" ))
+axis(2)
+```
+
+Como se puede apreciar, hay mas casos en que NO se ha producido una angina inducida por el ejercicio de que Si se haya producido.
+
+### OLDPEAK
+  
+Esta característica de tipo numérica puede abarcar valores negativos hasta  hasta un máximo de un valor igual a 6,2.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$Oldpeak, xlab="Oldpeak", col="ivory", ylab="Cantidad", main="OLDPEAK", ylim = c(0,400), xlim = c(-4, 8))
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+```
+
+Se puede comprobar que el grueso de las muestras se encuentra entre los valores centrales teniendo una distribución normal
+
+### PENDIENTE DEL SEGMENTO ST (ST_Slope)
+
+Como ocurría en otras características anteriores el conjunto tiene los valores para esta caracteristica de la siguiente forma:
+  + Up: uploping
+  + Flat: flat
+  + Down: downsloping
+Y como se ha realizado antes, se normalizará para solo tener datos numericos.
+
+```{r message= FALSE, warning=FALSE}
+#Cambiamos las letras por los números
+datos$ST_Slope [datos$ST_Slope == "Up"]   <- 0
+datos$ST_Slope [datos$ST_Slope == "Flat"] <- 1
+datos$ST_Slope [datos$ST_Slope == "Down"] <- 2
+
+#Pasamos de carácter a numérico
+datos$ST_Slope <- as.numeric(datos$ST_Slope)
+```
+
+Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$ST_Slope, xlab="Pendiente del segmento ST", col= c("ivory", "lightcyan", "ORANGE"), ylab="Cantidad", main="PENDIENTE DEL SEGMENTO ST", ylim = c(0, 500), axes = FALSE,breaks=seq(min(datos$ST_Slope)-0.5, max(datos$ST_Slope)+0.5, by=1) )
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0.25, 0.75,1.75), cex.axis=1, labels = c("Ascendente","Plano", "Descendente"))
+axis(2)
+```
+
+El caso más común es que la pendiente sea plana, teniendo menos casos en los casos descendentes.
+
+### ¿ENFERMEDAD CARDIACA? (HeartDisease)
+
+En el conjunto de datos tienen normalizada la salida usando el valor 1: enfermedad cardíaca, y el valor 0: Normal.
+
+```{r message= FALSE, warning=FALSE}
+h1 <- hist(datos$HeartDisease, xlab="¿Enfermedad Cardiaca?", col=c("ivory", "lightcyan"), ylab="Cantidad", main="¿ENFERMEDAD CARDIACA?", breaks = 2, ylim = c(0, 600), axes = FALSE)
+text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
+axis(1, at =c(0.25, 0.75), cex.axis=1, labels = c("NO","SI" ))
+axis(2)
+```
+
+Como se puede observar hay mas casos en que SI hay enfermedad cardiaca que caso en los que NO hay.
+
+## Construcción de conjunto de datos final
+
+Renombramos las columnas para que tenga uno mas significativo y creamos el conjunto final de datos.
+
+
+```{r message= FALSE, warning=FALSE}
+
+datos_final <- datos
+
+colnames(datos_final)[1]<-  "EDAD"
+colnames(datos_final)[2]<-  "SEXO"
+colnames(datos_final)[3]<-  "TIPO DOLOR TORAX"
+colnames(datos_final)[4]<-  "PRESIÓN ARTERIAL"
+colnames(datos_final)[5]<-  "CORESTEROL"
+colnames(datos_final)[6]<-  "NIVEL DE AZÚCAR"
+colnames(datos_final)[7]<-  "ECG EN REPOSO"
+colnames(datos_final)[8]<-  "FREC CARDÍACA MÁX"
+colnames(datos_final)[9]<-  "ANGINA x EJERCICIO"
+colnames(datos_final)[10]<- "OLDPEAK"
+colnames(datos_final)[11]<- "PENDIENTE ST"
+colnames(datos_final)[12]<- "E. CARDIACA"
+
+```
+
+
+Por ultimo se va a mirar a través de los diagramas de cajas el rango de las características enfrentado a si un paciente tiene una enfermedad cardiaca o no.
+
+```{r message= FALSE, warning=FALSE}
+#Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
+plot_boxplot(datos_final, by = "E. CARDIACA")
+```
+
+## Correlaciones
+
+```{r message= FALSE, warning=FALSE}
+#Calculamos las correlaciones
+cor_datos <- cor(datos_final)
+cor_datos
+```
+
+
+```{r message= FALSE, warning=FALSE}
+#Representación de las correlaciones
+corrplot(cor_datos, method = "pie", type="upper")
+```
+
+## Análisis de componentes principales (PCA)
+
+Ahora se va a realizar un análisis de componentes sobre el conjunto de datos final. Lo primero que vamos a calcular es la varianza de todas las caracteristicas
+
+```{r message= FALSE, warning=FALSE}
+#Cálculo de la varianza de los componentes.
+var <- apply(datos_final, 2, var)
+var
+```
+
+Como se puede observar de una manera bastante clara, el colesterol es la característica que mas varia de un individuo a otro.
+
+Lo siguiente es centrar y escalar las características, para que así las variables pierdan esa variabilidad. Una vez calculada la matriz se la asigno al pca
+
+```{r message= FALSE, warning=FALSE}
+#Calculo de la descomposición de los componentes
+pca <- prcomp(datos_final, scale = TRUE, center = TRUE)
+pca
+```
+
+Se puede ver que la primera componente tiene la mayor desviación estándar de todos los componentes. Para verlo de una manera mas clara, se va a representar de una manera grafica la salida anterior
+
+```{r message= FALSE, warning=FALSE}
+#Representación PCA´s anteriores
+fviz_eig(pca)
+```
+
+Como se ha visto antes, tanto de una manera numérica como gráfica, el PC1 es el que mejor de todos con una diferencia notable. Si usamos la técnica del codo, deberíamos coger solamente las dos primeras componentes.
+
+Para confirmar la interpretación, no estaría de más obtener las estadísticas de todas las componentes
+
+```{r message= FALSE, warning=FALSE}
+#Estadísticas de las componentes
+summary(pca)
+```
+
+Viendo las estadísticas vemos que con las dos primeras componentes solamente podríamos explicar un 39,64% de los datos.Como no queremos perder información en el modelo, nos tendríamos que quedar con todas las componentes. Para verlo de una manera visual, se va a representar la PCA de una manera gráfica.
+
+```{r message= FALSE, warning=FALSE}
+#Representación de variables sobre componentes principales
+fviz_pca_var(pca, repel = TRUE, scale = 0)
+```
+
+```{r message= FALSE, warning=FALSE}
+#Representación de observaciones sobre componentes principales
+fviz_pca_ind(pca, col.ind = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+```
+
+```{r message= FALSE, warning=FALSE}
+#Representa la contribución de filas/columnas de los resultados de un pca
+fviz_contrib(pca,choice = "var") 
+```
+
+Una vez que hemos representada las variables y los individuos, se va a fusionar estas dos gráficas
+
+```{r message= FALSE, warning=FALSE}
+#Representación de variables y los individuos en la misma gráfica
+fviz_pca_biplot(pca, repel = TRUE, col.var = "#2E9FDF", col.ind = "#696969")
+```
+
+Aunque la opción de repelerse esta activada al ser bastantes casos no se puede ver una manera correcta, así que se a mostrar solamente los 10, 50 y 100 casos más influyentes
+
+```{r message= FALSE, warning=FALSE}
+#Representación de variables y los 10 individuos más influyentes en la misma gráfica
+fviz_pca_biplot(pca, repel = TRUE, col.var = "#2E9FDF", col.ind = "#696969", select.ind = list(contrib = 10))
+
+#Representación de variables y los 50 individuos más influyentes en la misma gráfica
+fviz_pca_biplot(pca, repel = TRUE, col.var = "#2E9FDF", col.ind = "#696969", select.ind = list(contrib = 50))
+
+#Representación de variables y los 100 individuos más influyentes en la misma gráfica
+fviz_pca_biplot(pca, repel = TRUE, col.var = "#2E9FDF", col.ind = "#696969", select.ind = list(contrib = 100))
+```
+
+Al mostrar solamente los casos mas influyentes, se puede ver con mas claridad las relaciones entre los individuos y las características. Podemos concluir de este análisis de componentes, que no se puede quitar ninguna característica ya que se perdería información.
+
+
+# Análisis de los datos
+
 
 ```{r message= FALSE, warning=FALSE}
 
@@ -139,10 +500,4 @@ axis(2)
 ```{r message= FALSE, warning=FALSE}
 
 ```
-
-
-```{r message= FALSE, warning=FALSE}
-
-```
-
 
