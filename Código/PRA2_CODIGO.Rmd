@@ -169,7 +169,8 @@ Ahora ya tenemos los valores entre 80 y 200 que son un rango normal para estos v
 
 ```{r message= FALSE, warning=FALSE}
 #Histograma de la característica Presión Arterial del primer conjunto de datos 
-h1 <- hist(datos$RestingBP, xlab="Presión Arterial", col="ivory", ylab="Cantidad", main="PRESIÓN ARTERIAL EN REPOSO", ylim = c(0, 225), xlim = c(80,200))
+h1 <- hist(datos$RestingBP, xlab="Presión Arterial", col="ivory", 
+           ylab="Cantidad", main="PRESIÓN ARTERIAL EN REPOSO", ylim = c(0, 225), xlim = c(80,200))
 text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 ```
 
@@ -185,7 +186,9 @@ length(datos$RestingBP[datos$Cholesterol == 0])
 Esta vez tenemos 172 casos en lo que ocurre esto (equivale a un 18% de los casos totales). Antes de ver que valor se le asignan, se va a graficar los datos para ver de manera grafica que opción tomar: el valor medio o el más común.
 
 ```{r message= FALSE, warning=FALSE}
-h1 <- hist(datos$Cholesterol, xlab="Coresterol", col="ivory", ylab="Cantidad", main="CORESTEROL SIN TRATAR NULOS", ylim = c(0,300), xlim = c(0, 700))
+h1 <- hist(datos$Cholesterol, xlab="Coresterol", col="ivory",
+           ylab="Cantidad", main="CORESTEROL SIN TRATAR NULOS", ylim = c(0,300),
+           xlim = c(0, 700))
 text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 ```
 
@@ -206,7 +209,8 @@ summary(datos$RestingBP)
 Ahora ya tenemos los valores entre 80 y 200 que son un rango normal para estos valores.
 
 ```{r message= FALSE, warning=FALSE}
-h1 <- hist(datos$Cholesterol, xlab="Coresterol", col="ivory", ylab="Cantidad", main="CORESTEROL", ylim = c(0,330), xlim = c(0, 700))
+h1 <- hist(datos$Cholesterol, xlab="Coresterol", col="ivory",
+           ylab="Cantidad", main="CORESTEROL", ylim = c(0,330), xlim = c(0, 700))
 text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 ```
 
@@ -217,7 +221,9 @@ Como se puede comprobar el conjunto de los datos puedes ser 1 o 0, es decir verd
 En esta característica no tenemos valores nulos, así que vamos a ver la distribución de las dos opciones:
 
 ```{r message= FALSE, warning=FALSE}
-h1 <- hist(datos$FastingBS, xlab="¿Azúcar en sangre en ayunas> 120 mg / dl?", col=c("ivory", "lightcyan"), ylab="Cantidad", main="NIVEL DE AZÚCAR", breaks = 2, ylim = c(0, 750), axes = FALSE)
+h1 <- hist(datos$FastingBS, xlab="¿Azúcar en sangre en ayunas> 120 mg / dl?",
+           col=c("ivory", "lightcyan"), ylab="Cantidad",
+           main="NIVEL DE AZÚCAR", breaks = 2, ylim = c(0, 750), axes = FALSE)
 text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 axis(1, at =c(0.25, 0.75), cex.axis=1, labels = c("NO","SI" ))
 axis(2)
