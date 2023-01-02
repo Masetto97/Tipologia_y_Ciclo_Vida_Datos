@@ -3,9 +3,6 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
-  pdf_document:
-    highlight: zenburn
-    toc: yes
   html_document:
     highlight: default
     number_sections: yes
@@ -14,6 +11,9 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
+  pdf_document:
+    highlight: zenburn
+    toc: yes
   word_document: default
 ---
 
@@ -34,6 +34,7 @@ if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
 if (!require('DataExplorer')) install.packages('DataExplorer'); library('DataExplorer')
 if (!require('corrplot')) install.packages("corrplot"); library(corrplot)
 if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
+if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
 ```
 
 
@@ -42,6 +43,42 @@ if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
 ```{r message= FALSE, warning=FALSE}
 datos <- read_csv("./fichero_original_datos.csv")
 ```
+
+
+## Descripción del dataset:
+
+El significado de las variables del dataset:
+
+El conjunto de datos ha sido extraido de Kaggle: https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset, está compuesto de 12 variables y 918 registros. 
+
+
+Tipo de dato asignado a cada campo:
+
+- **Age** Edad del paciente
+- **Sex** Sexo del paciente
+- **ChestPainType** Tipo de dolor torácico:
+        Angina Típica
+        Angina Atípica
+        Dolor no debido a una angina
+        Asintomático
+- **RestingBP** Presión arterial en reposo (en mm Hg)
+- **Cholesterol** Colesterol en sangre (mg/dL)
+- **FastingBS** Tiene Glucemia en ayunas > 120 mg/dl -> (1: True, 0: False) 
+- **RestingECG** Resultados electrocardiográficos en reposo
+        Value 0: normal
+        Value 1: Tiene anormalidad de la onda ST-T (inversiones de la onda T y/o elevación o depresión del ST > 0.05 mV)
+        Value 2  Muestra hipertrofia ventricular izquierda probable o definitiva según los criterios de Estes
+- **MaxHR** Frecuencia cardíaca máxima alcanzada
+- **ExerciseAngina** Angina inducida por el ejercicio (1 = sí, 0 = no)
+- **Oldpeak** 
+- **ST_Slope**
+- **HeartDisease**  
+
+```{r}
+sapply(datos, function(x) class(x))
+```
+
+
 
 Ahora vamos a ver las estructura del juego de datos
 
@@ -54,6 +91,10 @@ Vamos ahora a sacar estadísticas básicas
 ```{r message= FALSE, warning=FALSE}
 summary(datos)
 ```
+
+Observamos los primeros 5 registros:
+
+
 
 # Preprocesado y gestión de características
 
