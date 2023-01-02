@@ -45,39 +45,40 @@ datos <- read_csv("./fichero_original_datos.csv")
 ```
 
 
-## Descripción del dataset:
+# Descripción del dataset:
 
-El significado de las variables del dataset:
+El conjunto de datos ha sido extraido de Kaggle: https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset, está compuesto de 12 variables y 918 registros. Que correlacionan una serie de caracteristicas recogidas de varios pacientes con la posibilidad de sufrir un ataque al corazón.
 
-El conjunto de datos ha sido extraido de Kaggle: https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset, está compuesto de 12 variables y 918 registros. 
+Explicación de cada variable:
 
-
-Tipo de dato asignado a cada campo:
-
-- **Age** Edad del paciente
-- **Sex** Sexo del paciente
-- **ChestPainType** Tipo de dolor torácico:
+- **Age**: Edad del paciente
+- **Sex**: Sexo del paciente
+- **ChestPainType**: Tipo de dolor torácico:
         Angina Típica
         Angina Atípica
         Dolor no debido a una angina
         Asintomático
-- **RestingBP** Presión arterial en reposo (en mm Hg)
-- **Cholesterol** Colesterol en sangre (mg/dL)
-- **FastingBS** Tiene Glucemia en ayunas > 120 mg/dl -> (1: True, 0: False) 
-- **RestingECG** Resultados electrocardiográficos en reposo
+- **RestingBP**: Presión arterial en reposo (en mm Hg)
+- **Cholesterol**: Colesterol en sangre (mg/dL)
+- **FastingBS**: Tiene Glucemia en ayunas > 120 mg/dl -> (1: True, 0: False) 
+- **RestingECG**: Resultados electrocardiográficos en reposo
         Value 0: normal
         Value 1: Tiene anormalidad de la onda ST-T (inversiones de la onda T y/o elevación o depresión del ST > 0.05 mV)
         Value 2  Muestra hipertrofia ventricular izquierda probable o definitiva según los criterios de Estes
-- **MaxHR** Frecuencia cardíaca máxima alcanzada
-- **ExerciseAngina** Angina inducida por el ejercicio (1 = sí, 0 = no)
-- **Oldpeak** 
-- **ST_Slope**
-- **HeartDisease**  
+- **MaxHR**: Frecuencia cardíaca máxima alcanzada
+- **ExerciseAngina**: Angina inducida por el ejercicio (1 = sí, 0 = no)
+- **Oldpeak**: Descenso del segmento ST inducido por el ejercicio en relación con el reposo ('Segmento ST' se relaciona con las posiciones en el gráfico de Electro cardiograma). 
+- **ST_Slope**: La pendiente del segmento ST de ejercicio máximo: 
+	0: pendiente descendente 
+	1: plano 
+	2: pendiente ascendente
+- **HeartDisease**: Variable Objetivo: 0= menos posibilidades de infarto 1= más posibilidades de infarto.
+
+Tipo de dato asignado a cada campo:
 
 ```{r}
 sapply(datos, function(x) class(x))
 ```
-
 
 
 Ahora vamos a ver las estructura del juego de datos
@@ -95,6 +96,9 @@ summary(datos)
 Observamos los primeros 5 registros:
 
 
+```{r}
+head(datos, 5L)
+```
 
 # Preprocesado y gestión de características
 
@@ -113,6 +117,8 @@ colSums(datos=="")
 ```
 
 Como se puede comprobar, tenemos la “suerte” de no tener ningún valor nulo o vacío en los dos juegos de datos.
+
+
 
 ## Normalización del conjunto de los datos
 
@@ -536,6 +542,18 @@ fviz_pca_biplot(pca, repel = TRUE, col.var = "#2E9FDF",
 ```
 
 Al mostrar solamente los casos mas influyentes, se puede ver con mas claridad las relaciones entre los individuos y las características. Podemos concluir de este análisis de componentes, que no se puede quitar ninguna característica ya que se perdería información.
+
+
+# Exportación de los datos
+
+Una vez que hemos acometido sobre el conjunto de datos inicial los procedimientos de integración, validación y limpieza anteriores, procedemos a guardar estos en un nuevo fichero denominado heart_dissease_data_clean.csv:
+
+
+```{r}
+# Exportación de los datos limpios en .csv
+write.csv(datos, "../Código/heart_dissease_data_clean.csv")
+```
+
 
 
 # Análisis de los datos
