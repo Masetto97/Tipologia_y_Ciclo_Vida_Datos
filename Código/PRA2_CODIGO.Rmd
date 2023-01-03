@@ -318,7 +318,7 @@ h1 <- hist(datos$RestingECG, xlab="ECG en reposo",
            breaks=seq(min(datos$RestingECG)-0.5,
                       max(datos$RestingECG)+0.5, by=1) )
 text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
-axis(1, at =c(0.25, 0.75, 1.75 ), cex.axis=1, labels = c("Normal","ST", "LVH"))
+axis(1, at =c(0.25, 1, 1.75 ), cex.axis=1, labels = c("Normal","ST", "LVH"))
 axis(2)
 ```
 
@@ -681,6 +681,40 @@ for(i in 1:(ncol(datos_final) -1 ))
 print(corr_matrix)
 
 ```
+Podemos identificar cual es la variable más correlacionada con la variable Enfermedad Cardiaca, viendo cuales de los valores de la columan estimate se acercan más al valor +1 o -1, en este caso los más cercanos y por lo tanto los que más correlacionados están con la varibale objetivo son: OLDPEAK y FREC CARDÍACA MAX.
+
+Por otro lado en la columna p-value, tenemos el indicador del peso estadistico de dicga variable, en este caso las variables que tienen peso estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
+
+# Grupos de datos
+
+Podemos establecer una serie de grupos partiendo de nuestro dataset para analizar y/o comparlos más adelante
+
+
+```{r}
+# Agrupación por Tipo de dolor de torax
+# [0: TA; 1: ATA ; 2: NAP ; 3: ASY]
+datos_final.angina_tipica <- datos_final[datos_final$`TIPO DOLOR TORAX` == 0,] 
+datos_final.angina_atipica <- datos_final[datos_final$`TIPO DOLOR TORAX` == 1,] 
+datos_final.no_angina <- datos_final[datos_final$`TIPO DOLOR TORAX` == 2,] 
+datos_final.asintomatico <- datos_final[datos_final$`TIPO DOLOR TORAX` == 3,]
+
+# Agrupación por pacientes con Hiperglucemia
+datos_final.sin_hiperglucemia <- datos_final[datos_final$`NIVEL DE AZÚCAR` == 0,] 
+datos_final.con_hiperglucemia <- datos_final[datos_final$`NIVEL DE AZÚCAR` == 1,]
+
+# Agrupación por pacientes con Angina inducida
+datos_final.sin_angina_inducida <- datos_final[datos_final$`ANGINA x EJERCICIO` == 0,] 
+datos_final.con_angina_inducida <- datos_final[datos_final$`ANGINA x EJERCICIO` == 1,]
+
+# Agrupación por ECG en reposo
+# ["Normal": 0, "ST": 1, "LVH": 2]
+
+datos_final.ecg_normal <- datos_final[datos_final$`ECG EN REPOSO` == 0,] 
+datos_final.ecg_st <- datos_final[datos_final$`ECG EN REPOSO` == 1,] 
+datos_final.ecg_lvh <- datos_final[datos_final$`ECG EN REPOSO` == 2,] 
+
+```
+
 
 
 ```{r message= FALSE, warning=FALSE}
