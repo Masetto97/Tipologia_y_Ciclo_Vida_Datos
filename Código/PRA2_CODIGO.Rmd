@@ -453,6 +453,44 @@ Por ultimo se va a mirar a través de los diagramas de cajas el rango de las car
 #Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
 plot_boxplot(datos_final, by = "E. CARDIACA")
 ```
+## Eliminamos outliers
+
+
+
+```{r}
+datos_bp.colesterol <- boxplot(datos_final$COLESTEROL)
+datos_bp.colesterol.out <- datos_bp.colesterol$out
+print("Eliminamos Outliers de la variable COLESTEROL con valores: ")
+datos_bp.colesterol.out
+datos_final <- datos_final %>% filter(!(COLESTEROL %in% datos_bp.colesterol.out))
+
+datos_frec.cardiaca.max <- boxplot(datos_final$`FREC CARDÍACA MÁX`)
+datos_frec.cardiaca.max.out <- datos_frec.cardiaca.max$out
+print("Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: ")
+datos_frec.cardiaca.max.out
+datos_final <- datos_final %>% filter(!(`FREC CARDÍACA MÁX` %in% datos_frec.cardiaca.max.out))
+
+datos_oldpeak <- boxplot(datos_final$OLDPEAK)
+datos_oldpeak.out <- datos_oldpeak$out
+print("Eliminamos Outliers de la variable OLDPEAK con valores: ")
+datos_oldpeak.out
+datos_final <- datos_final %>% filter(!(OLDPEAK %in% datos_oldpeak.out))
+
+datos_bp.presion_arterial <- boxplot(datos_final$`PRESIÓN ARTERIAL`)
+datos_bp.presion_arterial.out <- datos_bp.presion_arterial$out
+print("Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: ")
+datos_bp.presion_arterial.out
+datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.presion_arterial.out))
+
+datos_bp.tipo_dolor_torax <- boxplot(datos_final$`TIPO DOLOR TORAX`)
+datos_bp.tipo_dolor_torax.out <- datos_bp.tipo_dolor_torax$out
+print("Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: ")
+datos_bp.tipo_dolor_torax.out
+datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.tipo_dolor_torax.out))
+```
+
+
+
 
 ## Correlaciones
 
@@ -504,7 +542,7 @@ Para confirmar la interpretación, no estaría de más obtener las estadísticas
 summary(pca)
 ```
 
-Viendo las estadísticas vemos que con las dos primeras componentes solamente podríamos explicar un 39,64% de los datos.Como no queremos perder información en el modelo, nos tendríamos que quedar con todas las componentes. Para verlo de una manera visual, se va a representar la PCA de una manera gráfica.
+Viendo las estadísticas vemos que con las dos primeras componentes solamente podríamos explicar un 39,75% de los datos.Como no queremos perder información en el modelo, nos tendríamos que quedar con todas las componentes. Para verlo de una manera visual, se va a representar la PCA de una manera gráfica.
 
 ```{r message= FALSE, warning=FALSE}
 #Representación de variables sobre componentes principales
@@ -554,7 +592,7 @@ Una vez que hemos acometido sobre el conjunto de datos inicial los procedimiento
 
 ```{r message= FALSE, warning=FALSE}
 # Exportación de los datos limpios en .csv
-write.csv(datos, "./heart_dissease_data_clean.csv")
+write.csv(datos_final, "./heart_dissease_data_clean.csv")
 ```
 
 
@@ -572,16 +610,16 @@ Podemos comprobar que para cada prueba se obtiene un p-valor superior al nivel d
 ```{r message= FALSE, warning=FALSE}
 if (!require('nortest')) install.packages('nortest'); library('nortest')
 alpha = 0.05
-col.names = colnames(datos)
+col.names = colnames(datos_final)
 ind = 1
 
 # Comprobanos unicamente lS variables que inicialmente eran de tipo numericas
 
-for (i in colnames(datos)) {
+for (i in colnames(datos_final)) {
   if (ind == 1) cat("Variables que no siguen una distribución normal:\n")
-  if(vector_tipos[i] == "numeric")
+  if(vector_tipos[ind] == "numeric")
   {
-    p_val = ad.test(unlist(datos[i]))$p.value
+    p_val = ad.test(unlist(datos_final[i]))$p.value
     if (p_val < alpha) {
       cat(i)
       # Format output
@@ -597,18 +635,50 @@ Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el ant
 
 ```{r}
 # Edad
-variables <- c("Age", "RestingBP", "Cholesterol",
-               "FastingBS", "MaxHR", "Oldpeak", 
-               "HeartDisease")
+variables <- c("EDAD", "PRESIÓN ARTERIAL", "COLESTEROL",
+               "NIVEL DE AZÚCAR", "FREC CARDÍACA MÁX", "OLDPEAK")
+
+
 for(i in(variables))
 {
-  qqnorm(unlist(datos[i]),  main = paste0("Q-Q para la variable: ", i));qqline(unlist(datos[i]), col = 2)
+  qqnorm(unlist(datos_final[i]),  main = paste0("Q-Q para la variable: ", i));qqline(unlist(datos_final[i]), col = 2)
 }
 
 ```
 
 
+# Pruebas estadisticas
+
+## ¿Que variables cuantitativas ejercen mayor influencia en la variable que define si hay una enfermedad cardica
+
 ```{r message= FALSE, warning=FALSE}
+corr_matrix <- matrix(nc=2, nr=0)
+colnames(corr_matrix) <- c("estimate", "p-value")
+
+# Calculamos el coficiente de correlacion para cada variable cuantitativa
+# con respecto al campo E. CARDICA
+
+for(i in 1:(ncol(datos_final) -1 ))
+{
+  if(vector_tipos[i] == "numeric")
+  {
+    spearman_test = cor.test(unlist(datos_final[,i]),
+                              unlist(datos_final[,length(datos_final)]),
+                              method = "spearman")
+    corr_coef <- spearman_test$estimate
+    p_val <- spearman_test$p.value
+    
+    # Aañade a la matriz
+    pair <- matrix(ncol = 2, nrow = 1)
+    pair[1][1] = corr_coef
+    pair[2][1] = p_val
+    corr_matrix <- rbind(corr_matrix, pair)
+    rownames(corr_matrix)[nrow(corr_matrix)] <- colnames(datos_final)[i]
+  }
+  
+}
+
+print(corr_matrix)
 
 ```
 
