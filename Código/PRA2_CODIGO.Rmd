@@ -42,6 +42,7 @@ if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
 
 ```{r message= FALSE, warning=FALSE}
 datos <- read_csv("./fichero_original_datos.csv")
+attach(datos)
 ```
 
 
@@ -77,7 +78,9 @@ Explicación de cada variable:
 Tipo de dato asignado a cada campo:
 
 ```{r}
-sapply(datos, function(x) class(x))
+# Cargamos en un vector los tipos de variable del datase
+vector_tipos <- sapply(datos, function(x) class(x))
+print(vector_tipos)
 ```
 
 
@@ -549,27 +552,58 @@ Al mostrar solamente los casos mas influyentes, se puede ver con mas claridad la
 Una vez que hemos acometido sobre el conjunto de datos inicial los procedimientos de integración, validación y limpieza anteriores, procedemos a guardar estos en un nuevo fichero denominado heart_dissease_data_clean.csv:
 
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 # Exportación de los datos limpios en .csv
-write.csv(datos, "../Código/heart_dissease_data_clean.csv")
+write.csv(datos, "./heart_dissease_data_clean.csv")
 ```
 
 
 
 # Análisis de los datos
 
+## COmprobación de la normalidad y la homogeneidad de la varianza
+
+
+Para la comprobación de que los valores que toman nuestra variables cuantativa provienen de una distirbución normal vamos a utilizar la prueba de normalidad de Anderson-Darling.
+
+Podemos comprobar que para cada prueba se obtiene un p-valor superior al nivel de significancia estadistica prefijado en alpha = 0,05. Si esto se cumple, entonces se considera que variable en cuestion sigue la distribución normal.
+
 
 ```{r message= FALSE, warning=FALSE}
+if (!require('nortest')) install.packages('nortest'); library('nortest')
+alpha = 0.05
+col.names = colnames(datos)
+ind = 1
 
+# Comprobanos unicamente lS variables que inicialmente eran de tipo numericas
+
+for (i in colnames(datos)) {
+  if (ind == 1) cat("Variables que no siguen una distribución normal:\n")
+  if(vector_tipos[i] == "numeric")
+  {
+    p_val = ad.test(unlist(datos[i]))$p.value
+    if (p_val < alpha) {
+      cat(i)
+      # Format output
+        if (ind < ncol(datos) - 1) cat(", ")
+        if (ind %% 3 == 0) cat("\n")
+      }
+  }
+  ind = ind + 1
+  }
 ```
+Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el anterior punto no siguen una distribución normal.
 
 
-```{r message= FALSE, warning=FALSE}
-
-```
-
-
-```{r message= FALSE, warning=FALSE}
+```{r}
+# Edad
+variables <- c("Age", "RestingBP", "Cholesterol",
+               "FastingBS", "MaxHR", "Oldpeak", 
+               "HeartDisease")
+for(i in(variables))
+{
+  qqnorm(unlist(datos[i]),  main = paste0("Q-Q para la variable: ", i));qqline(unlist(datos[i]), col = 2)
+}
 
 ```
 
