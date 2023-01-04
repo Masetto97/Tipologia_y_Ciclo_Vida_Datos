@@ -463,33 +463,43 @@ datos_bp.colesterol.out <- datos_bp.colesterol$out
 print("Eliminamos Outliers de la variable COLESTEROL con valores: ")
 datos_bp.colesterol.out
 datos_final <- datos_final %>% filter(!(COLESTEROL %in% datos_bp.colesterol.out))
+dev.off()
 
 datos_frec.cardiaca.max <- boxplot(datos_final$`FREC CARDÍACA MÁX`)
 datos_frec.cardiaca.max.out <- datos_frec.cardiaca.max$out
 print("Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: ")
 datos_frec.cardiaca.max.out
 datos_final <- datos_final %>% filter(!(`FREC CARDÍACA MÁX` %in% datos_frec.cardiaca.max.out))
+dev.off()
 
 datos_oldpeak <- boxplot(datos_final$OLDPEAK)
 datos_oldpeak.out <- datos_oldpeak$out
 print("Eliminamos Outliers de la variable OLDPEAK con valores: ")
 datos_oldpeak.out
 datos_final <- datos_final %>% filter(!(OLDPEAK %in% datos_oldpeak.out))
+dev.off()
+
 
 datos_bp.presion_arterial <- boxplot(datos_final$`PRESIÓN ARTERIAL`)
 datos_bp.presion_arterial.out <- datos_bp.presion_arterial$out
 print("Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: ")
 datos_bp.presion_arterial.out
 datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.presion_arterial.out))
+dev.off()
+
 
 datos_bp.tipo_dolor_torax <- boxplot(datos_final$`TIPO DOLOR TORAX`)
 datos_bp.tipo_dolor_torax.out <- datos_bp.tipo_dolor_torax$out
 print("Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: ")
 datos_bp.tipo_dolor_torax.out
 datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.tipo_dolor_torax.out))
+dev.off()
 ```
 
-
+```{r message= FALSE, warning=FALSE}
+#Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
+plot_boxplot(datos_final, by = "E. CARDIACA")
+```
 
 
 ## Correlaciones
@@ -683,7 +693,7 @@ print(corr_matrix)
 ```
 Podemos identificar cual es la variable más correlacionada con la variable Enfermedad Cardiaca, viendo cuales de los valores de la columan estimate se acercan más al valor +1 o -1, en este caso los más cercanos y por lo tanto los que más correlacionados están con la varibale objetivo son: OLDPEAK y FREC CARDÍACA MAX.
 
-Por otro lado en la columna p-value, tenemos el indicador del peso estadistico de dicga variable, en este caso las variables que tienen peso estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
+Por otro lado en la columna p-value, tenemos el indicador del peso estadistico de diga variable, en este caso las variables que tienen peso estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
 
 # Grupos de datos
 
@@ -714,6 +724,11 @@ datos_final.ecg_st <- datos_final[datos_final$`ECG EN REPOSO` == 1,]
 datos_final.ecg_lvh <- datos_final[datos_final$`ECG EN REPOSO` == 2,] 
 
 ```
+
+
+## ¿La Presión arterial y su influencia en la enfermedad cardiaca?
+
+Vamos a realizar una prueba estadistica para establecer un contraste de hipótesis sobre dos muestras (una con presión arterial alta y otra con presión arterial normal) y ver cual de ellas tiene mayor probabilidades de sufrir enfermedad cardiaca.
 
 
 
