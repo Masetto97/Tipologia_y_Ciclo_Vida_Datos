@@ -3,6 +3,9 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
   html_document:
     highlight: default
     number_sections: yes
@@ -11,9 +14,6 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
-  pdf_document:
-    highlight: zenburn
-    toc: yes
   word_document: default
 ---
 
@@ -889,7 +889,7 @@ colnames(train_X2)[1] <- "TIPO_DOLOR_TORAX"
 colnames(train_X2)[3] <- "FREC_CARD_MAX"
 colnames(train_X2)[5] <- "PENDIENTE_ST"
 model <- C50::C5.0(train_X2, train_y)
-plot(model, gp = gpar(fontsize = 9.5))
+plot(model)
 ```
 
 Como podemos observar de manara visual el modelo basado en arbol de decisión, solo tiene en cuenta la variable "PENDIENTE_ST", para decidir entre si un paciente es propenso a sufrir una enfermedad cardiaca o no.
@@ -954,9 +954,8 @@ Discretización de variables:
 
 ```{r}
 colnames(train_X2)
-train.data <- as.data.frame(cbind(train_X2[c(1,2,5,4)] ,train_y))
-colnames(train.data)[5] <- "ENF_CARDIACA"
-train.data
+train.data <- as.data.frame(cbind(train_X2[c(1,5,4)] ,train_y))
+colnames(train.data)[4] <- "ENF_CARDIACA"
 rf <-  randomForest(ENF_CARDIACA ~ ., data = train.data, ntree = 50)
 
 X <- train.data[which(names(train.data) != "ENF_CARDIACA")]
