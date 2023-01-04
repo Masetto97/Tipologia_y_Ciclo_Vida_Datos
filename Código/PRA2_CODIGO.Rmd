@@ -646,7 +646,7 @@ Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el ant
 ```{r}
 # Edad
 variables <- c("EDAD", "PRESIÓN ARTERIAL", "COLESTEROL",
-               "NIVEL DE AZÚCAR", "FREC CARDÍACA MÁX", "OLDPEAK")
+               "FREC CARDÍACA MÁX", "OLDPEAK")
 
 
 for(i in(variables))
@@ -655,6 +655,8 @@ for(i in(variables))
 }
 
 ```
+
+Vemos que tanto la distribución de los valores de las caracteristicas de EDAD y de la Frecuencia Cardica máxima se acercan mucho a la normalidad, por otro lado la distribución de los valores de la caracteristica Presión Arterial, Colesterol y Old distan de la normal.
 
 
 # Pruebas estadisticas
@@ -732,9 +734,249 @@ Vamos a realizar una prueba estadistica para establecer un contraste de hipótes
 
 
 
-```{r message= FALSE, warning=FALSE}
+
+
+# Modelo Arbol de Decision
+
+Podemos elaborar un arbol de decisión, para ver que variables tienen más influencia en la enfermedad cardiaca y establecer las reglas que definen dicha variable.
+
+
+## Test estadísticos de significancia
+
+Antes de proceder a la clasificación de los parámetros de pacientes con más probabilidades de sufrir enfermedad cardiaca, deberemos de hacer una selección previa de las caracteristicas a utilizar en nuestro modelo.
+
+Para ello nos vamos a ayudar de una matriz de correlación con el objetivo de confirmar las conclusiones en cuanto a correlación de variables obtenidas en el apartado anterior.
+
+```{r}
+if(!require("DescTools"))
+{
+  install.packages("DeskTools")
+  # http://cran.us.r-project.org
+  library("DescTools")
+}
+
+# Analizamos las correlaciones de todos las caracteristicas de tipo categoricas con "E. CARDIACA"
+# Lo añadimos a una tabla
+
+datos_corr.Phi <- list()
+datos_corr.CramerV <- list()
+datos_corr.nombre <- list()
+
+ind <- 1
+for (i in colnames(datos_final))
+{
+  
+  if(i != "E. CARDIACA")
+  {
+    tabla_cruzada <- table(as.numeric(unlist(datos_final[i])), datos_final$`E. CARDIACA`)
+    datos_corr.CramerV <- append(datos_corr.CramerV, CramerV(tabla_cruzada))
+    datos_corr.Phi <- append(datos_corr.Phi, Phi(tabla_cruzada))
+    datos_corr.nombre <- append(datos_corr.nombre, i)
+  }
+  
+  if (vector_tipos[ind] != 'numeric')
+  {
+    # Solo pintamos las variables categoricas ya que con las de tipo numerico no se aprecian los valores
+    plot(tabla_cruzada, col = c("black","#008000"), main = paste0(i, " vs. E. CARDIACA"))
+  }
+  
+  
+  ind <- ind + 1
+  
+}
+n_list <- list(nombre=as.character(datos_corr.nombre),
+               CamerV=as.numeric(datos_corr.CramerV),
+               Phi=as.numeric(datos_corr.Phi))
+
+df_CramerV <- (as.data.frame(do.call(cbind, n_list)))
+print(df_CramerV[order(df_CramerV$Phi, decreasing = TRUE),])
 
 ```
+
+Valores de la V de Cramér ([https://en.wikipedia.org/wiki/Cramér%27s_V](https://en.wikipedia.org/wiki/Cramér%27s_V){.uri}) y Phi (<https://en.wikipedia.org/wiki/Phi_coefficient>) entre 0.1 y 0.3 nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se puede considerar una asociación media. Finalmente, si los valores fueran superiores a 0.5 la asociación estadística entre las variables sería alta.
+
+Podemos observar dentro del dataframe: df_cramerV que las variables PENDIENTES ST, COLESTEROL, TIPO DOLOR TORAX, FREC CARDIACA MAX y OLDPEAK tienen correlación alta con E. CARDIACA.
+
+Usaremos dichas variables para la obtención del Arbol de decisión, se podria utilizar un número mayor de variables, pero podría hacerse mucho complejo (con muchas reglas de decisión)
+
+```{r}
+# caracteristicas con significancia estadistica:
+nombres_columnas <- df_CramerV$nombre[df_CramerV$Phi > 0.5]
+nombres_columnas
+```
+
+## Aplicación del modelo Decision Tree (Arbol de decisión)
+
+Aplicamos el modelo Decision Tree sobre las 3 caracteristicas que hemos obtenido en el test de significacia estadistica de Cramer V.
+
+```{r}
+# Backup dataset inicial:
+datos_final_orig <- datos_final
+
+# Convertimos todas las variables a tipo factor
+datos_final[] <- lapply(datos_final, factor)
+
+# Reducimos el datset
+for(i in colnames(datos_final))
+{
+  if(!i %in% nombres_columnas)
+  {
+    if (!i == "E. CARDIACA")
+    {
+      datos_final$i <- NULL
+    }
+  }
+}
+set.seed(666)
+y <- datos_final$`E. CARDIACA` # Variable objetivo
+X <- datos_final[nombres_columnas] # Variables predictoras
+```
+
+
+Separamos conjunto de test y de entrenamiento con una proporción 33% Test 66% Training.
+
+```{r}
+split_prop <- 3
+indexes = sample(1:nrow(X), size=floor(((split_prop-1)/split_prop)*nrow(X)))
+train_X <- X[indexes,]
+train_y <- y[indexes]
+test_X <- X[-indexes,]
+test_y <- y[-indexes]
+```
+
+
+Comprobamos que las variables train_y y test_y estén balanceadas reflejo de la variable y.
+
+```{r}
+print("y:")
+summary(y)
+print("train_y:")
+summary(train_y)
+print("test_y:")
+summary(test_y)
+```
+Hacemos lo mismo con las variales train_crX y test_crX y X
+
+```{r}
+print("X:")
+summary(X)
+print("train_X:")
+summary(train_X)
+print("test_X:")
+summary(test_X)
+```
+Se crea el árbol de decisión usando los datos de entrenamiento (no hay que olvidar que la variable outcome es de tipo factor):
+
+```{r}
+tree <- C50::C5.0(train_X, train_y, rules=TRUE )
+summary(tree)
+```
+
+El modelo decision tree explica con dos reglas la probabilidad de sufrir una enfermedad cardiaca en función de las variables: TIPO DOLOR TORAX, COLESTEROL  FREC CARDÍACA MÁX,  OLDPEAK,  PENDIENTE ST.
+
+Regla: 1 -> PENDIENTE ST = 0 -> Tendrán menos probabilidades de sufrir E. CARDIACA
+Regla: 2 -> PENDIENTE ST in {1, 2} -> Tendrán más probabilidades de sufrir E. CARDIACA
+
+El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa de error de 18.4 % es decir es capaz de explicar el 82.6 % de los casos.
+
+De manera más gráfica:
+
+
+```{r message= FALSE, warning=FALSE}
+# RENOMBRAMOS VARIABLES PARA PODER DIBUJAR:
+train_X2 <- train_X
+colnames(train_X2)[1] <- "TIPO_DOLOR_TORAX"
+colnames(train_X2)[3] <- "FREC_CARD_MAX"
+colnames(train_X2)[5] <- "PENDIENTE_ST"
+model <- C50::C5.0(train_X2, train_y)
+plot(model, gp = gpar(fontsize = 9.5))
+```
+
+Como podemos observar de manara visual el modelo basado en arbol de decisión, solo tiene en cuenta la variable "PENDIENTE_ST", para decidir entre si un paciente es propenso a sufrir una enfermedad cardiaca o no.
+
+
+## Evaluación del modelo arbol de decision
+
+
+Una vez tenemos el modelo, podemos comprobar su calidad prediciendo la clase para los datos de prueba que nos hemos reservado al principio.
+
+```{r}
+predicted_model <- predict( tree, test_X, type="class" )
+print(sprintf("La precisión del árbol es: %.4f %%",100*sum(predicted_model == test_y) / length(predicted_model)))
+```
+
+
+Cuando hay pocas clases, la calidad de la predicción se puede analizar mediante una matriz de confusión que identifica los tipos de errores cometidos.
+
+```{r}
+mat_conf <- table(test_y, Predicted=predicted_model)
+mat_conf
+```
+De la matriz de confusión observamos los siguientes valores:
+
+Verdaderos Negativos (E. CARDIACA): 110
+Verdaderos Positivos (E. CARDIACA): 123
+Falsos Negativos (E. CARDIACA): 28
+Falsos Positivos (E. CARDIACA): 25
+
+El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
+
+# Random Forest
+
+
+Nos interesa saber para las predicciones que variable son las que tienen más influencia. Así, probaremos con un enfoque algorítmico de Random Forest y obtendremos métricas de interpretabilidad con la librería IML (<https://cran.r-project.org/web/packages/iml/iml.pdf>). As:
+
+```{r}
+if(!require(randomForest)){
+  install.packages('randomForest',repos='http://cran.us.r-project.org')
+  library(randomForest)
+}
+if(!require(iml)){
+  install.packages('iml', repos='http://cran.us.r-project.org')
+  library(iml)
+}
+```
+
+
+Discretización de variables:
+
+
+```{r}
+# Antes de aplicar el modelo random forest con el conjunto de variables obtenidos para el arbol de decision es necesario discretizar las variables COLESTEROL y FREQ CARDICA MAX
+# Establcemos los siguientes niveles:
+# COLESTEROL [ COL: MENOR DE 200 -> 0, COL: ENTRE 200 - 400 -> 1, COL: ENTRE 400 - 600 -> 2, COL: MAYOR QUE 600 -> 3]
+
+
+
+```
+
+
+
+```{r}
+colnames(train_X2)
+train.data <- as.data.frame(cbind(train_X2[c(1,2,5,4)] ,train_y))
+colnames(train.data)[5] <- "ENF_CARDIACA"
+train.data
+rf <-  randomForest(ENF_CARDIACA ~ ., data = train.data, ntree = 50)
+
+X <- train.data[which(names(train.data) != "ENF_CARDIACA")]
+predictor <- Predictor$new(rf, data = X, y = train.data$ENF_CARDIACA) 
+imp <- FeatureImp$new(predictor, loss = "ce")
+plot(imp)
+imp$results
+```
+
+Podemos medir y graficar la importancia de cada variable para las predicciones del random forest con *FeatureImp*. La medida se basa funciones de pérdida de rendimiento que en nuestro caso será con el objetivo de clasificación ("ce").
+
+```{r}
+X <- train.data[which(names(train.data) != "SURVIVED")]
+predictor <- Predictor$new(rf, data = X, y = train.data$SURVIVED) 
+imp <- FeatureImp$new(predictor, loss = "ce")
+plot(imp)
+imp$results
+```
+
+
 
 
 ```{r message= FALSE, warning=FALSE}
