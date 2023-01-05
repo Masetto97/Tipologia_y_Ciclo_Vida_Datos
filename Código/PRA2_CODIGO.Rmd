@@ -35,6 +35,7 @@ if (!require('DataExplorer')) install.packages('DataExplorer'); library('DataExp
 if (!require('corrplot')) install.packages("corrplot"); library(corrplot)
 if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
 if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
+if (!require('nortest')) install.packages('nortest'); library('nortest')
 ```
 
 
@@ -426,7 +427,6 @@ Como se puede observar hay mas casos en que SI hay enfermedad cardiaca que caso 
 
 Renombramos las columnas para que tenga uno mas significativo y creamos el conjunto final de datos.
 
-
 ```{r message= FALSE, warning=FALSE}
 
 datos_final <- datos
@@ -455,41 +455,43 @@ plot_boxplot(datos_final, by = "E. CARDIACA")
 ```
 ## Eliminamos outliers
 
-
-
 ```{r}
-datos_bp.colesterol <- boxplot(datos_final$COLESTEROL)
+datos_bp.colesterol <- boxplot(datos_final$COLESTEROL);dev.off()
 datos_bp.colesterol.out <- datos_bp.colesterol$out
 print("Eliminamos Outliers de la variable COLESTEROL con valores: ")
 datos_bp.colesterol.out
 datos_final <- datos_final %>% filter(!(COLESTEROL %in% datos_bp.colesterol.out))
 
-datos_frec.cardiaca.max <- boxplot(datos_final$`FREC CARDÍACA MÁX`)
+datos_frec.cardiaca.max <- boxplot(datos_final$`FREC CARDÍACA MÁX`);dev.off()
 datos_frec.cardiaca.max.out <- datos_frec.cardiaca.max$out
 print("Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: ")
 datos_frec.cardiaca.max.out
 datos_final <- datos_final %>% filter(!(`FREC CARDÍACA MÁX` %in% datos_frec.cardiaca.max.out))
 
-datos_oldpeak <- boxplot(datos_final$OLDPEAK)
+datos_oldpeak <- boxplot(datos_final$OLDPEAK);dev.off()
 datos_oldpeak.out <- datos_oldpeak$out
 print("Eliminamos Outliers de la variable OLDPEAK con valores: ")
 datos_oldpeak.out
 datos_final <- datos_final %>% filter(!(OLDPEAK %in% datos_oldpeak.out))
 
-datos_bp.presion_arterial <- boxplot(datos_final$`PRESIÓN ARTERIAL`)
+datos_bp.presion_arterial <- boxplot(datos_final$`PRESIÓN ARTERIAL`);dev.off()
 datos_bp.presion_arterial.out <- datos_bp.presion_arterial$out
 print("Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: ")
 datos_bp.presion_arterial.out
 datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.presion_arterial.out))
 
-datos_bp.tipo_dolor_torax <- boxplot(datos_final$`TIPO DOLOR TORAX`)
+datos_bp.tipo_dolor_torax <- boxplot(datos_final$`TIPO DOLOR TORAX`);dev.off()
 datos_bp.tipo_dolor_torax.out <- datos_bp.tipo_dolor_torax$out
 print("Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: ")
 datos_bp.tipo_dolor_torax.out
 datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.tipo_dolor_torax.out))
+
 ```
 
-
+```{r message= FALSE, warning=FALSE}
+#Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
+plot_boxplot(datos_final, by = "E. CARDIACA")
+```
 
 
 ## Correlaciones
@@ -499,7 +501,6 @@ datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.tipo_d
 cor_datos <- cor(datos_final)
 cor_datos
 ```
-
 
 ```{r message= FALSE, warning=FALSE}
 #Representación de las correlaciones
@@ -589,26 +590,20 @@ Al mostrar solamente los casos mas influyentes, se puede ver con mas claridad la
 
 Una vez que hemos acometido sobre el conjunto de datos inicial los procedimientos de integración, validación y limpieza anteriores, procedemos a guardar estos en un nuevo fichero denominado heart_dissease_data_clean.csv:
 
-
 ```{r message= FALSE, warning=FALSE}
 # Exportación de los datos limpios en .csv
 write.csv(datos_final, "./heart_dissease_data_clean.csv")
 ```
 
-
-
 # Análisis de los datos
 
-## COmprobación de la normalidad y la homogeneidad de la varianza
-
+## Comprobación de la normalidad y la homogeneidad de la varianza
 
 Para la comprobación de que los valores que toman nuestra variables cuantativa provienen de una distirbución normal vamos a utilizar la prueba de normalidad de Anderson-Darling.
 
 Podemos comprobar que para cada prueba se obtiene un p-valor superior al nivel de significancia estadistica prefijado en alpha = 0,05. Si esto se cumple, entonces se considera que variable en cuestion sigue la distribución normal.
 
-
 ```{r message= FALSE, warning=FALSE}
-if (!require('nortest')) install.packages('nortest'); library('nortest')
 alpha = 0.05
 col.names = colnames(datos_final)
 ind = 1
@@ -632,7 +627,6 @@ for (i in colnames(datos_final)) {
 ```
 Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el anterior punto no siguen una distribución normal.
 
-
 ```{r}
 # Edad
 variables <- c("EDAD", "PRESIÓN ARTERIAL", "COLESTEROL",
@@ -645,7 +639,6 @@ for(i in(variables))
 }
 
 ```
-
 
 # Pruebas estadisticas
 
