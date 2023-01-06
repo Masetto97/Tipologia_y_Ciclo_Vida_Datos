@@ -3,6 +3,9 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
   html_document:
     highlight: default
     number_sections: yes
@@ -11,9 +14,6 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
-  pdf_document:
-    highlight: zenburn
-    toc: yes
   word_document: default
 ---
 
@@ -35,7 +35,6 @@ if (!require('DataExplorer')) install.packages('DataExplorer'); library('DataExp
 if (!require('corrplot')) install.packages("corrplot"); library(corrplot)
 if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
 if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
-if (!require('nortest')) install.packages('nortest'); library('nortest')
 ```
 
 
@@ -430,6 +429,7 @@ Como se puede observar hay mas casos en que SI hay enfermedad cardiaca que caso 
 
 Renombramos las columnas para que tenga uno mas significativo y creamos el conjunto final de datos.
 
+
 ```{r message= FALSE, warning=FALSE}
 
 datos_final <- datos
@@ -458,48 +458,30 @@ plot_boxplot(datos_final, by = "E_CARDIACA")
 ```
 ## Eliminamos outliers
 
+
+
 ```{r}
-datos_bp.colesterol <- boxplot(datos_final$COLESTEROL);dev.off()
+datos_bp.colesterol <- boxplot(datos_final$COLESTEROL)
 datos_bp.colesterol.out <- datos_bp.colesterol$out
 print("Eliminamos Outliers de la variable COLESTEROL con valores: ")
 datos_bp.colesterol.out
 datos_final <- datos_final %>% filter(!(COLESTEROL %in% datos_bp.colesterol.out))
+dev.off()
 
-<<<<<<< HEAD
-datos_frec.cardiaca.max <- boxplot(datos_final$`FREC CARDÍACA MÁX`);dev.off()
-datos_frec.cardiaca.max.out <- datos_frec.cardiaca.max$out
-print("Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: ")
-datos_frec.cardiaca.max.out
-datos_final <- datos_final %>% filter(!(`FREC CARDÍACA MÁX` %in% datos_frec.cardiaca.max.out))
-=======
 datos_frec.cardiaca.max <- boxplot(datos_final$FREC_CARDIACA_MAX)
 datos_frec.cardiaca.max.out <- datos_frec.cardiaca.max$out
 print("Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: ")
 datos_frec.cardiaca.max.out
 datos_final <- datos_final %>% filter(!(FREC_CARDIACA_MAX %in% datos_frec.cardiaca.max.out))
 dev.off()
->>>>>>> 531df414240c8a3f4eb9ef494fd7b5284e226d0c
 
-datos_oldpeak <- boxplot(datos_final$OLDPEAK);dev.off()
+datos_oldpeak <- boxplot(datos_final$OLDPEAK)
 datos_oldpeak.out <- datos_oldpeak$out
 print("Eliminamos Outliers de la variable OLDPEAK con valores: ")
 datos_oldpeak.out
 datos_final <- datos_final %>% filter(!(OLDPEAK %in% datos_oldpeak.out))
+dev.off()
 
-<<<<<<< HEAD
-datos_bp.presion_arterial <- boxplot(datos_final$`PRESIÓN ARTERIAL`);dev.off()
-datos_bp.presion_arterial.out <- datos_bp.presion_arterial$out
-print("Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: ")
-datos_bp.presion_arterial.out
-datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.presion_arterial.out))
-
-datos_bp.tipo_dolor_torax <- boxplot(datos_final$`TIPO DOLOR TORAX`);dev.off()
-datos_bp.tipo_dolor_torax.out <- datos_bp.tipo_dolor_torax$out
-print("Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: ")
-datos_bp.tipo_dolor_torax.out
-datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.tipo_dolor_torax.out))
-
-=======
 
 datos_bp.presion_arterial <- boxplot(datos_final$PRESION_ARTERIAL)
 datos_bp.presion_arterial.out <- datos_bp.presion_arterial$out
@@ -515,7 +497,6 @@ print("Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: ")
 datos_bp.tipo_dolor_torax.out
 datos_final <- datos_final %>% filter(!(TIPO_DOLOR_TORAX %in% datos_bp.tipo_dolor_torax.out))
 dev.off()
->>>>>>> 531df414240c8a3f4eb9ef494fd7b5284e226d0c
 ```
 
 ```{r message= FALSE, warning=FALSE}
@@ -531,6 +512,7 @@ plot_boxplot(datos_final, by = "E_CARDIACA")
 cor_datos <- cor(datos_final)
 cor_datos
 ```
+
 
 ```{r message= FALSE, warning=FALSE}
 #Representación de las correlaciones
@@ -620,16 +602,12 @@ Al mostrar solamente los casos mas influyentes, se puede ver con mas claridad la
 
 Una vez que hemos acometido sobre el conjunto de datos inicial los procedimientos de integración, validación y limpieza anteriores, procedemos a guardar estos en un nuevo fichero denominado heart_dissease_data_clean.csv:
 
+
 ```{r message= FALSE, warning=FALSE}
 # Exportación de los datos limpios en .csv
 write.csv(datos_final, "./heart_dissease_data_clean.csv")
 ```
 
-<<<<<<< HEAD
-# Análisis de los datos
-
-## Comprobación de la normalidad y la homogeneidad de la varianza
-=======
 
 
 
@@ -638,13 +616,14 @@ write.csv(datos_final, "./heart_dissease_data_clean.csv")
 
 ## Comprobación de la normalidad y la homogeneidad de la varianza variables numericas
 
->>>>>>> 531df414240c8a3f4eb9ef494fd7b5284e226d0c
 
 Para la comprobación de que los valores que toman nuestra variables cuantativa provienen de una distirbución normal vamos a utilizar la prueba de normalidad de Anderson-Darling.
 
 Podemos comprobar que para cada prueba se obtiene un p-valor superior al nivel de significancia estadistica prefijado en alpha = 0,05. Si esto se cumple, entonces se considera que variable en cuestion sigue la distribución normal.
 
+
 ```{r message= FALSE, warning=FALSE}
+if (!require('nortest')) install.packages('nortest'); library('nortest')
 alpha = 0.05
 col.names = colnames(datos_final)
 ind = 1
@@ -668,17 +647,10 @@ for (i in colnames(datos_final)) {
 ```
 Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el anterior punto no siguen una distribución normal.
 
-<<<<<<< HEAD
-```{r}
-# Edad
-variables <- c("EDAD", "PRESIÓN ARTERIAL", "COLESTEROL",
-               "NIVEL DE AZÚCAR", "FREC CARDÍACA MÁX", "OLDPEAK")
-=======
 
 ```{r message= FALSE, warning=FALSE}
 variables <- c("EDAD", "PRESION_ARTERIAL", "COLESTEROL",
                "FREC_CARDIACA_MAX", "OLDPEAK")
->>>>>>> 531df414240c8a3f4eb9ef494fd7b5284e226d0c
 
 
 for(i in(variables))
@@ -687,6 +659,9 @@ for(i in(variables))
 }
 
 ```
+
+Vemos que tanto la distribución de los valores de las caracteristicas de EDAD y de la Frecuencia Cardica máxima se acercan mucho a la normalidad, por otro lado la distribución de los valores de la caracteristica Presión Arterial, Colesterol y Old distan de la normal.
+
 
 # Pruebas estadisticas
 
@@ -724,7 +699,7 @@ print(corr_matrix)
 ```
 Podemos identificar cual es la variable más correlacionada con la variable Enfermedad Cardiaca, viendo cuales de los valores de la columan estimate se acercan más al valor +1 o -1, en este caso los más cercanos y por lo tanto los que más correlacionados están con la varibale objetivo son: OLDPEAK y FREC CARDÍACA MAX.
 
-Por otro lado en la columna p-value, tenemos el indicador del peso estadistico de dicga variable, en este caso las variables que tienen peso estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
+Por otro lado en la columna p-value, tenemos el indicador del peso estadistico de diga variable, en este caso las variables que tienen peso estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
 
 # Grupos de datos
 
@@ -757,14 +732,6 @@ datos_final.ecg_lvh <- datos_final[datos_final$ECG_EN_REPOSO == 2,]
 ```
 
 
-<<<<<<< HEAD
-
-```{r message= FALSE, warning=FALSE}
-
-```
-
-
-=======
 ## ¿La Presión arterial y su influencia en la enfermedad cardiaca?
 
 Vamos a realizar una prueba estadistica para establecer un contraste de hipótesis sobre dos muestras (una con presión arterial alta y otra con presión arterial normal) y ver cual de ellas tiene mayor probabilidades de sufrir enfermedad cardiaca.
@@ -1061,7 +1028,6 @@ imp$results
 
 
 
->>>>>>> 531df414240c8a3f4eb9ef494fd7b5284e226d0c
 ```{r message= FALSE, warning=FALSE}
 
 ```
@@ -1070,4 +1036,3 @@ imp$results
 ```{r message= FALSE, warning=FALSE}
 
 ```
-
