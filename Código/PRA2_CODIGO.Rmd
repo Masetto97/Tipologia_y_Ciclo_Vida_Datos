@@ -148,7 +148,10 @@ datos$Sex [datos$Sex == "F"] <- 0
 
 #Pasamos de carácter a numérico
 datos$Sex <- as.numeric(datos$Sex)
+
 ```
+
+
 
 
 Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
@@ -433,16 +436,16 @@ datos_final <- datos
 
 colnames(datos_final)[1]<-  "EDAD"
 colnames(datos_final)[2]<-  "SEXO"
-colnames(datos_final)[3]<-  "TIPO DOLOR TORAX"
-colnames(datos_final)[4]<-  "PRESIÓN ARTERIAL"
+colnames(datos_final)[3]<-  "TIPO_DOLOR_TORAX"
+colnames(datos_final)[4]<-  "PRESION_ARTERIAL"
 colnames(datos_final)[5]<-  "COLESTEROL"
-colnames(datos_final)[6]<-  "NIVEL DE AZÚCAR"
-colnames(datos_final)[7]<-  "ECG EN REPOSO"
-colnames(datos_final)[8]<-  "FREC CARDÍACA MÁX"
-colnames(datos_final)[9]<-  "ANGINA x EJERCICIO"
+colnames(datos_final)[6]<-  "NIVEL_DE_AZUCAR"
+colnames(datos_final)[7]<-  "ECG_EN_REPOSO"
+colnames(datos_final)[8]<-  "FREC_CARDIACA_MAX"
+colnames(datos_final)[9]<-  "ANGINA_x_EJERCICIO"
 colnames(datos_final)[10]<- "OLDPEAK"
-colnames(datos_final)[11]<- "PENDIENTE ST"
-colnames(datos_final)[12]<- "E. CARDIACA"
+colnames(datos_final)[11]<- "PENDIENTE_ST"
+colnames(datos_final)[12]<- "E_CARDIACA"
 
 ```
 
@@ -451,7 +454,7 @@ Por ultimo se va a mirar a través de los diagramas de cajas el rango de las car
 
 ```{r message= FALSE, warning=FALSE}
 #Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
-plot_boxplot(datos_final, by = "E. CARDIACA")
+plot_boxplot(datos_final, by = "E_CARDIACA")
 ```
 ## Eliminamos outliers
 
@@ -465,11 +468,11 @@ datos_bp.colesterol.out
 datos_final <- datos_final %>% filter(!(COLESTEROL %in% datos_bp.colesterol.out))
 dev.off()
 
-datos_frec.cardiaca.max <- boxplot(datos_final$`FREC CARDÍACA MÁX`)
+datos_frec.cardiaca.max <- boxplot(datos_final$FREC_CARDIACA_MAX)
 datos_frec.cardiaca.max.out <- datos_frec.cardiaca.max$out
 print("Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: ")
 datos_frec.cardiaca.max.out
-datos_final <- datos_final %>% filter(!(`FREC CARDÍACA MÁX` %in% datos_frec.cardiaca.max.out))
+datos_final <- datos_final %>% filter(!(FREC_CARDIACA_MAX %in% datos_frec.cardiaca.max.out))
 dev.off()
 
 datos_oldpeak <- boxplot(datos_final$OLDPEAK)
@@ -480,25 +483,25 @@ datos_final <- datos_final %>% filter(!(OLDPEAK %in% datos_oldpeak.out))
 dev.off()
 
 
-datos_bp.presion_arterial <- boxplot(datos_final$`PRESIÓN ARTERIAL`)
+datos_bp.presion_arterial <- boxplot(datos_final$PRESION_ARTERIAL)
 datos_bp.presion_arterial.out <- datos_bp.presion_arterial$out
 print("Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: ")
 datos_bp.presion_arterial.out
-datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.presion_arterial.out))
+datos_final <- datos_final %>% filter(!(PRESION_ARTERIAL %in% datos_bp.presion_arterial.out))
 dev.off()
 
 
-datos_bp.tipo_dolor_torax <- boxplot(datos_final$`TIPO DOLOR TORAX`)
+datos_bp.tipo_dolor_torax <- boxplot(datos_final$TIPO_DOLOR_TORAX)
 datos_bp.tipo_dolor_torax.out <- datos_bp.tipo_dolor_torax$out
 print("Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: ")
 datos_bp.tipo_dolor_torax.out
-datos_final <- datos_final %>% filter(!(`PRESIÓN ARTERIAL` %in% datos_bp.tipo_dolor_torax.out))
+datos_final <- datos_final %>% filter(!(TIPO_DOLOR_TORAX %in% datos_bp.tipo_dolor_torax.out))
 dev.off()
 ```
 
 ```{r message= FALSE, warning=FALSE}
 #Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
-plot_boxplot(datos_final, by = "E. CARDIACA")
+plot_boxplot(datos_final, by = "E_CARDIACA")
 ```
 
 
@@ -607,9 +610,11 @@ write.csv(datos_final, "./heart_dissease_data_clean.csv")
 
 
 
+
 # Análisis de los datos
 
-## COmprobación de la normalidad y la homogeneidad de la varianza
+
+## Comprobación de la normalidad y la homogeneidad de la varianza variables numericas
 
 
 Para la comprobación de que los valores que toman nuestra variables cuantativa provienen de una distirbución normal vamos a utilizar la prueba de normalidad de Anderson-Darling.
@@ -643,10 +648,9 @@ for (i in colnames(datos_final)) {
 Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el anterior punto no siguen una distribución normal.
 
 
-```{r}
-# Edad
-variables <- c("EDAD", "PRESIÓN ARTERIAL", "COLESTEROL",
-               "FREC CARDÍACA MÁX", "OLDPEAK")
+```{r message= FALSE, warning=FALSE}
+variables <- c("EDAD", "PRESION_ARTERIAL", "COLESTEROL",
+               "FREC_CARDIACA_MAX", "OLDPEAK")
 
 
 for(i in(variables))
@@ -702,28 +706,28 @@ Por otro lado en la columna p-value, tenemos el indicador del peso estadistico d
 Podemos establecer una serie de grupos partiendo de nuestro dataset para analizar y/o comparlos más adelante
 
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 # Agrupación por Tipo de dolor de torax
 # [0: TA; 1: ATA ; 2: NAP ; 3: ASY]
-datos_final.angina_tipica <- datos_final[datos_final$`TIPO DOLOR TORAX` == 0,] 
-datos_final.angina_atipica <- datos_final[datos_final$`TIPO DOLOR TORAX` == 1,] 
-datos_final.no_angina <- datos_final[datos_final$`TIPO DOLOR TORAX` == 2,] 
-datos_final.asintomatico <- datos_final[datos_final$`TIPO DOLOR TORAX` == 3,]
+datos_final.angina_tipica <- datos_final[datos_final$TIPO_DOLOR_TORAX == 0,] 
+datos_final.angina_atipica <- datos_final[datos_final$TIPO_DOLOR_TORAX == 1,] 
+datos_final.no_angina <- datos_final[datos_final$TIPO_DOLOR_TORAX == 2,] 
+datos_final.asintomatico <- datos_final[datos_final$TIPO_DOLOR_TORAX == 3,]
 
 # Agrupación por pacientes con Hiperglucemia
-datos_final.sin_hiperglucemia <- datos_final[datos_final$`NIVEL DE AZÚCAR` == 0,] 
-datos_final.con_hiperglucemia <- datos_final[datos_final$`NIVEL DE AZÚCAR` == 1,]
+datos_final.sin_hiperglucemia <- datos_final[datos_final$NIVEL_DE_AZUCAR == 0,] 
+datos_final.con_hiperglucemia <- datos_final[datos_final$NIVEL_DE_AZUCAR == 1,]
 
 # Agrupación por pacientes con Angina inducida
-datos_final.sin_angina_inducida <- datos_final[datos_final$`ANGINA x EJERCICIO` == 0,] 
-datos_final.con_angina_inducida <- datos_final[datos_final$`ANGINA x EJERCICIO` == 1,]
+datos_final.sin_angina_inducida <- datos_final[datos_final$ANGINA_x_EJERCICIO == 0,] 
+datos_final.con_angina_inducida <- datos_final[datos_final$ANGINA_x_EJERCICIO == 1,]
 
 # Agrupación por ECG en reposo
 # ["Normal": 0, "ST": 1, "LVH": 2]
 
-datos_final.ecg_normal <- datos_final[datos_final$`ECG EN REPOSO` == 0,] 
-datos_final.ecg_st <- datos_final[datos_final$`ECG EN REPOSO` == 1,] 
-datos_final.ecg_lvh <- datos_final[datos_final$`ECG EN REPOSO` == 2,] 
+datos_final.ecg_normal <- datos_final[datos_final$ECG_EN_REPOSO == 0,] 
+datos_final.ecg_st <- datos_final[datos_final$ECG_EN_REPOSO == 1,] 
+datos_final.ecg_lvh <- datos_final[datos_final$ECG_EN_REPOSO == 2,] 
 
 ```
 
@@ -731,8 +735,6 @@ datos_final.ecg_lvh <- datos_final[datos_final$`ECG EN REPOSO` == 2,]
 ## ¿La Presión arterial y su influencia en la enfermedad cardiaca?
 
 Vamos a realizar una prueba estadistica para establecer un contraste de hipótesis sobre dos muestras (una con presión arterial alta y otra con presión arterial normal) y ver cual de ellas tiene mayor probabilidades de sufrir enfermedad cardiaca.
-
-
 
 
 
@@ -747,7 +749,7 @@ Antes de proceder a la clasificación de los parámetros de pacientes con más p
 
 Para ello nos vamos a ayudar de una matriz de correlación con el objetivo de confirmar las conclusiones en cuanto a correlación de variables obtenidas en el apartado anterior.
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 if(!require("DescTools"))
 {
   install.packages("DeskTools")
@@ -766,14 +768,15 @@ ind <- 1
 for (i in colnames(datos_final))
 {
   
-  if(i != "E. CARDIACA")
+  if(i != "E_CARDIACA")
   {
-    tabla_cruzada <- table(as.numeric(unlist(datos_final[i])), datos_final$`E. CARDIACA`)
+    tabla_cruzada <- table(as.numeric(unlist(datos_final[i])), datos_final$E_CARDIACA)
     datos_corr.CramerV <- append(datos_corr.CramerV, CramerV(tabla_cruzada))
     datos_corr.Phi <- append(datos_corr.Phi, Phi(tabla_cruzada))
     datos_corr.nombre <- append(datos_corr.nombre, i)
   }
   
+  vector_tipos[5] <- 'character'
   if (vector_tipos[ind] != 'numeric')
   {
     # Solo pintamos las variables categoricas ya que con las de tipo numerico no se aprecian los valores
@@ -793,49 +796,92 @@ print(df_CramerV[order(df_CramerV$Phi, decreasing = TRUE),])
 
 ```
 
+Obtenemos las siguientes conclusiones del dataset:
+
+En cuanto al Sexo, las Mujeres tienen menos probabilidad de sufrir una enfermedad cardiaca.
+
+En cuanto al tipo de dolor de Torax, los pacientes que sufren de dolor tipo Asintomáticos son los que pese a lo que se pdoría pensar tienen más probabilidades de sufrir enfermedad cardiaca.
+
+
+En cuanto a la variable ECG en Reposo está muy equilibrada, pero tienen una ligera mayor probabilidad de sufrir enfermedad cardiaca los de tipo 1 ()
+
 Valores de la V de Cramér ([https://en.wikipedia.org/wiki/Cramér%27s_V](https://en.wikipedia.org/wiki/Cramér%27s_V){.uri}) y Phi (<https://en.wikipedia.org/wiki/Phi_coefficient>) entre 0.1 y 0.3 nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se puede considerar una asociación media. Finalmente, si los valores fueran superiores a 0.5 la asociación estadística entre las variables sería alta.
 
 Podemos observar dentro del dataframe: df_cramerV que las variables PENDIENTES ST, COLESTEROL, TIPO DOLOR TORAX, FREC CARDIACA MAX y OLDPEAK tienen correlación alta con E. CARDIACA.
 
 Usaremos dichas variables para la obtención del Arbol de decisión, se podria utilizar un número mayor de variables, pero podría hacerse mucho complejo (con muchas reglas de decisión)
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 # caracteristicas con significancia estadistica:
 nombres_columnas <- df_CramerV$nombre[df_CramerV$Phi > 0.5]
 nombres_columnas
 ```
 
+
+
 ## Aplicación del modelo Decision Tree (Arbol de decisión)
 
 Aplicamos el modelo Decision Tree sobre las 3 caracteristicas que hemos obtenido en el test de significacia estadistica de Cramer V.
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 # Backup dataset inicial:
 datos_final_orig <- datos_final
 
-# Convertimos todas las variables a tipo factor
-datos_final[] <- lapply(datos_final, factor)
 
 # Reducimos el datset
 for(i in colnames(datos_final))
 {
   if(!i %in% nombres_columnas)
   {
-    if (!i == "E. CARDIACA")
+    if (!i == "E_CARDIACA")
     {
       datos_final$i <- NULL
     }
   }
 }
-set.seed(666)
-y <- datos_final$`E. CARDIACA` # Variable objetivo
-X <- datos_final[nombres_columnas] # Variables predictoras
+
 ```
+
+Para aplicar los modelos de arbol de decision debemos de discretizar las variables COLESTEROL y FREC CARDIACA MAXIMA.
+
+```{r message= FALSE, warning=FALSE}
+
+datos_final <- datos_final %>% mutate(COLESTEROL = case_when(
+  COLESTEROL < 100 ~ 0,
+  (COLESTEROL >= 100 & COLESTEROL < 200) ~ 1,
+  (COLESTEROL >= 200 & COLESTEROL < 300) ~ 2,
+  (COLESTEROL >= 300 & COLESTEROL < 400) ~ 3,
+  (COLESTEROL >= 400 & COLESTEROL < 500) ~ 4,
+  COLESTEROL >= 600 ~ 5,
+  ))
+
+
+datos_final <- datos_final %>% mutate(FREC_CARDIACA_MAX = case_when(
+  FREC_CARDIACA_MAX < 50 ~ 0,
+  (FREC_CARDIACA_MAX >= 50 & FREC_CARDIACA_MAX < 80) ~ 1,
+  (FREC_CARDIACA_MAX >= 80 & FREC_CARDIACA_MAX < 110) ~ 2,
+  (FREC_CARDIACA_MAX >= 110 & FREC_CARDIACA_MAX < 140) ~ 3,
+  (FREC_CARDIACA_MAX >= 140 & FREC_CARDIACA_MAX < 170) ~ 4,
+  (FREC_CARDIACA_MAX >= 170 & FREC_CARDIACA_MAX < 200) ~ 5,
+  FREC_CARDIACA_MAX >= 200 ~ 6,
+  ))
+
+datos_final
+
+# Convertimos todas las variables a tipo factor
+datos_final[] <- lapply(datos_final, factor)
+
+```
+
 
 
 Separamos conjunto de test y de entrenamiento con una proporción 33% Test 66% Training.
 
-```{r}
+```{r message= FALSE, warning=FALSE}
+set.seed(666)
+y <- datos_final$E_CARDIACA # Variable objetivo
+X <- datos_final[nombres_columnas] # Variables predictoras
+
 split_prop <- 3
 indexes = sample(1:nrow(X), size=floor(((split_prop-1)/split_prop)*nrow(X)))
 train_X <- X[indexes,]
@@ -847,7 +893,7 @@ test_y <- y[-indexes]
 
 Comprobamos que las variables train_y y test_y estén balanceadas reflejo de la variable y.
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 print("y:")
 summary(y)
 print("train_y:")
@@ -857,7 +903,7 @@ summary(test_y)
 ```
 Hacemos lo mismo con las variales train_crX y test_crX y X
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 print("X:")
 summary(X)
 print("train_X:")
@@ -867,7 +913,7 @@ summary(test_X)
 ```
 Se crea el árbol de decisión usando los datos de entrenamiento (no hay que olvidar que la variable outcome es de tipo factor):
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 tree <- C50::C5.0(train_X, train_y, rules=TRUE )
 summary(tree)
 ```
@@ -883,12 +929,7 @@ De manera más gráfica:
 
 
 ```{r message= FALSE, warning=FALSE}
-# RENOMBRAMOS VARIABLES PARA PODER DIBUJAR:
-train_X2 <- train_X
-colnames(train_X2)[1] <- "TIPO_DOLOR_TORAX"
-colnames(train_X2)[3] <- "FREC_CARD_MAX"
-colnames(train_X2)[5] <- "PENDIENTE_ST"
-model <- C50::C5.0(train_X2, train_y)
+model <- C50::C5.0(train_X, train_y)
 plot(model)
 ```
 
@@ -900,7 +941,7 @@ Como podemos observar de manara visual el modelo basado en arbol de decisión, s
 
 Una vez tenemos el modelo, podemos comprobar su calidad prediciendo la clase para los datos de prueba que nos hemos reservado al principio.
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 predicted_model <- predict( tree, test_X, type="class" )
 print(sprintf("La precisión del árbol es: %.4f %%",100*sum(predicted_model == test_y) / length(predicted_model)))
 ```
@@ -908,16 +949,16 @@ print(sprintf("La precisión del árbol es: %.4f %%",100*sum(predicted_model == 
 
 Cuando hay pocas clases, la calidad de la predicción se puede analizar mediante una matriz de confusión que identifica los tipos de errores cometidos.
 
-```{r}
+```{r message= FALSE, warning=FALSE}
 mat_conf <- table(test_y, Predicted=predicted_model)
 mat_conf
 ```
 De la matriz de confusión observamos los siguientes valores:
 
-Verdaderos Negativos (E. CARDIACA): 110
-Verdaderos Positivos (E. CARDIACA): 123
-Falsos Negativos (E. CARDIACA): 28
-Falsos Positivos (E. CARDIACA): 25
+Verdaderos Negativos (E. CARDIACA): 94
+Verdaderos Positivos (E. CARDIACA): 129
+Falsos Negativos (E. CARDIACA): 25
+Falsos Positivos (E. CARDIACA): 23
 
 El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
 
@@ -938,28 +979,17 @@ if(!require(iml)){
 ```
 
 
-Discretización de variables:
 
 
-```{r}
-# Antes de aplicar el modelo random forest con el conjunto de variables obtenidos para el arbol de decision es necesario discretizar las variables COLESTEROL y FREQ CARDICA MAX
-# Establcemos los siguientes niveles:
-# COLESTEROL [ COL: MENOR DE 200 -> 0, COL: ENTRE 200 - 400 -> 1, COL: ENTRE 400 - 600 -> 2, COL: MAYOR QUE 600 -> 3]
+```{r message= FALSE, warning=FALSE}
+train_X
+colnames(train_X)
+train.data <- as.data.frame(cbind(train_X[c(1,3,5,4)] ,train_y))
+colnames(train.data)[5] <- "E_CARDIACA"
+rf <-  randomForest(E_CARDIACA ~ ., data = train.data, ntree = 50)
 
-
-
-```
-
-
-
-```{r}
-colnames(train_X2)
-train.data <- as.data.frame(cbind(train_X2[c(1,5,4)] ,train_y))
-colnames(train.data)[4] <- "ENF_CARDIACA"
-rf <-  randomForest(ENF_CARDIACA ~ ., data = train.data, ntree = 50)
-
-X <- train.data[which(names(train.data) != "ENF_CARDIACA")]
-predictor <- Predictor$new(rf, data = X, y = train.data$ENF_CARDIACA) 
+X <- train.data[which(names(train.data) != "E_CARDIACA")]
+predictor <- Predictor$new(rf, data = X, y = train.data$E_CARDIACA) 
 imp <- FeatureImp$new(predictor, loss = "ce")
 plot(imp)
 imp$results
@@ -968,8 +998,8 @@ imp$results
 Podemos medir y graficar la importancia de cada variable para las predicciones del random forest con *FeatureImp*. La medida se basa funciones de pérdida de rendimiento que en nuestro caso será con el objetivo de clasificación ("ce").
 
 ```{r}
-X <- train.data[which(names(train.data) != "SURVIVED")]
-predictor <- Predictor$new(rf, data = X, y = train.data$SURVIVED) 
+X <- train.data[which(names(train.data) != "E_CARDIACA")]
+predictor <- Predictor$new(rf, data = X, y = train.data$E_CARDIACA) 
 imp <- FeatureImp$new(predictor, loss = "ce")
 plot(imp)
 imp$results
