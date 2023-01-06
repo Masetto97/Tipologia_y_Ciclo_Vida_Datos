@@ -3,9 +3,6 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
-  pdf_document:
-    highlight: zenburn
-    toc: yes
   html_document:
     highlight: default
     number_sections: yes
@@ -14,6 +11,9 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
+  pdf_document:
+    highlight: zenburn
+    toc: yes
   word_document: default
 ---
 
@@ -35,18 +35,19 @@ if (!require('DataExplorer')) install.packages('DataExplorer'); library('DataExp
 if (!require('corrplot')) install.packages("corrplot"); library(corrplot)
 if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
 if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
+if (!require('DescTools')) install.packages("DescTools"); library(DescTools)
+if (!require('regclass')) install.packages("regclass"); library(regclass)
+if(!require(randomForest)) install.packages('randomForest',repos='http://cran.us.r-project.org'); library(randomForest)
+if(!require(iml)) install.packages('iml', repos='http://cran.us.r-project.org'); library(iml)
 ```
 
+# Dataset
 
-# CARGA DEL FICHERO DE DATOS
+## Motivación
 
-```{r message= FALSE, warning=FALSE}
-datos <- read_csv("./fichero_original_datos.csv")
-attach(datos)
-```
+En Europa, el paro cardiaco es una de las primeras causas de mortalidad y en España fallecen en torno a 100 personas al día por este suceso [https://fundaciondelcorazon.com/prensa/notas-de-prensa/2900-solo-el-30-de-espanoles-sabe-realizar-la-reanimacion-cardio-pulmonar-rcp-.html], esto representa aproximadamente el 31% de las muertes a nivel mundial.
 
-
-# Descripción del dataset:
+## Descripción del dataset
 
 El conjunto de datos ha sido extraido de Kaggle: https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset, está compuesto de 12 variables y 918 registros. Que correlacionan una serie de caracteristicas recogidas de varios pacientes con la posibilidad de sufrir un ataque al corazón.
 
@@ -75,14 +76,20 @@ Explicación de cada variable:
 	2: pendiente ascendente
 - **HeartDisease**: Variable Objetivo: 0= menos posibilidades de infarto 1= más posibilidades de infarto.
 
-Tipo de dato asignado a cada campo:
+## Carga del fichero de datos
+
+```{r message= FALSE, warning=FALSE}
+datos <- read_csv("./fichero_original_datos.csv")
+attach(datos)
+```
+
+## Tipos de datos
 
 ```{r}
 # Cargamos en un vector los tipos de variable del datase
 vector_tipos <- sapply(datos, function(x) class(x))
 print(vector_tipos)
 ```
-
 
 Ahora vamos a ver las estructura del juego de datos
 
@@ -98,12 +105,15 @@ summary(datos)
 
 Observamos los primeros 5 registros:
 
-
 ```{r}
 head(datos, 5L)
 ```
 
-# Preprocesado y gestión de características
+## Objetivo buscado
+
+Se puede decir que el objetivo buscado es predecir la posibilidad de que una persona tenga un alto riesgo de ser diagnosticado como un paciente cardíaco a través de las diversas características. Para llegar a al objetivo se tiene pensado realizar diversos métodos de análisis para así relacionar las diversas características para obtener unos parámetros finales y así concluir la posibilidad de que una persona tenga o no una enfermedad cardiaca.
+
+# Preprocesado, gestión de características y exploración de los datos.
 
 ## Valores nulos del conjunto de los datos
 
@@ -121,11 +131,9 @@ colSums(datos=="")
 
 Como se puede comprobar, tenemos la “suerte” de no tener ningún valor nulo o vacío en los dos juegos de datos.
 
-
-
 ## Normalización del conjunto de los datos
 
-### EDAD
+### EDAD (Age)
 
 ```{r message= FALSE, warning=FALSE}
 #Histograma de la característica edad del primer conjunto de datos 
@@ -136,8 +144,7 @@ text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 
 Como se puede observar, la franja de entre los 50 y 60 años son donde más datos existen, mientras que los extremos donde menos datos.
 
-
-### SEXO
+### SEXO (Sex)
   
 Normalizamos para tenerlo de tipo numérico todas la variables
   
@@ -150,9 +157,6 @@ datos$Sex [datos$Sex == "F"] <- 0
 datos$Sex <- as.numeric(datos$Sex)
 
 ```
-
-
-
 
 Una vez normalizada la característica , analizamos el conjunto de los datos contemplados en esta.
 
@@ -255,7 +259,6 @@ text(h1$mids,h1$counts,labels=h1$counts, adj=c(0.5, -0.5))
 ```
 
 Tras analizar la gráfica y para no perder estos datos, se le asignaran un valor por defecto, que será la media de los datos. Esta decisión se ha tomado ya que poner el más común, nos crearía un conjunto de datos muy distintos entre unas medidas y otras, mientras que poner la media sería un valor que tenga en cuenta el grueso de todos los datos.
-
 
 ```{r message= FALSE, warning=FALSE}
 #Calculamos el valor más comun
@@ -429,7 +432,6 @@ Como se puede observar hay mas casos en que SI hay enfermedad cardiaca que caso 
 
 Renombramos las columnas para que tenga uno mas significativo y creamos el conjunto final de datos.
 
-
 ```{r message= FALSE, warning=FALSE}
 
 datos_final <- datos
@@ -449,16 +451,14 @@ colnames(datos_final)[12]<- "E_CARDIACA"
 
 ```
 
-
 Por ultimo se va a mirar a través de los diagramas de cajas el rango de las características enfrentado a si un paciente tiene una enfermedad cardiaca o no.
 
 ```{r message= FALSE, warning=FALSE}
 #Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca
 plot_boxplot(datos_final, by = "E_CARDIACA")
 ```
+
 ## Eliminamos outliers
-
-
 
 ```{r}
 datos_bp.colesterol <- boxplot(datos_final$COLESTEROL)
@@ -504,7 +504,6 @@ dev.off()
 plot_boxplot(datos_final, by = "E_CARDIACA")
 ```
 
-
 ## Correlaciones
 
 ```{r message= FALSE, warning=FALSE}
@@ -512,7 +511,6 @@ plot_boxplot(datos_final, by = "E_CARDIACA")
 cor_datos <- cor(datos_final)
 cor_datos
 ```
-
 
 ```{r message= FALSE, warning=FALSE}
 #Representación de las correlaciones
@@ -597,30 +595,11 @@ fviz_pca_biplot(pca, repel = TRUE, col.var = "#2E9FDF",
 
 Al mostrar solamente los casos mas influyentes, se puede ver con mas claridad las relaciones entre los individuos y las características. Podemos concluir de este análisis de componentes, que no se puede quitar ninguna característica ya que se perdería información.
 
-
-# Exportación de los datos
-
-Una vez que hemos acometido sobre el conjunto de datos inicial los procedimientos de integración, validación y limpieza anteriores, procedemos a guardar estos en un nuevo fichero denominado heart_dissease_data_clean.csv:
-
-
-```{r message= FALSE, warning=FALSE}
-# Exportación de los datos limpios en .csv
-write.csv(datos_final, "./heart_dissease_data_clean.csv")
-```
-
-
-
-
-# Análisis de los datos
-
-
 ## Comprobación de la normalidad y la homogeneidad de la varianza variables numericas
-
 
 Para la comprobación de que los valores que toman nuestra variables cuantativa provienen de una distirbución normal vamos a utilizar la prueba de normalidad de Anderson-Darling.
 
 Podemos comprobar que para cada prueba se obtiene un p-valor superior al nivel de significancia estadistica prefijado en alpha = 0,05. Si esto se cumple, entonces se considera que variable en cuestion sigue la distribución normal.
-
 
 ```{r message= FALSE, warning=FALSE}
 if (!require('nortest')) install.packages('nortest'); library('nortest')
@@ -645,8 +624,8 @@ for (i in colnames(datos_final)) {
   ind = ind + 1
   }
 ```
-Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el anterior punto no siguen una distribución normal.
 
+Podemos realizar un Q-Q plot para comprobar si las variables obtenidas en el anterior punto no siguen una distribución normal.
 
 ```{r message= FALSE, warning=FALSE}
 variables <- c("EDAD", "PRESION_ARTERIAL", "COLESTEROL",
@@ -661,11 +640,21 @@ for(i in(variables))
 ```
 
 Vemos que tanto la distribución de los valores de las caracteristicas de EDAD y de la Frecuencia Cardica máxima se acercan mucho a la normalidad, por otro lado la distribución de los valores de la caracteristica Presión Arterial, Colesterol y Old distan de la normal.
+ 
+# Exportación de los datos
 
+Una vez que hemos acometido sobre el conjunto de datos inicial los procedimientos de integración, validación y limpieza anteriores, procedemos a guardar estos en un nuevo fichero denominado heart_dissease_data_clean.csv:
 
-# Pruebas estadisticas
+```{r message= FALSE, warning=FALSE}
+# Exportación de los datos limpios en .csv
+write.csv(datos_final, "./heart_dissease_data_clean.csv")
+```
 
-## ¿Que variables cuantitativas ejercen mayor influencia en la variable que define si hay una enfermedad cardica
+# Análisis de los datos
+
+## ¿Cuáles son los factores o parámetros que más influyen a la hora de tener una enfermedad cardiaca? (Correlaciones y Regresión logística)
+
+### Test de Spearman
 
 ```{r message= FALSE, warning=FALSE}
 corr_matrix <- matrix(nc=2, nr=0)
@@ -697,53 +686,102 @@ for(i in 1:(ncol(datos_final) -1 ))
 print(corr_matrix)
 
 ```
+
 Podemos identificar cual es la variable más correlacionada con la variable Enfermedad Cardiaca, viendo cuales de los valores de la columan estimate se acercan más al valor +1 o -1, en este caso los más cercanos y por lo tanto los que más correlacionados están con la varibale objetivo son: OLDPEAK y FREC CARDÍACA MAX.
 
 Por otro lado en la columna p-value, tenemos el indicador del peso estadistico de diga variable, en este caso las variables que tienen peso estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
 
-# Grupos de datos
+### Regresión logística
 
-Podemos establecer una serie de grupos partiendo de nuestro dataset para analizar y/o comparlos más adelante
-
+####  Generación de los conjuntos de entrenamiento y de test
 
 ```{r message= FALSE, warning=FALSE}
-# Agrupación por Tipo de dolor de torax
-# [0: TA; 1: ATA ; 2: NAP ; 3: ASY]
-datos_final.angina_tipica <- datos_final[datos_final$TIPO_DOLOR_TORAX == 0,] 
-datos_final.angina_atipica <- datos_final[datos_final$TIPO_DOLOR_TORAX == 1,] 
-datos_final.no_angina <- datos_final[datos_final$TIPO_DOLOR_TORAX == 2,] 
-datos_final.asintomatico <- datos_final[datos_final$TIPO_DOLOR_TORAX == 3,]
-
-# Agrupación por pacientes con Hiperglucemia
-datos_final.sin_hiperglucemia <- datos_final[datos_final$NIVEL_DE_AZUCAR == 0,] 
-datos_final.con_hiperglucemia <- datos_final[datos_final$NIVEL_DE_AZUCAR == 1,]
-
-# Agrupación por pacientes con Angina inducida
-datos_final.sin_angina_inducida <- datos_final[datos_final$ANGINA_x_EJERCICIO == 0,] 
-datos_final.con_angina_inducida <- datos_final[datos_final$ANGINA_x_EJERCICIO == 1,]
-
-# Agrupación por ECG en reposo
-# ["Normal": 0, "ST": 1, "LVH": 2]
-
-datos_final.ecg_normal <- datos_final[datos_final$ECG_EN_REPOSO == 0,] 
-datos_final.ecg_st <- datos_final[datos_final$ECG_EN_REPOSO == 1,] 
-datos_final.ecg_lvh <- datos_final[datos_final$ECG_EN_REPOSO == 2,] 
-
+set.seed(123)
+ind <- sample(seq_len(nrow(datos_final)), size = round(.8 * dim(datos_final)[1]))
+training <- datos_final[ind, ]
+testing <- datos_final[-ind, ]
+prop.table(table(datos_final$E_CARDIACA))
 ```
 
+```{r message= FALSE, warning=FALSE}
+prop.table(table(training$E_CARDIACA))
+```
 
-## ¿La Presión arterial y su influencia en la enfermedad cardiaca?
+```{r message= FALSE, warning=FALSE}
+prop.table(table(testing$E_CARDIACA))
+```
+
+####  Estimación del modelo con el conjunto de entrenamiento e interpretación
+
+```{r message= FALSE, warning=FALSE}
+#Estimación del modelo
+mod1<- glm(E_CARDIACA~.,data=training[,-1], family=binomial)
+summary(mod1)
+```
+
+Existe colinealidad en todas la variables menos en: FREC_CARDIACA_MAX, ANGINA_x_EJERCICIO, OLDPEAK y PENDIENTE_ST
+
+```{r message= FALSE, warning=FALSE}
+training2 = training %>%
+select(-SEXO,-TIPO_DOLOR_TORAX, -PRESION_ARTERIAL, -COLESTEROL, -NIVEL_DE_AZUCAR, -ECG_EN_REPOSO)
+ModlgF<- glm(E_CARDIACA~.,data=training2, family=binomial)
+summary(ModlgF)
+```
+ 
+Se observa que todas las variables explicativas son significativas con un nivel de significación del 5%
+ 
+####  Predicciones con con casos del dataframe
+
+```{r message= FALSE, warning=FALSE}
+pred_1 <-predict (ModlgF, datos_final[1,], type = "response")
+cat("La probabilidad de que el primer usuario tenga una enfermedad cardiaca es del: ", pred_1*100)
+```
+
+```{r message= FALSE, warning=FALSE}
+pred_14 <-predict (ModlgF, datos_final[14,], type = "response")
+cat("La probabilidad de que el usuario 14 tenga una enfermedad cardiaca es del: ", pred_14*100)
+```
+
+Nos damos cuenta de que la probabilidad obtenida es muy acertada a si esos usuarios han tenido o no enfermedad cardiaca.
+
+## ¿Influye el sexo en tener una enfermedad cardiaca? (Contraste de hipótesis)
 
 Vamos a realizar una prueba estadistica para establecer un contraste de hipótesis sobre dos muestras (una con presión arterial alta y otra con presión arterial normal) y ver cual de ellas tiene mayor probabilidades de sufrir enfermedad cardiaca.
 
 
+### Hipótesis nula y la alternativa
 
-# Modelo Arbol de Decision
+H0 : Enf.Cardiaca_Mujer = Enf.Cardiaca_Hombre
+
+H1 : Enf.Cardiaca_Mujer != Enf.Cardiaca_Hombre
+
+### Preparación datos
+
+```{r message= FALSE, warning=FALSE}
+hombres <- datos_final[datos_final$SEXO==1,]
+mujeres <- datos_final[datos_final$SEXO==0,]
+
+var.test( as.numeric(hombres$E_CARDIACA),  as.numeric(mujeres$E_CARDIACA) )
+```
+
+El resultado del test muestra diferencias significativas entre varianzas (p=0.04968). Por tanto, aplicaremos un test de dos muestras independientes sobre la media con varianzas desconocidas diferentes.
+
+### Cálculo
+
+```{r message= FALSE, warning=FALSE}
+t.test( as.numeric(datos_final$SEXO), as.numeric(datos_final$E_CARDIACA), alternative="greater", conf.level=0.95)
+```
+
+###  Interpretación del test
+
+Existen diferencias significativas en tener enfermedad cardiaca entre los hombres y la mujeres (p=2.2e-16) por lo que se encuentra fuera de la zona de aceptación de la hipótesis nula, es decir, se acepta la hipótesis alternativa.
+
+
+## Modelo Arbol de Decision
 
 Podemos elaborar un arbol de decisión, para ver que variables tienen más influencia en la enfermedad cardiaca y establecer las reglas que definen dicha variable.
 
-
-## Test estadísticos de significancia
+### Test estadísticos de significancia
 
 Antes de proceder a la clasificación de los parámetros de pacientes con más probabilidades de sufrir enfermedad cardiaca, deberemos de hacer una selección previa de las caracteristicas a utilizar en nuestro modelo.
 
@@ -779,19 +817,6 @@ datos_final <- datos_final %>% mutate(FREC_CARDIACA_MAX = case_when(
 # Convertimos todas las variables a tipo factor
 datos_final[] <- lapply(datos_final, factor)
 
-```
-
-
-
-
-```{r message= FALSE, warning=FALSE}
-if(!require("DescTools"))
-{
-  install.packages("DeskTools")
-  # http://cran.us.r-project.org
-  library("DescTools")
-}
-
 # Analizamos las correlaciones de todos las caracteristicas de tipo categoricas con "E. CARDIACA"
 # Lo añadimos a una tabla
 
@@ -820,10 +845,10 @@ for (i in colnames(datos_final))
     plot(tabla_cruzada, col = c("black","#008000"), main = paste0(i, " vs. E. CARDIACA"))
   }
   
-  
   ind <- ind + 1
   
 }
+
 n_list <- list(nombre=as.character(datos_corr.nombre),
                CamerV=as.numeric(datos_corr.CramerV),
                Phi=as.numeric(datos_corr.Phi))
@@ -835,24 +860,21 @@ print(df_CramerV[order(df_CramerV$Phi, decreasing = TRUE),])
 
 Obtenemos las siguientes conclusiones del dataset:
 
-La Edad 
+  + En cuanto al Sexo, las Mujeres tienen menos probabilidad de sufrir una enfermedad cardiaca.
 
-En cuanto al Sexo, las Mujeres tienen menos probabilidad de sufrir una enfermedad cardiaca.
+  + En cuanto al tipo de dolor de Torax, los pacientes que sufren de dolor tipo Asintomáticos son los que pese a lo que se pdoría pensar tienen más probabilidades de sufrir enfermedad cardiaca.
 
-En cuanto al tipo de dolor de Torax, los pacientes que sufren de dolor tipo Asintomáticos son los que pese a lo que se pdoría pensar tienen más probabilidades de sufrir enfermedad cardiaca.
+  + COLESTEROL: Vemos que cuando el colesterol está en valores comprendidos entre 100-200 y 300-400 hay más posibilidades de enfermedad cardiaca que en valores entre 200-300, probablemente porque existan medicación para pacientes con dichas enfermedades que se enfocan en reducir el colesterol
 
-COLESTEROL: Vemos que cuando el colesterol está en valores comprendidos entre 100-200 y 300-400 hay más posibilidades de enfermedad cardiaca que en valores entre 200-300, probablemente porque existan medicación para pacientes con dichas enfermedades que se enfocan en reducir el colesterol
+  + FREC CARDIACA MAXIMA hay correlación negativa con la enfermedad cardiaca es decir contra menor frecuencia más posibilidades de sufrir enfermedad cardiaca.
 
-FREC CARDIACA MAXIMA hay correlación negativa con la enfermedad cardiaca es decir contra menor frecuencia más posibilidades de sufrir enfermedad cardiaca.
+  + En cuanto al ECG en Reposo, tenemos que hay más probabilidades de Enfermedad Cardiaca cuando esta variable toma el valor 1 (ST -> Tiene anormalidad de la onda ST-T (inversiones de la onda T y/o elevación o depresión del ST > 0.05 mV))
 
-En cuanto al ECG en Reposo, tenemos que hay más probabilidades de Enfermedad Cardiaca cuando esta variable toma el valor 1 (ST -> Tiene anormalidad de la onda ST-T (inversiones de la onda T y/o elevación o depresión del ST > 0.05 mV))
+  + Angina por Ejercicio -> Cuando esta toma el valor 1 (es decir hay angina inducida por ejercicio) hay más probabilidades de Enfermedad Cardiaca.
 
-Angina por Ejercicio -> Cuando esta toma el valor 1 (es decir hay angina inducida por ejercicio) hay más probabilidades de Enfermedad Cardiaca.
+  + En cuanto a la variable Pendiente ST, si esta indica valor 1 y 2, hay una alta probabilidad de sufrir enfermedad cardíaca. 
 
-
-En cuanto a la variable Pendiente ST, si esta indica valor 1 y 2, hay una alta probabilidad de sufrir enfermedad cardíaca. 
-
-## Prueba de la C de Crámer
+### Prueba de la C de Crámer
 
 Valores de la V de Cramér ([https://en.wikipedia.org/wiki/Cramér%27s_V](https://en.wikipedia.org/wiki/Cramér%27s_V){.uri}) y Phi (<https://en.wikipedia.org/wiki/Phi_coefficient>) entre 0.1 y 0.3 nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se puede considerar una asociación media. Finalmente, si los valores fueran superiores a 0.5 la asociación estadística entre las variables sería alta.
 
@@ -860,16 +882,13 @@ Podemos observar dentro del dataframe: df_cramerV que las variables PENDIENTES S
 
 Usaremos dichas variables para la obtención del Arbol de decisión, se podria utilizar un número mayor de variables, pero podría hacerse mucho complejo (con muchas reglas de decisión)
 
-
 ```{r message= FALSE, warning=FALSE}
 # caracteristicas con significancia estadistica:
 nombres_columnas <- df_CramerV$nombre[df_CramerV$Phi > 0.5]
 nombres_columnas
 ```
 
-
-
-## Aplicación del modelo Decision Tree (Arbol de decisión)
+### Aplicación del modelo Decision Tree (Arbol de decisión)
 
 Aplicamos el modelo Decision Tree sobre las 3 caracteristicas que hemos obtenido en el test de significacia estadistica de Cramer V.
 
@@ -890,9 +909,6 @@ for(i in colnames(datos_final))
 
 ```
 
-
-
-
 Separamos conjunto de test y de entrenamiento con una proporción 33% Test 66% Training.
 
 ```{r message= FALSE, warning=FALSE}
@@ -907,7 +923,6 @@ train_y <- y[indexes]
 test_X <- X[-indexes,]
 test_y <- y[-indexes]
 ```
-
 
 Comprobamos que las variables train_y y test_y estén balanceadas reflejo de la variable y.
 
@@ -938,15 +953,14 @@ summary(tree)
 
 El modelo decision tree explica con dos reglas la probabilidad de sufrir una enfermedad cardiaca en función de las variables: TIPO DOLOR TORAX, COLESTEROL  FREC CARDÍACA MÁX,  OLDPEAK,  PENDIENTE ST.
 
-Regla: 1 -> TIPO DE DOLOR DE TORAX con valores entre {1, 2} y PENDIENTE_ST <- 0 No tienen probabilidad de sufrir enfermadad cardiaca.
-Regla: 2 -> OLDPEAK entre {-1.1 y 3} con PENDIENTE_ST <- 0 No tienen probabilidad de sufrir Enfremedad Cardiaca.
-Regla: 3 -> TIPO_DOLOR_TORAX <- 3 y OLDPEAK entre {-1, 2.8} Tienen probabilidad de padecer enfermedad cardiaca.
-Regla 4 -> entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
+  + Regla: 1 -> TIPO DE DOLOR DE TORAX con valores entre {1, 2} y PENDIENTE_ST <- 0 No tienen probabilidad de sufrir enfermadad cardiaca.
+  + Regla: 2 -> OLDPEAK entre {-1.1 y 3} con PENDIENTE_ST <- 0 No tienen probabilidad de sufrir Enfremedad Cardiaca.
+  + Regla: 3 -> TIPO_DOLOR_TORAX <- 3 y OLDPEAK entre {-1, 2.8} Tienen probabilidad de padecer enfermedad cardiaca.
+  + Regla 4 -> entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
 
 El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa de error de 14.2 % es decir es capaz de explicar el 82.6 % de los casos.
 
 De manera más gráfica:
-
 
 ```{r message= FALSE, warning=FALSE}
 model <- C50::C5.0(train_X, train_y)
@@ -955,9 +969,7 @@ plot(model)
 
 Como podemos observar de manara visual el modelo basado en arbol de decisión, solo tiene en cuenta la variable "PENDIENTE_ST", para decidir entre si un paciente es propenso a sufrir una enfermedad cardiaca o no.
 
-
-## Evaluación del modelo arbol de decision
-
+### Evaluación del modelo arbol de decision
 
 Una vez tenemos el modelo, podemos comprobar su calidad prediciendo la clase para los datos de prueba que nos hemos reservado al principio.
 
@@ -965,7 +977,6 @@ Una vez tenemos el modelo, podemos comprobar su calidad prediciendo la clase par
 predicted_model <- predict( tree, test_X, type="class" )
 print(sprintf("La precisión del árbol es: %.4f %%",100*sum(predicted_model == test_y) / length(predicted_model)))
 ```
-
 
 Cuando hay pocas clases, la calidad de la predicción se puede analizar mediante una matriz de confusión que identifica los tipos de errores cometidos.
 
@@ -982,24 +993,9 @@ Falsos Positivos (E. CARDIACA): 12
 
 El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
 
-# Random Forest
-
+## Random Forest
 
 Nos interesa saber para las predicciones que variable son las que tienen más influencia. Así, probaremos con un enfoque algorítmico de Random Forest y obtendremos métricas de interpretabilidad con la librería IML (<https://cran.r-project.org/web/packages/iml/iml.pdf>). As:
-
-```{r}
-if(!require(randomForest)){
-  install.packages('randomForest',repos='http://cran.us.r-project.org')
-  library(randomForest)
-}
-if(!require(iml)){
-  install.packages('iml', repos='http://cran.us.r-project.org')
-  library(iml)
-}
-```
-
-
-
 
 ```{r message= FALSE, warning=FALSE}
 train_X
@@ -1025,14 +1021,5 @@ plot(imp)
 imp$results
 ```
 
+# Conclusiones
 
-
-
-```{r message= FALSE, warning=FALSE}
-
-```
-
-
-```{r message= FALSE, warning=FALSE}
-
-```
