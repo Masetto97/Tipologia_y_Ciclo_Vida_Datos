@@ -749,102 +749,11 @@ Antes de proceder a la clasificación de los parámetros de pacientes con más p
 
 Para ello nos vamos a ayudar de una matriz de correlación con el objetivo de confirmar las conclusiones en cuanto a correlación de variables obtenidas en el apartado anterior.
 
-```{r message= FALSE, warning=FALSE}
-if(!require("DescTools"))
-{
-  install.packages("DeskTools")
-  # http://cran.us.r-project.org
-  library("DescTools")
-}
-
-# Analizamos las correlaciones de todos las caracteristicas de tipo categoricas con "E. CARDIACA"
-# Lo añadimos a una tabla
-
-datos_corr.Phi <- list()
-datos_corr.CramerV <- list()
-datos_corr.nombre <- list()
-
-ind <- 1
-for (i in colnames(datos_final))
-{
-  
-  if(i != "E_CARDIACA")
-  {
-    tabla_cruzada <- table(as.numeric(unlist(datos_final[i])), datos_final$E_CARDIACA)
-    datos_corr.CramerV <- append(datos_corr.CramerV, CramerV(tabla_cruzada))
-    datos_corr.Phi <- append(datos_corr.Phi, Phi(tabla_cruzada))
-    datos_corr.nombre <- append(datos_corr.nombre, i)
-  }
-  
-  vector_tipos[5] <- 'character'
-  if (vector_tipos[ind] != 'numeric')
-  {
-    # Solo pintamos las variables categoricas ya que con las de tipo numerico no se aprecian los valores
-    plot(tabla_cruzada, col = c("black","#008000"), main = paste0(i, " vs. E. CARDIACA"))
-  }
-  
-  
-  ind <- ind + 1
-  
-}
-n_list <- list(nombre=as.character(datos_corr.nombre),
-               CamerV=as.numeric(datos_corr.CramerV),
-               Phi=as.numeric(datos_corr.Phi))
-
-df_CramerV <- (as.data.frame(do.call(cbind, n_list)))
-print(df_CramerV[order(df_CramerV$Phi, decreasing = TRUE),])
-
-```
-
-Obtenemos las siguientes conclusiones del dataset:
-
-En cuanto al Sexo, las Mujeres tienen menos probabilidad de sufrir una enfermedad cardiaca.
-
-En cuanto al tipo de dolor de Torax, los pacientes que sufren de dolor tipo Asintomáticos son los que pese a lo que se pdoría pensar tienen más probabilidades de sufrir enfermedad cardiaca.
-
-
-En cuanto a la variable ECG en Reposo está muy equilibrada, pero tienen una ligera mayor probabilidad de sufrir enfermedad cardiaca los de tipo 1 ()
-
-Valores de la V de Cramér ([https://en.wikipedia.org/wiki/Cramér%27s_V](https://en.wikipedia.org/wiki/Cramér%27s_V){.uri}) y Phi (<https://en.wikipedia.org/wiki/Phi_coefficient>) entre 0.1 y 0.3 nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se puede considerar una asociación media. Finalmente, si los valores fueran superiores a 0.5 la asociación estadística entre las variables sería alta.
-
-Podemos observar dentro del dataframe: df_cramerV que las variables PENDIENTES ST, COLESTEROL, TIPO DOLOR TORAX, FREC CARDIACA MAX y OLDPEAK tienen correlación alta con E. CARDIACA.
-
-Usaremos dichas variables para la obtención del Arbol de decisión, se podria utilizar un número mayor de variables, pero podría hacerse mucho complejo (con muchas reglas de decisión)
-
-```{r message= FALSE, warning=FALSE}
-# caracteristicas con significancia estadistica:
-nombres_columnas <- df_CramerV$nombre[df_CramerV$Phi > 0.5]
-nombres_columnas
-```
-
-
-
-## Aplicación del modelo Decision Tree (Arbol de decisión)
-
-Aplicamos el modelo Decision Tree sobre las 3 caracteristicas que hemos obtenido en el test de significacia estadistica de Cramer V.
+Para aplicar los modelos de arbol de decision debemos de discretizar las variables COLESTEROL y FREC CARDIACA MAXIMA.
 
 ```{r message= FALSE, warning=FALSE}
 # Backup dataset inicial:
 datos_final_orig <- datos_final
-
-
-# Reducimos el datset
-for(i in colnames(datos_final))
-{
-  if(!i %in% nombres_columnas)
-  {
-    if (!i == "E_CARDIACA")
-    {
-      datos_final$i <- NULL
-    }
-  }
-}
-
-```
-
-Para aplicar los modelos de arbol de decision debemos de discretizar las variables COLESTEROL y FREC CARDIACA MAXIMA.
-
-```{r message= FALSE, warning=FALSE}
 
 datos_final <- datos_final %>% mutate(COLESTEROL = case_when(
   COLESTEROL < 100 ~ 0,
@@ -866,12 +775,121 @@ datos_final <- datos_final %>% mutate(FREC_CARDIACA_MAX = case_when(
   FREC_CARDIACA_MAX >= 200 ~ 6,
   ))
 
-datos_final
 
 # Convertimos todas las variables a tipo factor
 datos_final[] <- lapply(datos_final, factor)
 
 ```
+
+
+
+
+```{r message= FALSE, warning=FALSE}
+if(!require("DescTools"))
+{
+  install.packages("DeskTools")
+  # http://cran.us.r-project.org
+  library("DescTools")
+}
+
+# Analizamos las correlaciones de todos las caracteristicas de tipo categoricas con "E. CARDIACA"
+# Lo añadimos a una tabla
+
+datos_corr.Phi <- list()
+datos_corr.CramerV <- list()
+datos_corr.nombre <- list()
+
+vector_tipos[8] <- "character"
+vector_tipos[5] <- "character"
+
+ind <- 1
+for (i in colnames(datos_final))
+{
+  
+  if(i != "E_CARDIACA")
+  {
+    tabla_cruzada <- table(as.numeric(unlist(datos_final[i])), datos_final$E_CARDIACA)
+    datos_corr.CramerV <- append(datos_corr.CramerV, CramerV(tabla_cruzada))
+    datos_corr.Phi <- append(datos_corr.Phi, Phi(tabla_cruzada))
+    datos_corr.nombre <- append(datos_corr.nombre, i)
+  }
+  
+  if (vector_tipos[ind] != 'numeric')
+  {
+    # Solo pintamos las variables categoricas ya que con las de tipo numerico no se aprecian los valores
+    plot(tabla_cruzada, col = c("black","#008000"), main = paste0(i, " vs. E. CARDIACA"))
+  }
+  
+  
+  ind <- ind + 1
+  
+}
+n_list <- list(nombre=as.character(datos_corr.nombre),
+               CamerV=as.numeric(datos_corr.CramerV),
+               Phi=as.numeric(datos_corr.Phi))
+
+df_CramerV <- (as.data.frame(do.call(cbind, n_list)))
+print(df_CramerV[order(df_CramerV$Phi, decreasing = TRUE),])
+
+```
+
+Obtenemos las siguientes conclusiones del dataset:
+
+La Edad 
+
+En cuanto al Sexo, las Mujeres tienen menos probabilidad de sufrir una enfermedad cardiaca.
+
+En cuanto al tipo de dolor de Torax, los pacientes que sufren de dolor tipo Asintomáticos son los que pese a lo que se pdoría pensar tienen más probabilidades de sufrir enfermedad cardiaca.
+
+COLESTEROL: Vemos que cuando el colesterol está en valores comprendidos entre 100-200 y 300-400 hay más posibilidades de enfermedad cardiaca que en valores entre 200-300, probablemente porque existan medicación para pacientes con dichas enfermedades que se enfocan en reducir el colesterol
+
+FREC CARDIACA MAXIMA hay correlación negativa con la enfermedad cardiaca es decir contra menor frecuencia más posibilidades de sufrir enfermedad cardiaca.
+
+En cuanto al ECG en Reposo, tenemos que hay más probabilidades de Enfermedad Cardiaca cuando esta variable toma el valor 1 (ST -> Tiene anormalidad de la onda ST-T (inversiones de la onda T y/o elevación o depresión del ST > 0.05 mV))
+
+Angina por Ejercicio -> Cuando esta toma el valor 1 (es decir hay angina inducida por ejercicio) hay más probabilidades de Enfermedad Cardiaca.
+
+
+En cuanto a la variable Pendiente ST, si esta indica valor 1 y 2, hay una alta probabilidad de sufrir enfermedad cardíaca. 
+
+## Prueba de la C de Crámer
+
+Valores de la V de Cramér ([https://en.wikipedia.org/wiki/Cramér%27s_V](https://en.wikipedia.org/wiki/Cramér%27s_V){.uri}) y Phi (<https://en.wikipedia.org/wiki/Phi_coefficient>) entre 0.1 y 0.3 nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se puede considerar una asociación media. Finalmente, si los valores fueran superiores a 0.5 la asociación estadística entre las variables sería alta.
+
+Podemos observar dentro del dataframe: df_cramerV que las variables PENDIENTES ST, COLESTEROL, TIPO DOLOR TORAX, FREC CARDIACA MAX y OLDPEAK tienen correlación alta con E. CARDIACA.
+
+Usaremos dichas variables para la obtención del Arbol de decisión, se podria utilizar un número mayor de variables, pero podría hacerse mucho complejo (con muchas reglas de decisión)
+
+
+```{r message= FALSE, warning=FALSE}
+# caracteristicas con significancia estadistica:
+nombres_columnas <- df_CramerV$nombre[df_CramerV$Phi > 0.5]
+nombres_columnas
+```
+
+
+
+## Aplicación del modelo Decision Tree (Arbol de decisión)
+
+Aplicamos el modelo Decision Tree sobre las 3 caracteristicas que hemos obtenido en el test de significacia estadistica de Cramer V.
+
+```{r message= FALSE, warning=FALSE}
+
+
+# Reducimos el datset
+for(i in colnames(datos_final))
+{
+  if(!i %in% nombres_columnas)
+  {
+    if (!i == "E_CARDIACA")
+    {
+      datos_final$i <- NULL
+    }
+  }
+}
+
+```
+
 
 
 
@@ -920,10 +938,12 @@ summary(tree)
 
 El modelo decision tree explica con dos reglas la probabilidad de sufrir una enfermedad cardiaca en función de las variables: TIPO DOLOR TORAX, COLESTEROL  FREC CARDÍACA MÁX,  OLDPEAK,  PENDIENTE ST.
 
-Regla: 1 -> PENDIENTE ST = 0 -> Tendrán menos probabilidades de sufrir E. CARDIACA
-Regla: 2 -> PENDIENTE ST in {1, 2} -> Tendrán más probabilidades de sufrir E. CARDIACA
+Regla: 1 -> TIPO DE DOLOR DE TORAX con valores entre {1, 2} y PENDIENTE_ST <- 0 No tienen probabilidad de sufrir enfermadad cardiaca.
+Regla: 2 -> OLDPEAK entre {-1.1 y 3} con PENDIENTE_ST <- 0 No tienen probabilidad de sufrir Enfremedad Cardiaca.
+Regla: 3 -> TIPO_DOLOR_TORAX <- 3 y OLDPEAK entre {-1, 2.8} Tienen probabilidad de padecer enfermedad cardiaca.
+Regla 4 -> entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
 
-El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa de error de 18.4 % es decir es capaz de explicar el 82.6 % de los casos.
+El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa de error de 14.2 % es decir es capaz de explicar el 82.6 % de los casos.
 
 De manera más gráfica:
 
@@ -955,10 +975,10 @@ mat_conf
 ```
 De la matriz de confusión observamos los siguientes valores:
 
-Verdaderos Negativos (E. CARDIACA): 94
-Verdaderos Positivos (E. CARDIACA): 129
-Falsos Negativos (E. CARDIACA): 25
-Falsos Positivos (E. CARDIACA): 23
+Verdaderos Negativos (E. CARDIACA): 85
+Verdaderos Positivos (E. CARDIACA): 142
+Falsos Negativos (E. CARDIACA): 32
+Falsos Positivos (E. CARDIACA): 12
 
 El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
 
@@ -984,7 +1004,7 @@ if(!require(iml)){
 ```{r message= FALSE, warning=FALSE}
 train_X
 colnames(train_X)
-train.data <- as.data.frame(cbind(train_X[c(1,3,5,4)] ,train_y))
+train.data <- as.data.frame(cbind(train_X ,train_y))
 colnames(train.data)[5] <- "E_CARDIACA"
 rf <-  randomForest(E_CARDIACA ~ ., data = train.data, ntree = 50)
 
