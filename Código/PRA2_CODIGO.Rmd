@@ -3,6 +3,7 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
+  word_document: default
   pdf_document:
     highlight: zenburn
     toc: yes
@@ -14,7 +15,6 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
-  word_document: default
 ---
 
 <style>
@@ -37,8 +37,13 @@ if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
 if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
 if (!require('DescTools')) install.packages("DescTools"); library(DescTools)
 if (!require('regclass')) install.packages("regclass"); library(regclass)
-if(!require(randomForest)) install.packages('randomForest',repos='http://cran.us.r-project.org'); library(randomForest)
-if(!require(iml)) install.packages('iml', repos='http://cran.us.r-project.org'); library(iml)
+if(!require('randomForest')) install.packages('randomForest',repos='http://cran.us.r-project.org'); library(randomForest)
+if(!require('iml')) install.packages('iml', repos='http://cran.us.r-project.org'); library(iml)
+if(!require("tidyverse"))install.packages("DeskTools");library("tidyverse")
+if(!require("rpart")) install.packages("rpart");library("rpart")
+if(!require("rpart.plot")) install.packages("rpart.plot"); library("rpart.plot")
+if(!require("caret"))install.packages("caret");library("caret")
+if(!require('patchwork'))install.packages('patchwork',repos='http://cran.us.r-project.org');library(patchwork)
 ```
 
 # Dataset
@@ -951,19 +956,12 @@ tree <- C50::C5.0(train_X, train_y, rules=TRUE )
 summary(tree)
 ```
 
-El modelo decision tree explica con dos reglas la probabilidad de sufrir una enfermedad cardiaca en función de las variables: TIPO DOLOR TORAX, COLESTEROL  FREC CARDÍACA MÁX,  OLDPEAK,  PENDIENTE ST.
+El modelo decision tree explica con dos reglas la probabilidad de sufrir una enfermedad cardiaca en función de las variables: TIPO DOLOR TORAX, COLESTEROL  FREC CARDÍACA MÁX,  OLDPEAK,  PENDIENTE ST:
 
-<<<<<<< HEAD
-Regla: 1 -> TIPO DE DOLOR DE TORAX con valores entre {1, 2} y PENDIENTE_ST <- 0 No tienen probabilidad de sufrir enfermadad cardiaca.
-Regla: 2 -> OLDPEAK entre {-1.1 y 3} con PENDIENTE_ST <- 0 No tienen probabilidad de sufrir Enfremedad Cardiaca.
-Regla: 3 -> TIPO_DOLOR_TORAX <- 3 y OLDPEAK entre {-1, 2.8} Tienen probabilidad de padecer enfermedad cardiaca.
-Regla: 4 -> entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
-=======
   + Regla: 1 -> TIPO DE DOLOR DE TORAX con valores entre {1, 2} y PENDIENTE_ST <- 0 No tienen probabilidad de sufrir enfermadad cardiaca.
   + Regla: 2 -> OLDPEAK entre {-1.1 y 3} con PENDIENTE_ST <- 0 No tienen probabilidad de sufrir Enfremedad Cardiaca.
   + Regla: 3 -> TIPO_DOLOR_TORAX <- 3 y OLDPEAK entre {-1, 2.8} Tienen probabilidad de padecer enfermedad cardiaca.
   + Regla 4 -> entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
->>>>>>> 5095e48bfda7a6912a6cdd525e7fc411b79210ee
 
 El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa de error de 14.2 % es decir es capaz de explicar el 82.6 % de los casos.
 
@@ -993,10 +991,10 @@ mat_conf
 ```
 De la matriz de confusión observamos los siguientes valores:
 
-Verdaderos Negativos (E. CARDIACA): 85
-Verdaderos Positivos (E. CARDIACA): 142
-Falsos Negativos (E. CARDIACA): 32
-Falsos Positivos (E. CARDIACA): 12
+  + Verdaderos Negativos (E. CARDIACA): 85
+  + Verdaderos Positivos (E. CARDIACA): 142
+  + Falsos Negativos (E. CARDIACA): 32
+  + Falsos Positivos (E. CARDIACA): 12
 
 El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
 
@@ -1004,23 +1002,6 @@ El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no q
 
 Nos interesa saber para las predicciones que variable son las que tienen más influencia. Así, probaremos con un enfoque algorítmico de Random Forest y obtendremos métricas de interpretabilidad con la librería IML (<https://cran.r-project.org/web/packages/iml/iml.pdf>). As:
 
-<<<<<<< HEAD
-```{r message= FALSE, warning=FALSE}
-if(!require(randomForest)){
-  install.packages('randomForest',repos='http://cran.us.r-project.org')
-  library(randomForest)
-}
-if(!require(iml)){
-  install.packages('iml', repos='http://cran.us.r-project.org')
-  library(iml)
-}
-```
-
-
-
-
-=======
->>>>>>> 5095e48bfda7a6912a6cdd525e7fc411b79210ee
 ```{r message= FALSE, warning=FALSE}
 colnames(train_X)
 train.data <- as.data.frame(cbind(train_X ,train_y))
@@ -1044,7 +1025,6 @@ plot(imp)
 imp$results
 ```
 
-<<<<<<< HEAD
 Precisión del modelo Random Forest
 ```{r message= FALSE, warning=FALSE}
 # Extraido de la matriz de confusion
@@ -1056,12 +1036,6 @@ print(paste0("La precsión del modelo randomforest es: ",
 Podemos observar el grado de importancia de las variables:
 
 ```{r message= FALSE, warning=FALSE}
-if(!require(patchwork)){
-    install.packages('patchwork',repos='http://cran.us.r-project.org')
-    library(patchwork)
-}
-
-
 X <- train.data[which(names(train.data) != "E_CARDIACA")]
 predictor_cr <- Predictor$new(rf, data = X, y = train.data$E_CARDIACA) 
 
@@ -1069,6 +1043,7 @@ predictor_cr <- Predictor$new(rf, data = X, y = train.data$E_CARDIACA)
 effs <- FeatureEffects$new(predictor_cr)
 plot(effs)
 ```
+
 Parece ser que para el modelo de clasificación Random Forest la variable que toma mayor importancia es OLDPEAK.
 
 Podemos verlo de manera textual:
@@ -1080,35 +1055,6 @@ rf$importance
 Otros modelos basados en arboles de decision:
 
 ```{r message= FALSE, warning=FALSE}
-# Instalamos los paquetes
-if(!require("tidyverse"))
-{
-  install.packages("DeskTools")
-  # http://cran.us.r-project.org
-  library("tidyverse")
-}
-if(!require("rpart"))
-{
-  install.packages("rpart")
-  # http://cran.us.r-project.org
-  library("rpart")
-}
-if(!require("rpart.plot"))
-{
-  install.packages("rpart.plot")
-  # http://cran.us.r-project.org
-  library("rpart.plot")
-}
-if(!require("caret"))
-{
-  install.packages("caret")
-  # http://cran.us.r-project.org
-  library("caret")
-}
-```
-
-
-```{r message= FALSE, warning=FALSE}
 tree_2 <- rpart(formula = train_y ~ ., data = train_X)
 tree_2
 ```
@@ -1118,6 +1064,7 @@ Visualizamos el modelo:
 ```{r message= FALSE, warning=FALSE}
 rpart.plot(tree_2)
 ```
+
 El modelo inicialmente se fija en la variable PENDIENTE_ST tanto como si es 0 como si es 1 se fija en TIPO_DOLOR_TORX (en cualquier caso se fija en los valores 1, 2 de dicha variable), después en funcion del rango de valores de OLDPEAK.
 
 La probabilidades de sifrir enfermedad cardiaca son menores con PENDIENTE_ST=0, tanto en el caso en el que TIPO_DOLOR_TORAX esté en rango de valores de {1,2} al igual de que TIPO_DOLOR_TORAX no este en dicho rango, si se cumple que OLDPEAK esté en el rango {0-2.3}. En el otro caso habrá probabilidad alta de enfermedad cardiaca.
@@ -1133,7 +1080,6 @@ Para el caso de PENDIENTE_ST distinto a 0, y TIPO_DOLOR_TORAX en rango {1,2} si 
 ```{r message= FALSE, warning=FALSE}
 
 ```
-=======
+
 # Conclusiones
->>>>>>> 5095e48bfda7a6912a6cdd525e7fc411b79210ee
 

@@ -1,0 +1,2453 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{48,48,48}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.87,0.87,0.75}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.86,0.86,0.80}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.76,0.75,0.62}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.75,0.75,0.82}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.94,0.94,0.82}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{\textbf{#1}}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={¿Cómo realizar la limpieza y análisis de datos?},
+  pdfauthor={Autores: Eduardo Mora González y Diego Sánchez De La Fuente},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{¿Cómo realizar la limpieza y análisis de datos?}
+\author{Autores: Eduardo Mora González y Diego Sánchez De La Fuente}
+\date{Enero 2023}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+Instalamos y cargamos las librerías necesarias.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}readr\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}readr\textquotesingle{}}\NormalTok{); }\FunctionTok{library}\NormalTok{(}\StringTok{\textquotesingle{}readr\textquotesingle{}}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}ggplot2\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}ggplot2\textquotesingle{}}\NormalTok{); }\FunctionTok{library}\NormalTok{(}\StringTok{\textquotesingle{}ggplot2\textquotesingle{}}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}DataExplorer\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}DataExplorer\textquotesingle{}}\NormalTok{); }\FunctionTok{library}\NormalTok{(}\StringTok{\textquotesingle{}DataExplorer\textquotesingle{}}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}corrplot\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"corrplot"}\NormalTok{); }\FunctionTok{library}\NormalTok{(corrplot)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}factoextra\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"factoextra"}\NormalTok{); }\FunctionTok{library}\NormalTok{(factoextra)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}dplyr\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{); }\FunctionTok{library}\NormalTok{(dplyr)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}DescTools\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"DescTools"}\NormalTok{); }\FunctionTok{library}\NormalTok{(DescTools)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}regclass\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"regclass"}\NormalTok{); }\FunctionTok{library}\NormalTok{(regclass)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}randomForest\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}randomForest\textquotesingle{}}\NormalTok{,}\AttributeTok{repos=}\StringTok{\textquotesingle{}http://cran.us.r{-}project.org\textquotesingle{}}\NormalTok{); }\FunctionTok{library}\NormalTok{(randomForest)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}iml\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}iml\textquotesingle{}}\NormalTok{, }\AttributeTok{repos=}\StringTok{\textquotesingle{}http://cran.us.r{-}project.org\textquotesingle{}}\NormalTok{); }\FunctionTok{library}\NormalTok{(iml)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{))}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"DeskTools"}\NormalTok{);}\FunctionTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"rpart"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"rpart"}\NormalTok{);}\FunctionTok{library}\NormalTok{(}\StringTok{"rpart"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"rpart.plot"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"rpart.plot"}\NormalTok{); }\FunctionTok{library}\NormalTok{(}\StringTok{"rpart.plot"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"caret"}\NormalTok{))}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"caret"}\NormalTok{);}\FunctionTok{library}\NormalTok{(}\StringTok{"caret"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}patchwork\textquotesingle{}}\NormalTok{))}\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}patchwork\textquotesingle{}}\NormalTok{,}\AttributeTok{repos=}\StringTok{\textquotesingle{}http://cran.us.r{-}project.org\textquotesingle{}}\NormalTok{);}\FunctionTok{library}\NormalTok{(patchwork)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dataset}{%
+\section{Dataset}\label{dataset}}
+
+\hypertarget{motivaciuxf3n}{%
+\subsection{Motivación}\label{motivaciuxf3n}}
+
+En Europa, el paro cardiaco es una de las primeras causas de mortalidad
+y en España fallecen en torno a 100 personas al día por este suceso
+{[}\url{https://fundaciondelcorazon.com/prensa/notas-de-prensa/2900-solo-el-30-de-espanoles-sabe-realizar-la-reanimacion-cardio-pulmonar-rcp-.html}{]},
+esto representa aproximadamente el 31\% de las muertes a nivel mundial.
+
+\hypertarget{descripciuxf3n-del-dataset}{%
+\subsection{Descripción del dataset}\label{descripciuxf3n-del-dataset}}
+
+El conjunto de datos ha sido extraido de Kaggle:
+\url{https://www.kaggle.com/datasets/rashikrahmanpritom/heart-attack-analysis-prediction-dataset},
+está compuesto de 12 variables y 918 registros. Que correlacionan una
+serie de caracteristicas recogidas de varios pacientes con la
+posibilidad de sufrir un ataque al corazón.
+
+Explicación de cada variable:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Age}: Edad del paciente
+\item
+  \textbf{Sex}: Sexo del paciente
+\item
+  \textbf{ChestPainType}: Tipo de dolor torácico: Angina Típica Angina
+  Atípica Dolor no debido a una angina Asintomático
+\item
+  \textbf{RestingBP}: Presión arterial en reposo (en mm Hg)
+\item
+  \textbf{Cholesterol}: Colesterol en sangre (mg/dL)
+\item
+  \textbf{FastingBS}: Tiene Glucemia en ayunas \textgreater{} 120 mg/dl
+  -\textgreater{} (1: True, 0: False)
+\item
+  \textbf{RestingECG}: Resultados electrocardiográficos en reposo Value
+  0: normal Value 1: Tiene anormalidad de la onda ST-T (inversiones de
+  la onda T y/o elevación o depresión del ST \textgreater{} 0.05 mV)
+  Value 2 Muestra hipertrofia ventricular izquierda probable o
+  definitiva según los criterios de Estes
+\item
+  \textbf{MaxHR}: Frecuencia cardíaca máxima alcanzada
+\item
+  \textbf{ExerciseAngina}: Angina inducida por el ejercicio (1 = sí, 0 =
+  no)
+\item
+  \textbf{Oldpeak}: Descenso del segmento ST inducido por el ejercicio
+  en relación con el reposo (`Segmento ST' se relaciona con las
+  posiciones en el gráfico de Electro cardiograma).
+\item
+  \textbf{ST\_Slope}: La pendiente del segmento ST de ejercicio máximo:
+  0: pendiente descendente 1: plano 2: pendiente ascendente
+\item
+  \textbf{HeartDisease}: Variable Objetivo: 0= menos posibilidades de
+  infarto 1= más posibilidades de infarto.
+\end{itemize}
+
+\hypertarget{carga-del-fichero-de-datos}{%
+\subsection{Carga del fichero de
+datos}\label{carga-del-fichero-de-datos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./fichero\_original\_datos.csv"}\NormalTok{)}
+\FunctionTok{attach}\NormalTok{(datos)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{tipos-de-datos}{%
+\subsection{Tipos de datos}\label{tipos-de-datos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Cargamos en un vector los tipos de variable del datase}
+\NormalTok{vector\_tipos }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(datos, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{class}\NormalTok{(x))}
+\FunctionTok{print}\NormalTok{(vector\_tipos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Age            Sex  ChestPainType      RestingBP    Cholesterol 
+##      "numeric"    "character"    "character"      "numeric"      "numeric" 
+##      FastingBS     RestingECG          MaxHR ExerciseAngina        Oldpeak 
+##      "numeric"    "character"      "numeric"    "character"      "numeric" 
+##       ST_Slope   HeartDisease 
+##    "character"      "numeric"
+\end{verbatim}
+
+Ahora vamos a ver las estructura del juego de datos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(datos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## spc_tbl_ [918 x 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ Age           : num [1:918] 40 49 37 48 54 39 45 54 37 48 ...
+##  $ Sex           : chr [1:918] "M" "F" "M" "F" ...
+##  $ ChestPainType : chr [1:918] "ATA" "NAP" "ATA" "ASY" ...
+##  $ RestingBP     : num [1:918] 140 160 130 138 150 120 130 110 140 120 ...
+##  $ Cholesterol   : num [1:918] 289 180 283 214 195 339 237 208 207 284 ...
+##  $ FastingBS     : num [1:918] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ RestingECG    : chr [1:918] "Normal" "Normal" "ST" "Normal" ...
+##  $ MaxHR         : num [1:918] 172 156 98 108 122 170 170 142 130 120 ...
+##  $ ExerciseAngina: chr [1:918] "N" "N" "N" "Y" ...
+##  $ Oldpeak       : num [1:918] 0 1 0 1.5 0 0 0 0 1.5 0 ...
+##  $ ST_Slope      : chr [1:918] "Up" "Flat" "Up" "Flat" ...
+##  $ HeartDisease  : num [1:918] 0 1 0 1 0 0 0 0 1 0 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   Age = col_double(),
+##   ..   Sex = col_character(),
+##   ..   ChestPainType = col_character(),
+##   ..   RestingBP = col_double(),
+##   ..   Cholesterol = col_double(),
+##   ..   FastingBS = col_double(),
+##   ..   RestingECG = col_character(),
+##   ..   MaxHR = col_double(),
+##   ..   ExerciseAngina = col_character(),
+##   ..   Oldpeak = col_double(),
+##   ..   ST_Slope = col_character(),
+##   ..   HeartDisease = col_double()
+##   .. )
+##  - attr(*, "problems")=<externalptr>
+\end{verbatim}
+
+Vamos ahora a sacar estadísticas básicas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(datos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Age            Sex            ChestPainType        RestingBP    
+##  Min.   :28.00   Length:918         Length:918         Min.   :  0.0  
+##  1st Qu.:47.00   Class :character   Class :character   1st Qu.:120.0  
+##  Median :54.00   Mode  :character   Mode  :character   Median :130.0  
+##  Mean   :53.51                                         Mean   :132.4  
+##  3rd Qu.:60.00                                         3rd Qu.:140.0  
+##  Max.   :77.00                                         Max.   :200.0  
+##   Cholesterol      FastingBS       RestingECG            MaxHR      
+##  Min.   :  0.0   Min.   :0.0000   Length:918         Min.   : 60.0  
+##  1st Qu.:173.2   1st Qu.:0.0000   Class :character   1st Qu.:120.0  
+##  Median :223.0   Median :0.0000   Mode  :character   Median :138.0  
+##  Mean   :198.8   Mean   :0.2331                      Mean   :136.8  
+##  3rd Qu.:267.0   3rd Qu.:0.0000                      3rd Qu.:156.0  
+##  Max.   :603.0   Max.   :1.0000                      Max.   :202.0  
+##  ExerciseAngina        Oldpeak          ST_Slope          HeartDisease   
+##  Length:918         Min.   :-2.6000   Length:918         Min.   :0.0000  
+##  Class :character   1st Qu.: 0.0000   Class :character   1st Qu.:0.0000  
+##  Mode  :character   Median : 0.6000   Mode  :character   Median :1.0000  
+##                     Mean   : 0.8874                      Mean   :0.5534  
+##                     3rd Qu.: 1.5000                      3rd Qu.:1.0000  
+##                     Max.   : 6.2000                      Max.   :1.0000
+\end{verbatim}
+
+Observamos los primeros 5 registros:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(datos, 5L)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 12
+##     Age Sex   ChestPainType RestingBP Cholesterol FastingBS RestingECG MaxHR
+##   <dbl> <chr> <chr>             <dbl>       <dbl>     <dbl> <chr>      <dbl>
+## 1    40 M     ATA                 140         289         0 Normal       172
+## 2    49 F     NAP                 160         180         0 Normal       156
+## 3    37 M     ATA                 130         283         0 ST            98
+## 4    48 F     ASY                 138         214         0 Normal       108
+## 5    54 M     NAP                 150         195         0 Normal       122
+## # ... with 4 more variables: ExerciseAngina <chr>, Oldpeak <dbl>,
+## #   ST_Slope <chr>, HeartDisease <dbl>
+\end{verbatim}
+
+\hypertarget{objetivo-buscado}{%
+\subsection{Objetivo buscado}\label{objetivo-buscado}}
+
+Se puede decir que el objetivo buscado es predecir la posibilidad de que
+una persona tenga un alto riesgo de ser diagnosticado como un paciente
+cardíaco a través de las diversas características. Para llegar a al
+objetivo se tiene pensado realizar diversos métodos de análisis para así
+relacionar las diversas características para obtener unos parámetros
+finales y así concluir la posibilidad de que una persona tenga o no una
+enfermedad cardiaca.
+
+\hypertarget{preprocesado-gestiuxf3n-de-caracteruxedsticas-y-exploraciuxf3n-de-los-datos.}{%
+\section{Preprocesado, gestión de características y exploración de los
+datos.}\label{preprocesado-gestiuxf3n-de-caracteruxedsticas-y-exploraciuxf3n-de-los-datos.}}
+
+\hypertarget{valores-nulos-del-conjunto-de-los-datos}{%
+\subsection{Valores nulos del conjunto de los
+datos}\label{valores-nulos-del-conjunto-de-los-datos}}
+
+De tipo numérico
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(datos))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Age            Sex  ChestPainType      RestingBP    Cholesterol 
+##              0              0              0              0              0 
+##      FastingBS     RestingECG          MaxHR ExerciseAngina        Oldpeak 
+##              0              0              0              0              0 
+##       ST_Slope   HeartDisease 
+##              0              0
+\end{verbatim}
+
+De tipo cadena
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(datos}\SpecialCharTok{==}\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Age            Sex  ChestPainType      RestingBP    Cholesterol 
+##              0              0              0              0              0 
+##      FastingBS     RestingECG          MaxHR ExerciseAngina        Oldpeak 
+##              0              0              0              0              0 
+##       ST_Slope   HeartDisease 
+##              0              0
+\end{verbatim}
+
+Como se puede comprobar, tenemos la ``suerte'' de no tener ningún valor
+nulo o vacío en los dos juegos de datos.
+
+\hypertarget{normalizaciuxf3n-del-conjunto-de-los-datos}{%
+\subsection{Normalización del conjunto de los
+datos}\label{normalizaciuxf3n-del-conjunto-de-los-datos}}
+
+\hypertarget{edad-age}{%
+\subsubsection{EDAD (Age)}\label{edad-age}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Histograma de la característica edad del primer conjunto de datos }
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Age, }\AttributeTok{xlab=}\StringTok{"Edad"}\NormalTok{, }\AttributeTok{col=}\StringTok{"ivory"}\NormalTok{,}
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"EDAD "}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{225}\NormalTok{), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{20}\NormalTok{,}\DecValTok{80}\NormalTok{))}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+Como se puede observar, la franja de entre los 50 y 60 años son donde
+más datos existen, mientras que los extremos donde menos datos.
+
+\hypertarget{sexo-sex}{%
+\subsubsection{SEXO (Sex)}\label{sexo-sex}}
+
+Normalizamos para tenerlo de tipo numérico todas la variables
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cambiamos las letras por los números}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{Sex [datos}\SpecialCharTok{$}\NormalTok{Sex }\SpecialCharTok{==} \StringTok{"M"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{Sex [datos}\SpecialCharTok{$}\NormalTok{Sex }\SpecialCharTok{==} \StringTok{"F"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{0}
+
+\CommentTok{\#Pasamos de carácter a numérico}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{Sex }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Sex)}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez normalizada la característica , analizamos el conjunto de los
+datos contemplados en esta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Sex, }\AttributeTok{xlab=}\StringTok{"Sexo"}\NormalTok{, }\AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{),}
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"SEXO"}\NormalTok{, }\AttributeTok{breaks =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{750}\NormalTok{), }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Mujeres"}\NormalTok{,}\StringTok{"Hombres"}\NormalTok{ ))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\hypertarget{tipo-de-dolor-toruxe1cico-chestpaintype}{%
+\subsubsection{TIPO DE DOLOR TORÁCICO
+(ChestPainType)}\label{tipo-de-dolor-toruxe1cico-chestpaintype}}
+
+Nos damos cuenta de que el conjunto de datos viene identificado por 4
+variables categóricas (TA: angina típica, ATA: angina atípica, NAP:
+dolor no anginal, ASY: asintomático). Normalizamos para tenerlo de tipo
+numérico todas la variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cambiamos las letras por los números}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ChestPainType [datos}\SpecialCharTok{$}\NormalTok{ChestPainType }\SpecialCharTok{==} \StringTok{"TA"}\NormalTok{]  }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ChestPainType [datos}\SpecialCharTok{$}\NormalTok{ChestPainType }\SpecialCharTok{==} \StringTok{"ATA"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ChestPainType [datos}\SpecialCharTok{$}\NormalTok{ChestPainType }\SpecialCharTok{==} \StringTok{"NAP"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ChestPainType [datos}\SpecialCharTok{$}\NormalTok{ChestPainType }\SpecialCharTok{==} \StringTok{"ASY"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{3}
+
+\CommentTok{\#Pasamos de carácter a numérico}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ChestPainType }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ChestPainType)}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez normalizada la característica , analizamos el conjunto de los
+datos contemplados en esta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ChestPainType, }\AttributeTok{xlab=}\StringTok{"Tipo de dolor torácico"}\NormalTok{,}
+           \AttributeTok{col=} \FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{, }\StringTok{"ORANGE"}\NormalTok{, }\StringTok{"PINK"}\NormalTok{), }
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"TIPO DOLOR TORÁCICO"}\NormalTok{, }
+           \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{550}\NormalTok{),}\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{, }
+           \AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ChestPainType)}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}
+                      \FunctionTok{max}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ChestPainType)}\SpecialCharTok{+}\FloatTok{0.5}\NormalTok{, }\AttributeTok{by=}\DecValTok{1}\NormalTok{) )}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{,}
+     \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Angina típica"}\NormalTok{, }\StringTok{"Angina atípica"}\NormalTok{,}\StringTok{"Dolor no anginal"}\NormalTok{, }\StringTok{"Asintomático"}\NormalTok{ ))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+como se puede comprobar, tenemos mas casos de de asintomaticos que del
+resto.
+
+\hypertarget{presiuxf3n-arterial-en-reposo-restingbp}{%
+\subsubsection{PRESIÓN ARTERIAL EN REPOSO
+(RestingBP)}\label{presiuxf3n-arterial-en-reposo-restingbp}}
+
+Como se muestran en las estadísticas esta característica es de tipo
+numérico y en el conjunto de datos va desde 0 hasta 200. Como se puede
+apreciar, tener una presión arterial de 0 es estar considerado muerto,
+por lo que considero que el valor 0 es un valor nulo.
+
+Lo primero que se va a hacer es obtener el número de casos que la
+presión arterial es 0, y se consideraran las diversas formas de tratar
+estos datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Veces que aparece el valor cero en la presion arterial}
+\FunctionTok{length}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingBP[datos}\SpecialCharTok{$}\NormalTok{RestingBP }\SpecialCharTok{==} \DecValTok{0}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+Como solo aparece una vez, se le asignará un valor por defecto. El valor
+por defecto será el más común.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Función para calcular el valor más común}
+\NormalTok{common\_value }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{uniqx }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(x))}
+\NormalTok{uniqx[}\FunctionTok{which.max}\NormalTok{(}\FunctionTok{tabulate}\NormalTok{(}\FunctionTok{match}\NormalTok{(x, uniqx)))]}
+\NormalTok{\}}
+
+\CommentTok{\#Calculamos el valor más comun}
+\NormalTok{BP\_comun }\OtherTok{\textless{}{-}} \FunctionTok{common\_value}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingBP)}
+
+\CommentTok{\#Asignamos el valor}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{RestingBP[datos}\SpecialCharTok{$}\NormalTok{RestingBP }\SpecialCharTok{==} \DecValTok{0}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ BP\_comun}
+
+\CommentTok{\#vemos las estaditicas del dato}
+\FunctionTok{summary}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingBP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    80.0   120.0   130.0   132.5   140.0   200.0
+\end{verbatim}
+
+Ahora ya tenemos los valores entre 80 y 200 que son un rango normal para
+estos valores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Histograma de la característica Presión Arterial del primer conjunto de datos }
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingBP, }\AttributeTok{xlab=}\StringTok{"Presión Arterial"}\NormalTok{, }\AttributeTok{col=}\StringTok{"ivory"}\NormalTok{, }
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"PRESIÓN ARTERIAL EN REPOSO"}\NormalTok{,}
+           \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{225}\NormalTok{), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{,}\DecValTok{200}\NormalTok{))}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\hypertarget{colesterol-cholesterol}{%
+\subsubsection{COLESTEROL (Cholesterol)}\label{colesterol-cholesterol}}
+
+La siguiente característica es de tipo numérico. Al igual que en la
+presión arterial en reposo, que tenemos valores 0 que debemos analizar.
+Lo primero que se va a hacer es obtener el numero de casos que el
+colesterol es 0, y se consideraran las diversas formas de tratar estos
+datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Veces que aparece el valor cero en la presion arterial}
+\FunctionTok{length}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingBP[datos}\SpecialCharTok{$}\NormalTok{Cholesterol }\SpecialCharTok{==} \DecValTok{0}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 172
+\end{verbatim}
+
+Esta vez tenemos 172 casos en lo que ocurre esto (equivale a un 18\% de
+los casos totales). Antes de ver que valor se le asignan, se va a
+graficar los datos para ver de manera grafica que opción tomar: el valor
+medio o el más común.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Cholesterol, }\AttributeTok{xlab=}\StringTok{"Colesterol"}\NormalTok{, }\AttributeTok{col=}\StringTok{"ivory"}\NormalTok{,}
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"COLESTEROL SIN TRATAR NULOS"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{300}\NormalTok{),}
+           \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{700}\NormalTok{))}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+Tras analizar la gráfica y para no perder estos datos, se le asignaran
+un valor por defecto, que será la media de los datos. Esta decisión se
+ha tomado ya que poner el más común, nos crearía un conjunto de datos
+muy distintos entre unas medidas y otras, mientras que poner la media
+sería un valor que tenga en cuenta el grueso de todos los datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Calculamos el valor más comun}
+\NormalTok{colesterol\_media }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Cholesterol)}
+
+\CommentTok{\#Asignamos el valor truncado para evitar decimales}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{Cholesterol[datos}\SpecialCharTok{$}\NormalTok{Cholesterol }\SpecialCharTok{==} \DecValTok{0}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{trunc}\NormalTok{(colesterol\_media)}
+
+\CommentTok{\#vemos las estaditicas del dato}
+\FunctionTok{summary}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingBP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    80.0   120.0   130.0   132.5   140.0   200.0
+\end{verbatim}
+
+Ahora ya tenemos los valores entre 80 y 200 que son un rango normal para
+estos valores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Cholesterol, }\AttributeTok{xlab=}\StringTok{"Colesterol"}\NormalTok{, }\AttributeTok{col=}\StringTok{"ivory"}\NormalTok{,}
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"COLESTEROL"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{330}\NormalTok{), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{700}\NormalTok{))}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\hypertarget{nivel-de-azuxfacar-en-sangre-en-ayunas-fastingbs}{%
+\subsubsection{NIVEL DE AZÚCAR EN SANGRE EN AYUNAS
+(FastingBS)}\label{nivel-de-azuxfacar-en-sangre-en-ayunas-fastingbs}}
+
+Como se puede comprobar el conjunto de los datos puedes ser 1 o 0, es
+decir verdadero o falso si se cumple la siguiente condición: si nivel de
+azúcar en sangre en ayunas\textgreater{} 120 mg / dl.
+
+En esta característica no tenemos valores nulos, así que vamos a ver la
+distribución de las dos opciones:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{FastingBS, }\AttributeTok{xlab=}\StringTok{"¿Azúcar en sangre en ayunas\textgreater{} 120 mg / dl?"}\NormalTok{,}
+           \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{), }\AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{,}
+           \AttributeTok{main=}\StringTok{"NIVEL DE AZÚCAR"}\NormalTok{, }\AttributeTok{breaks =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{750}\NormalTok{), }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"NO"}\NormalTok{,}\StringTok{"SI"}\NormalTok{ ))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+Como se puede comprobar que hay mas casos que NO se cumple esa condición
+de que SÍ.
+
+\hypertarget{ecg-en-reposo-restingecg}{%
+\subsubsection{ECG EN REPOSO
+(RestingECG)}\label{ecg-en-reposo-restingecg}}
+
+Nos damos cuenta de que el conjunto de datos viene identificado por 3
+variables categóricas: + Normal: Normal, + ST: con anomalía de la onda
+ST-T + LVH: que muestra una hipertrofia ventricular izquierda probable o
+definitiva según los criterios de Estes. Normalizamos para tenerlo de
+tipo numérico todas la variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cambiamos las letras por los números}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{RestingECG [datos}\SpecialCharTok{$}\NormalTok{RestingECG }\SpecialCharTok{==} \StringTok{"Normal"}\NormalTok{]  }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{RestingECG [datos}\SpecialCharTok{$}\NormalTok{RestingECG }\SpecialCharTok{==} \StringTok{"ST"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{RestingECG [datos}\SpecialCharTok{$}\NormalTok{RestingECG }\SpecialCharTok{==} \StringTok{"LVH"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\CommentTok{\#Pasamos de carácter a numérico}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{RestingECG }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingECG)}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez normalizada la característica , analizamos el conjunto de los
+datos contemplados en esta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingECG, }\AttributeTok{xlab=}\StringTok{"ECG en reposo"}\NormalTok{,}
+           \AttributeTok{col=} \FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{, }\StringTok{"ORANGE"}\NormalTok{),}
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"ECG EN REPOSO"}\NormalTok{,}
+           \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{600}\NormalTok{), }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{,}
+           \AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingECG)}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}
+                      \FunctionTok{max}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{RestingECG)}\SpecialCharTok{+}\FloatTok{0.5}\NormalTok{, }\AttributeTok{by=}\DecValTok{1}\NormalTok{) )}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{1.75}\NormalTok{ ), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Normal"}\NormalTok{,}\StringTok{"ST"}\NormalTok{, }\StringTok{"LVH"}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\hypertarget{frecuencia-carduxedaca-muxe1xima-maxhr}{%
+\subsubsection{FRECUENCIA CARDÍACA MÁXIMA
+(MaxHR)}\label{frecuencia-carduxedaca-muxe1xima-maxhr}}
+
+Dicha característica es de carácter numérica y en el conjunto de datos
+contempla valores desde el 60 al 202
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{MaxHR, }\AttributeTok{xlab=}\StringTok{"Frecuencia Cardíaca Máxima"}\NormalTok{,}
+           \AttributeTok{col=}\StringTok{"ivory"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"FRECUENCIA CARDÍACA MÁXIMA"}\NormalTok{,}
+           \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{140}\NormalTok{), }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\DecValTok{60}\NormalTok{, }\DecValTok{70}\NormalTok{, }\DecValTok{80}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{100}\NormalTok{,}\DecValTok{110}\NormalTok{,}\DecValTok{120}\NormalTok{,}\DecValTok{130}\NormalTok{,}\DecValTok{140}\NormalTok{,}\DecValTok{150}\NormalTok{,}\DecValTok{160}\NormalTok{,}\DecValTok{170}\NormalTok{,}\DecValTok{180}\NormalTok{,}\DecValTok{190}\NormalTok{,}\DecValTok{200}\NormalTok{,}\DecValTok{210}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{)}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+Se puede comprobar que los extremos en el conjunto de datos tienen menos
+valores, y que el grueso de las muestras se encuentran entre los valores
+centrales (desde 100 a 180).
+
+\hypertarget{angina-inducida-por-ejercicio-exerciseangina}{%
+\subsubsection{ANGINA INDUCIDA POR EJERCICIO
+(ExerciseAngina)}\label{angina-inducida-por-ejercicio-exerciseangina}}
+
+En el conjunto de datos tiene los valores Y: Sí, N: No.~Al igual que se
+ha hecho con otras características, se normalizará el conjunto.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cambiamos las letras por los números}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina [datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina }\SpecialCharTok{==} \StringTok{"N"}\NormalTok{]  }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina [datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina }\SpecialCharTok{==} \StringTok{"Y"}\NormalTok{]  }\OtherTok{\textless{}{-}} \DecValTok{1}
+
+\CommentTok{\#Pasamos de carácter a numérico}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina)}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez normalizada la característica , analizamos el conjunto de los
+datos contemplados en esta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ExerciseAngina, }\AttributeTok{xlab=}\StringTok{"¿Angina inducida por ejercicio?"}\NormalTok{,}
+           \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{), }\AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"ANGINA INDUCIDA"}\NormalTok{,}
+           \AttributeTok{breaks =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{600}\NormalTok{), }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"NO"}\NormalTok{,}\StringTok{"SI"}\NormalTok{ ))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+Como se puede apreciar, hay mas casos en que NO se ha producido una
+angina inducida por el ejercicio de que Si se haya producido.
+
+\hypertarget{oldpeak}{%
+\subsubsection{OLDPEAK}\label{oldpeak}}
+
+Esta característica de tipo numérica puede abarcar valores negativos
+hasta hasta un máximo de un valor igual a 6,2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Oldpeak, }\AttributeTok{xlab=}\StringTok{"Oldpeak"}\NormalTok{, }\AttributeTok{col=}\StringTok{"ivory"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"OLDPEAK"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{400}\NormalTok{), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+Se puede comprobar que el grueso de las muestras se encuentra entre los
+valores centrales teniendo una distribución normal
+
+\hypertarget{pendiente-del-segmento-st-st_slope}{%
+\subsubsection{PENDIENTE DEL SEGMENTO ST
+(ST\_Slope)}\label{pendiente-del-segmento-st-st_slope}}
+
+Como ocurría en otras características anteriores el conjunto tiene los
+valores para esta caracteristica de la siguiente forma: + Up: uploping +
+Flat: flat + Down: downsloping Y como se ha realizado antes, se
+normalizará para solo tener datos numericos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cambiamos las letras por los números}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ST\_Slope [datos}\SpecialCharTok{$}\NormalTok{ST\_Slope }\SpecialCharTok{==} \StringTok{"Up"}\NormalTok{]   }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ST\_Slope [datos}\SpecialCharTok{$}\NormalTok{ST\_Slope }\SpecialCharTok{==} \StringTok{"Flat"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ST\_Slope [datos}\SpecialCharTok{$}\NormalTok{ST\_Slope }\SpecialCharTok{==} \StringTok{"Down"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\CommentTok{\#Pasamos de carácter a numérico}
+\NormalTok{datos}\SpecialCharTok{$}\NormalTok{ST\_Slope }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ST\_Slope)}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez normalizada la característica , analizamos el conjunto de los
+datos contemplados en esta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ST\_Slope, }\AttributeTok{xlab=}\StringTok{"Pendiente del segmento ST"}\NormalTok{,}
+           \AttributeTok{col=} \FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{, }\StringTok{"ORANGE"}\NormalTok{), }\AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{,}
+           \AttributeTok{main=}\StringTok{"PENDIENTE DEL SEGMENTO ST"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{500}\NormalTok{),}
+           \AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{,}\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ST\_Slope)}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{, }\FunctionTok{max}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{ST\_Slope)}\SpecialCharTok{+}\FloatTok{0.5}\NormalTok{, }\AttributeTok{by=}\DecValTok{1}\NormalTok{) )}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{,}\DecValTok{1}\NormalTok{,}\FloatTok{1.75}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Ascendente"}\NormalTok{,}\StringTok{"Plano"}\NormalTok{, }\StringTok{"Descendente"}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+El caso más común es que la pendiente sea plana, teniendo menos casos en
+los casos descendentes.
+
+\hypertarget{enfermedad-cardiaca-heartdisease}{%
+\subsubsection{¿ENFERMEDAD CARDIACA?
+(HeartDisease)}\label{enfermedad-cardiaca-heartdisease}}
+
+En el conjunto de datos tienen normalizada la salida usando el valor 1:
+enfermedad cardíaca, y el valor 0: Normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{HeartDisease, }\AttributeTok{xlab=}\StringTok{"¿Enfermedad Cardiaca?"}\NormalTok{,}
+           \AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"ivory"}\NormalTok{, }\StringTok{"lightcyan"}\NormalTok{),}
+           \AttributeTok{ylab=}\StringTok{"Cantidad"}\NormalTok{, }\AttributeTok{main=}\StringTok{"¿ENFERMEDAD CARDIACA?"}\NormalTok{,}
+           \AttributeTok{breaks =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{600}\NormalTok{), }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(h1}\SpecialCharTok{$}\NormalTok{mids,h1}\SpecialCharTok{$}\NormalTok{counts,}\AttributeTok{labels=}\NormalTok{h1}\SpecialCharTok{$}\NormalTok{counts, }\AttributeTok{adj=}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =}\FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\AttributeTok{cex.axis=}\DecValTok{1}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"NO"}\NormalTok{,}\StringTok{"SI"}\NormalTok{ ))}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+Como se puede observar hay mas casos en que SI hay enfermedad cardiaca
+que caso en los que NO hay.
+
+\hypertarget{construcciuxf3n-de-conjunto-de-datos-final}{%
+\subsection{Construcción de conjunto de datos
+final}\label{construcciuxf3n-de-conjunto-de-datos-final}}
+
+Renombramos las columnas para que tenga uno mas significativo y creamos
+el conjunto final de datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos}
+
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{1}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"EDAD"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{2}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"SEXO"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{3}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"TIPO\_DOLOR\_TORAX"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{4}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"PRESION\_ARTERIAL"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{5}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"COLESTEROL"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{6}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"NIVEL\_DE\_AZUCAR"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{7}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"ECG\_EN\_REPOSO"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{8}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"FREC\_CARDIACA\_MAX"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{9}\NormalTok{]}\OtherTok{\textless{}{-}}  \StringTok{"ANGINA\_x\_EJERCICIO"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{10}\NormalTok{]}\OtherTok{\textless{}{-}} \StringTok{"OLDPEAK"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{11}\NormalTok{]}\OtherTok{\textless{}{-}} \StringTok{"PENDIENTE\_ST"}
+\FunctionTok{colnames}\NormalTok{(datos\_final)[}\DecValTok{12}\NormalTok{]}\OtherTok{\textless{}{-}} \StringTok{"E\_CARDIACA"}
+\end{Highlighting}
+\end{Shaded}
+
+Por ultimo se va a mirar a través de los diagramas de cajas el rango de
+las características enfrentado a si un paciente tiene una enfermedad
+cardiaca o no.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca}
+\FunctionTok{plot\_boxplot}\NormalTok{(datos\_final, }\AttributeTok{by =} \StringTok{"E\_CARDIACA"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\hypertarget{eliminamos-outliers}{%
+\subsection{Eliminamos outliers}\label{eliminamos-outliers}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.colesterol }\OtherTok{\textless{}{-}} \FunctionTok{boxplot}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{COLESTEROL)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.colesterol.out }\OtherTok{\textless{}{-}}\NormalTok{ datos\_bp.colesterol}\SpecialCharTok{$}\NormalTok{out}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Eliminamos Outliers de la variable COLESTEROL con valores: "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Eliminamos Outliers de la variable COLESTEROL con valores: "
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.colesterol.out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 468 518 412 529  85 392 466 393 388 603 404 491 394 458 384 385 564 407 417
+## [20] 409 394
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(COLESTEROL }\SpecialCharTok{\%in\%}\NormalTok{ datos\_bp.colesterol.out))}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## null device 
+##           1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_frec.cardiaca.max }\OtherTok{\textless{}{-}} \FunctionTok{boxplot}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{FREC\_CARDIACA\_MAX)}
+\NormalTok{datos\_frec.cardiaca.max.out }\OtherTok{\textless{}{-}}\NormalTok{ datos\_frec.cardiaca.max}\SpecialCharTok{$}\NormalTok{out}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Eliminamos Outliers de la variable FREC CARDIACA MAX con valores: "
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_frec.cardiaca.max.out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 63 60
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(FREC\_CARDIACA\_MAX }\SpecialCharTok{\%in\%}\NormalTok{ datos\_frec.cardiaca.max.out))}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## null device 
+##           1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_oldpeak }\OtherTok{\textless{}{-}} \FunctionTok{boxplot}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{OLDPEAK)}
+\NormalTok{datos\_oldpeak.out }\OtherTok{\textless{}{-}}\NormalTok{ datos\_oldpeak}\SpecialCharTok{$}\NormalTok{out}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Eliminamos Outliers de la variable OLDPEAK con valores: "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Eliminamos Outliers de la variable OLDPEAK con valores: "
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_oldpeak.out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  4.0  5.0 -2.6  4.0  4.0  4.0  4.0  4.2  4.0  5.6  3.8  4.2  6.2  4.4  4.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(OLDPEAK }\SpecialCharTok{\%in\%}\NormalTok{ datos\_oldpeak.out))}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## null device 
+##           1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.presion\_arterial }\OtherTok{\textless{}{-}} \FunctionTok{boxplot}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{PRESION\_ARTERIAL)}
+\NormalTok{datos\_bp.presion\_arterial.out }\OtherTok{\textless{}{-}}\NormalTok{ datos\_bp.presion\_arterial}\SpecialCharTok{$}\NormalTok{out}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Eliminamos Outliers de la variable PRESIÓN ARTERIAL ST con valores: "
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.presion\_arterial.out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 190 180 180 200 180 180 180  80 200 185 200 180 180 178 172 180 190 174 180
+## [20] 192 178 180 180 172
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(PRESION\_ARTERIAL }\SpecialCharTok{\%in\%}\NormalTok{ datos\_bp.presion\_arterial.out))}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## null device 
+##           1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.tipo\_dolor\_torax }\OtherTok{\textless{}{-}} \FunctionTok{boxplot}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{TIPO\_DOLOR\_TORAX)}
+\NormalTok{datos\_bp.tipo\_dolor\_torax.out }\OtherTok{\textless{}{-}}\NormalTok{ datos\_bp.tipo\_dolor\_torax}\SpecialCharTok{$}\NormalTok{out}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Eliminamos Outliers de la variable TIPO DOLOR TORAX con valores: "
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_bp.tipo\_dolor\_torax.out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [39] 0 0 0 0 0 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{(TIPO\_DOLOR\_TORAX }\SpecialCharTok{\%in\%}\NormalTok{ datos\_bp.tipo\_dolor\_torax.out))}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## null device 
+##           1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Diagrama de caja de todas las características enfrentadas a si un paciente tiene enfermedad cardiaca}
+\FunctionTok{plot\_boxplot}\NormalTok{(datos\_final, }\AttributeTok{by =} \StringTok{"E\_CARDIACA"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\hypertarget{correlaciones}{%
+\subsection{Correlaciones}\label{correlaciones}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Calculamos las correlaciones}
+\NormalTok{cor\_datos }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(datos\_final)}
+\NormalTok{cor\_datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                             EDAD        SEXO TIPO_DOLOR_TORAX PRESION_ARTERIAL
+## EDAD                1.0000000000  0.07987476       0.23222966       0.26263094
+## SEXO                0.0798747606  1.00000000       0.21446723       0.06480334
+## TIPO_DOLOR_TORAX    0.2322296603  0.21446723       1.00000000       0.05761116
+## PRESION_ARTERIAL    0.2626309425  0.06480334       0.05761116       1.00000000
+## COLESTEROL         -0.0002226103 -0.13574432      -0.04056882       0.06464654
+## NIVEL_DE_AZUCAR     0.1888535829  0.11982017       0.17113944       0.04940893
+## ECG_EN_REPOSO       0.2045327265 -0.01651334       0.09834667       0.07584846
+## FREC_CARDIACA_MAX  -0.4065414509 -0.19479093      -0.36601006      -0.11900267
+## ANGINA_x_EJERCICIO  0.2232404235  0.20949172       0.42401538       0.17055230
+## OLDPEAK             0.2647072227  0.13871819       0.32323764       0.18156990
+## PENDIENTE_ST        0.2649516503  0.16347763       0.38922582       0.06577099
+## E_CARDIACA          0.3112477185  0.31757032       0.55357954       0.11663793
+##                       COLESTEROL NIVEL_DE_AZUCAR ECG_EN_REPOSO
+## EDAD               -0.0002226103      0.18885358    0.20453273
+## SEXO               -0.1357443154      0.11982017   -0.01651334
+## TIPO_DOLOR_TORAX   -0.0405688154      0.17113944    0.09834667
+## PRESION_ARTERIAL    0.0646465372      0.04940893    0.07584846
+## COLESTEROL          1.0000000000     -0.11313552    0.10184968
+## NIVEL_DE_AZUCAR    -0.1131355201      1.00000000    0.03428603
+## ECG_EN_REPOSO       0.1018496822      0.03428603    1.00000000
+## FREC_CARDIACA_MAX   0.1075182058     -0.14779921    0.01659835
+## ANGINA_x_EJERCICIO  0.0643936183      0.07501356    0.05301848
+## OLDPEAK             0.0471006517      0.08503826    0.11254750
+## PENDIENTE_ST       -0.0493791928      0.17525733    0.06863116
+## E_CARDIACA         -0.0477984682      0.28341365    0.08182717
+##                    FREC_CARDIACA_MAX ANGINA_x_EJERCICIO     OLDPEAK
+## EDAD                     -0.40654145         0.22324042  0.26470722
+## SEXO                     -0.19479093         0.20949172  0.13871819
+## TIPO_DOLOR_TORAX         -0.36601006         0.42401538  0.32323764
+## PRESION_ARTERIAL         -0.11900267         0.17055230  0.18156990
+## COLESTEROL                0.10751821         0.06439362  0.04710065
+## NIVEL_DE_AZUCAR          -0.14779921         0.07501356  0.08503826
+## ECG_EN_REPOSO             0.01659835         0.05301848  0.11254750
+## FREC_CARDIACA_MAX         1.00000000        -0.39834669 -0.18975488
+## ANGINA_x_EJERCICIO       -0.39834669         1.00000000  0.43365158
+## OLDPEAK                  -0.18975488         0.43365158  1.00000000
+## PENDIENTE_ST             -0.36930737         0.45642629  0.48875764
+## E_CARDIACA               -0.42346641         0.51376813  0.43751373
+##                    PENDIENTE_ST  E_CARDIACA
+## EDAD                 0.26495165  0.31124772
+## SEXO                 0.16347763  0.31757032
+## TIPO_DOLOR_TORAX     0.38922582  0.55357954
+## PRESION_ARTERIAL     0.06577099  0.11663793
+## COLESTEROL          -0.04937919 -0.04779847
+## NIVEL_DE_AZUCAR      0.17525733  0.28341365
+## ECG_EN_REPOSO        0.06863116  0.08182717
+## FREC_CARDIACA_MAX   -0.36930737 -0.42346641
+## ANGINA_x_EJERCICIO   0.45642629  0.51376813
+## OLDPEAK              0.48875764  0.43751373
+## PENDIENTE_ST         1.00000000  0.58120599
+## E_CARDIACA           0.58120599  1.00000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de las correlaciones}
+\FunctionTok{corrplot}\NormalTok{(cor\_datos, }\AttributeTok{method =} \StringTok{"pie"}\NormalTok{, }\AttributeTok{type=}\StringTok{"upper"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-36-1.pdf}
+
+\hypertarget{anuxe1lisis-de-componentes-principales-pca}{%
+\subsection{Análisis de componentes principales
+(PCA)}\label{anuxe1lisis-de-componentes-principales-pca}}
+
+Ahora se va a realizar un análisis de componentes sobre el conjunto de
+datos final. Lo primero que vamos a calcular es la varianza de todas las
+caracteristicas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cálculo de la varianza de los componentes.}
+\NormalTok{var }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(datos\_final, }\DecValTok{2}\NormalTok{, var)}
+\NormalTok{var}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               EDAD               SEXO   TIPO_DOLOR_TORAX   PRESION_ARTERIAL 
+##         88.1377792          0.1621106          0.6374466        245.0442666 
+##         COLESTEROL    NIVEL_DE_AZUCAR      ECG_EN_REPOSO  FREC_CARDIACA_MAX 
+##       2160.3249895          0.1754691          0.6335349        637.4350996 
+## ANGINA_x_EJERCICIO            OLDPEAK       PENDIENTE_ST         E_CARDIACA 
+##          0.2422160          0.9478357          0.3549759          0.2478786
+\end{verbatim}
+
+Como se puede observar de una manera bastante clara, el colesterol es la
+característica que mas varia de un individuo a otro.
+
+Lo siguiente es centrar y escalar las características, para que así las
+variables pierdan esa variabilidad. Una vez calculada la matriz se la
+asigno al pca
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Calculo de la descomposición de los componentes}
+\NormalTok{pca }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(datos\_final, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{center =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{pca}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Standard deviations (1, .., p=12):
+##  [1] 1.8974493 1.1475086 1.0577031 0.9894707 0.9414635 0.9202567 0.8976197
+##  [8] 0.8068512 0.7422484 0.6983699 0.6456073 0.5828417
+## 
+## Rotation (n x k) = (12 x 12):
+##                            PC1         PC2         PC3         PC4          PC5
+## EDAD                0.28014843 -0.25245541  0.48732200 -0.07304964  0.256104929
+## SEXO                0.20039780  0.33847469  0.03514677 -0.16476622 -0.763305970
+## TIPO_DOLOR_TORAX    0.35837588  0.09136430 -0.13473172  0.16514131  0.005882123
+## PRESION_ARTERIAL    0.13829428 -0.37958423  0.36362321 -0.59017736 -0.255760964
+## COLESTEROL         -0.03058803 -0.57356528 -0.32677314  0.01280796 -0.005505378
+## NIVEL_DE_AZUCAR     0.17188118  0.22329356  0.46905923  0.37182111  0.024273900
+## ECG_EN_REPOSO       0.08311302 -0.46159376  0.23741130  0.58968414 -0.321590348
+## FREC_CARDIACA_MAX  -0.33268947 -0.13119755 -0.16819561  0.23310113 -0.385916552
+## ANGINA_x_EJERCICIO  0.37320411 -0.07541656 -0.29323460 -0.15482224  0.002822528
+## OLDPEAK             0.33368710 -0.20542115 -0.24820847  0.01026826 -0.089164578
+## PENDIENTE_ST        0.38478714  0.03185974 -0.20887652  0.12195037  0.151652559
+## E_CARDIACA          0.43248195  0.10606714 -0.09073580  0.11184415 -0.048966672
+##                            PC6         PC7         PC8         PC9         PC10
+## EDAD               -0.19012829  0.07602767 -0.39586282  0.38465564  0.152868605
+## SEXO               -0.11787912  0.27816619 -0.34470023  0.04446174 -0.013857771
+## TIPO_DOLOR_TORAX   -0.10759466  0.20321763  0.60091060  0.54901398  0.003766156
+## PRESION_ARTERIAL    0.22105853 -0.19709636  0.37321438 -0.07017404 -0.234844352
+## COLESTEROL          0.33735336  0.62122599 -0.19252011  0.05017177 -0.123957417
+## NIVEL_DE_AZUCAR     0.68485907  0.11737352  0.02332883 -0.16064936  0.172660255
+## ECG_EN_REPOSO      -0.40796143 -0.05485229  0.10908375 -0.27682556 -0.025367300
+## FREC_CARDIACA_MAX   0.31452613 -0.32365282  0.06117644  0.29035242  0.035570020
+## ANGINA_x_EJERCICIO -0.01691429  0.05956734  0.17454230 -0.48906281  0.549950590
+## OLDPEAK             0.16611307 -0.49474050 -0.28538178  0.26579163  0.355664752
+## PENDIENTE_ST        0.07037292 -0.27927242 -0.23036132 -0.20690027 -0.608826995
+## E_CARDIACA          0.09209677  0.05414122  0.07660088  0.04271721 -0.273082385
+##                           PC11        PC12
+## EDAD               -0.41570328 -0.08124084
+## SEXO                0.02697977 -0.14584048
+## TIPO_DOLOR_TORAX    0.08643164 -0.30804525
+## PRESION_ARTERIAL    0.05681729 -0.02320323
+## COLESTEROL          0.08777809 -0.02704705
+## NIVEL_DE_AZUCAR     0.10225997 -0.11095277
+## ECG_EN_REPOSO       0.11546071  0.02374709
+## FREC_CARDIACA_MAX  -0.58343555 -0.08461831
+## ANGINA_x_EJERCICIO -0.38969530 -0.13144093
+## OLDPEAK             0.46313399  0.10654434
+## PENDIENTE_ST       -0.12372310 -0.45235695
+## E_CARDIACA         -0.24942136  0.78909996
+\end{verbatim}
+
+Se puede ver que la primera componente tiene la mayor desviación
+estándar de todos los componentes. Para verlo de una manera mas clara,
+se va a representar de una manera grafica la salida anterior
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación PCA´s anteriores}
+\FunctionTok{fviz\_eig}\NormalTok{(pca)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-39-1.pdf}
+
+Como se ha visto antes, tanto de una manera numérica como gráfica, el
+PC1 es el que mejor de todos con una diferencia notable. Si usamos la
+técnica del codo, deberíamos coger solamente las dos primeras
+componentes.
+
+Para confirmar la interpretación, no estaría de más obtener las
+estadísticas de todas las componentes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Estadísticas de las componentes}
+\FunctionTok{summary}\NormalTok{(pca)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                          PC1    PC2     PC3     PC4     PC5     PC6     PC7
+## Standard deviation     1.897 1.1475 1.05770 0.98947 0.94146 0.92026 0.89762
+## Proportion of Variance 0.300 0.1097 0.09323 0.08159 0.07386 0.07057 0.06714
+## Cumulative Proportion  0.300 0.4098 0.50299 0.58457 0.65844 0.72901 0.79615
+##                            PC8     PC9    PC10    PC11    PC12
+## Standard deviation     0.80685 0.74225 0.69837 0.64561 0.58284
+## Proportion of Variance 0.05425 0.04591 0.04064 0.03473 0.02831
+## Cumulative Proportion  0.85040 0.89631 0.93696 0.97169 1.00000
+\end{verbatim}
+
+Viendo las estadísticas vemos que con las dos primeras componentes
+solamente podríamos explicar un 39,75\% de los datos.Como no queremos
+perder información en el modelo, nos tendríamos que quedar con todas las
+componentes. Para verlo de una manera visual, se va a representar la PCA
+de una manera gráfica.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de variables sobre componentes principales}
+\FunctionTok{fviz\_pca\_var}\NormalTok{(pca, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{scale =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-41-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de observaciones sobre componentes principales}
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(pca, }\AttributeTok{col.ind =} \StringTok{"cos2"}\NormalTok{, }\AttributeTok{gradient.cols =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#00AFBB"}\NormalTok{, }\StringTok{"\#E7B800"}\NormalTok{, }\StringTok{"\#FC4E07"}\NormalTok{), }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-42-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representa la contribución de filas/columnas de los resultados de un pca}
+\FunctionTok{fviz\_contrib}\NormalTok{(pca,}\AttributeTok{choice =} \StringTok{"var"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+Una vez que hemos representada las variables y los individuos, se va a
+fusionar estas dos gráficas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de variables y los individuos en la misma gráfica}
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col.var =} \StringTok{"\#2E9FDF"}\NormalTok{, }\AttributeTok{col.ind =} \StringTok{"\#696969"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+Aunque la opción de repelerse esta activada al ser bastantes casos no se
+puede ver una manera correcta, así que se a mostrar solamente los 10, 50
+y 100 casos más influyentes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de variables y los 10 individuos más influyentes en la misma gráfica}
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col.var =} \StringTok{"\#2E9FDF"}\NormalTok{,}
+                \AttributeTok{col.ind =} \StringTok{"\#696969"}\NormalTok{, }\AttributeTok{select.ind =} \FunctionTok{list}\NormalTok{(}\AttributeTok{contrib =} \DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-45-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de variables y los 50 individuos más influyentes en la misma gráfica}
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col.var =} \StringTok{"\#2E9FDF"}\NormalTok{,}
+                \AttributeTok{col.ind =} \StringTok{"\#696969"}\NormalTok{, }\AttributeTok{select.ind =} \FunctionTok{list}\NormalTok{(}\AttributeTok{contrib =} \DecValTok{50}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-45-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Representación de variables y los 100 individuos más influyentes en la misma gráfica}
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col.var =} \StringTok{"\#2E9FDF"}\NormalTok{,}
+                \AttributeTok{col.ind =} \StringTok{"\#696969"}\NormalTok{, }\AttributeTok{select.ind =} \FunctionTok{list}\NormalTok{(}\AttributeTok{contrib =} \DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-45-3.pdf}
+
+Al mostrar solamente los casos mas influyentes, se puede ver con mas
+claridad las relaciones entre los individuos y las características.
+Podemos concluir de este análisis de componentes, que no se puede quitar
+ninguna característica ya que se perdería información.
+
+\hypertarget{comprobaciuxf3n-de-la-normalidad-y-la-homogeneidad-de-la-varianza-variables-numericas}{%
+\subsection{Comprobación de la normalidad y la homogeneidad de la
+varianza variables
+numericas}\label{comprobaciuxf3n-de-la-normalidad-y-la-homogeneidad-de-la-varianza-variables-numericas}}
+
+Para la comprobación de que los valores que toman nuestra variables
+cuantativa provienen de una distirbución normal vamos a utilizar la
+prueba de normalidad de Anderson-Darling.
+
+Podemos comprobar que para cada prueba se obtiene un p-valor superior al
+nivel de significancia estadistica prefijado en alpha = 0,05. Si esto se
+cumple, entonces se considera que variable en cuestion sigue la
+distribución normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}nortest\textquotesingle{}}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{\textquotesingle{}nortest\textquotesingle{}}\NormalTok{); }\FunctionTok{library}\NormalTok{(}\StringTok{\textquotesingle{}nortest\textquotesingle{}}\NormalTok{)}
+\NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
+\NormalTok{col.names }\OtherTok{=} \FunctionTok{colnames}\NormalTok{(datos\_final)}
+\NormalTok{ind }\OtherTok{=} \DecValTok{1}
+
+\CommentTok{\# Comprobanos unicamente lS variables que inicialmente eran de tipo numericas}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(datos\_final)) \{}
+  \ControlFlowTok{if}\NormalTok{ (ind }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\FunctionTok{cat}\NormalTok{(}\StringTok{"Variables que no siguen una distribución normal:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{(vector\_tipos[ind] }\SpecialCharTok{==} \StringTok{"numeric"}\NormalTok{)}
+\NormalTok{  \{}
+\NormalTok{    p\_val }\OtherTok{=} \FunctionTok{ad.test}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(datos\_final[i]))}\SpecialCharTok{$}\NormalTok{p.value}
+    \ControlFlowTok{if}\NormalTok{ (p\_val }\SpecialCharTok{\textless{}}\NormalTok{ alpha) \{}
+      \FunctionTok{cat}\NormalTok{(i)}
+      \CommentTok{\# Format output}
+        \ControlFlowTok{if}\NormalTok{ (ind }\SpecialCharTok{\textless{}} \FunctionTok{ncol}\NormalTok{(datos) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\FunctionTok{cat}\NormalTok{(}\StringTok{", "}\NormalTok{)}
+        \ControlFlowTok{if}\NormalTok{ (ind }\SpecialCharTok{\%\%} \DecValTok{3} \SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{      \}}
+\NormalTok{  \}}
+\NormalTok{  ind }\OtherTok{=}\NormalTok{ ind }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Variables que no siguen una distribución normal:
+## EDAD, PRESION_ARTERIAL, COLESTEROL, NIVEL_DE_AZUCAR, 
+## FREC_CARDIACA_MAX, OLDPEAK, E_CARDIACA
+\end{verbatim}
+
+Podemos realizar un Q-Q plot para comprobar si las variables obtenidas
+en el anterior punto no siguen una distribución normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variables }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"EDAD"}\NormalTok{, }\StringTok{"PRESION\_ARTERIAL"}\NormalTok{, }\StringTok{"COLESTEROL"}\NormalTok{,}
+               \StringTok{"FREC\_CARDIACA\_MAX"}\NormalTok{, }\StringTok{"OLDPEAK"}\NormalTok{)}
+
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{(variables))}
+\NormalTok{\{}
+  \FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(datos\_final[i]),  }\AttributeTok{main =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"Q{-}Q para la variable: "}\NormalTok{, i));}\FunctionTok{qqline}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(datos\_final[i]), }\AttributeTok{col =} \DecValTok{2}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-47-2.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-47-3.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-47-4.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-47-5.pdf}
+
+Vemos que tanto la distribución de los valores de las caracteristicas de
+EDAD y de la Frecuencia Cardica máxima se acercan mucho a la normalidad,
+por otro lado la distribución de los valores de la caracteristica
+Presión Arterial, Colesterol y Old distan de la normal.
+
+\hypertarget{exportaciuxf3n-de-los-datos}{%
+\section{Exportación de los datos}\label{exportaciuxf3n-de-los-datos}}
+
+Una vez que hemos acometido sobre el conjunto de datos inicial los
+procedimientos de integración, validación y limpieza anteriores,
+procedemos a guardar estos en un nuevo fichero denominado
+heart\_dissease\_data\_clean.csv:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Exportación de los datos limpios en .csv}
+\FunctionTok{write.csv}\NormalTok{(datos\_final, }\StringTok{"./heart\_dissease\_data\_clean.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anuxe1lisis-de-los-datos}{%
+\section{Análisis de los datos}\label{anuxe1lisis-de-los-datos}}
+
+\hypertarget{cuuxe1les-son-los-factores-o-paruxe1metros-que-muxe1s-influyen-a-la-hora-de-tener-una-enfermedad-cardiaca-correlaciones-y-regresiuxf3n-loguxedstica}{%
+\subsection{¿Cuáles son los factores o parámetros que más influyen a la
+hora de tener una enfermedad cardiaca? (Correlaciones y Regresión
+logística)}\label{cuuxe1les-son-los-factores-o-paruxe1metros-que-muxe1s-influyen-a-la-hora-de-tener-una-enfermedad-cardiaca-correlaciones-y-regresiuxf3n-loguxedstica}}
+
+\hypertarget{test-de-spearman}{%
+\subsubsection{Test de Spearman}\label{test-de-spearman}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corr\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{nc=}\DecValTok{2}\NormalTok{, }\AttributeTok{nr=}\DecValTok{0}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(corr\_matrix) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"estimate"}\NormalTok{, }\StringTok{"p{-}value"}\NormalTok{)}
+
+\CommentTok{\# Calculamos el coficiente de correlacion para cada variable cuantitativa}
+\CommentTok{\# con respecto al campo E. CARDICA}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{ncol}\NormalTok{(datos\_final) }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(vector\_tipos[i] }\SpecialCharTok{==} \StringTok{"numeric"}\NormalTok{)}
+\NormalTok{  \{}
+\NormalTok{    spearman\_test }\OtherTok{=} \FunctionTok{cor.test}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(datos\_final[,i]),}
+                              \FunctionTok{unlist}\NormalTok{(datos\_final[,}\FunctionTok{length}\NormalTok{(datos\_final)]),}
+                              \AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
+\NormalTok{    corr\_coef }\OtherTok{\textless{}{-}}\NormalTok{ spearman\_test}\SpecialCharTok{$}\NormalTok{estimate}
+\NormalTok{    p\_val }\OtherTok{\textless{}{-}}\NormalTok{ spearman\_test}\SpecialCharTok{$}\NormalTok{p.value}
+    
+    \CommentTok{\# Aañade a la matriz}
+\NormalTok{    pair }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{1}\NormalTok{)}
+\NormalTok{    pair[}\DecValTok{1}\NormalTok{][}\DecValTok{1}\NormalTok{] }\OtherTok{=}\NormalTok{ corr\_coef}
+\NormalTok{    pair[}\DecValTok{2}\NormalTok{][}\DecValTok{1}\NormalTok{] }\OtherTok{=}\NormalTok{ p\_val}
+\NormalTok{    corr\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(corr\_matrix, pair)}
+    \FunctionTok{rownames}\NormalTok{(corr\_matrix)[}\FunctionTok{nrow}\NormalTok{(corr\_matrix)] }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(datos\_final)[i]}
+\NormalTok{  \}}
+  
+\NormalTok{\}}
+
+\FunctionTok{print}\NormalTok{(corr\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      estimate      p-value
+## EDAD               0.32133836 5.839139e-21
+## PRESION_ARTERIAL   0.11079517 1.566612e-03
+## COLESTEROL        -0.06760546 5.414249e-02
+## NIVEL_DE_AZUCAR    0.28341365 1.825875e-16
+## FREC_CARDIACA_MAX -0.42471804 6.745047e-37
+## OLDPEAK            0.44538146 8.078414e-41
+\end{verbatim}
+
+Podemos identificar cual es la variable más correlacionada con la
+variable Enfermedad Cardiaca, viendo cuales de los valores de la columan
+estimate se acercan más al valor +1 o -1, en este caso los más cercanos
+y por lo tanto los que más correlacionados están con la varibale
+objetivo son: OLDPEAK y FREC CARDÍACA MAX.
+
+Por otro lado en la columna p-value, tenemos el indicador del peso
+estadistico de diga variable, en este caso las variables que tienen peso
+estadistico más alto son: COLESTEROL y PRESION ARTERIAL.
+
+\hypertarget{regresiuxf3n-loguxedstica}{%
+\subsubsection{Regresión logística}\label{regresiuxf3n-loguxedstica}}
+
+\hypertarget{generaciuxf3n-de-los-conjuntos-de-entrenamiento-y-de-test}{%
+\paragraph{Generación de los conjuntos de entrenamiento y de
+test}\label{generaciuxf3n-de-los-conjuntos-de-entrenamiento-y-de-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ind }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{seq\_len}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(datos\_final)), }\AttributeTok{size =} \FunctionTok{round}\NormalTok{(.}\DecValTok{8} \SpecialCharTok{*} \FunctionTok{dim}\NormalTok{(datos\_final)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{training }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final[ind, ]}
+\NormalTok{testing }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final[}\SpecialCharTok{{-}}\NormalTok{ind, ]}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{E\_CARDIACA))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         0         1 
+## 0.4507389 0.5492611
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(training}\SpecialCharTok{$}\NormalTok{E\_CARDIACA))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         0         1 
+## 0.4569231 0.5430769
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(testing}\SpecialCharTok{$}\NormalTok{E\_CARDIACA))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         0         1 
+## 0.4259259 0.5740741
+\end{verbatim}
+
+\hypertarget{estimaciuxf3n-del-modelo-con-el-conjunto-de-entrenamiento-e-interpretaciuxf3n}{%
+\paragraph{Estimación del modelo con el conjunto de entrenamiento e
+interpretación}\label{estimaciuxf3n-del-modelo-con-el-conjunto-de-entrenamiento-e-interpretaciuxf3n}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Estimación del modelo}
+\NormalTok{mod1}\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(E\_CARDIACA}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{training[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{], }\AttributeTok{family=}\NormalTok{binomial)}
+\FunctionTok{summary}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = E_CARDIACA ~ ., family = binomial, data = training[, 
+##     -1])
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.5113  -0.4332   0.1592   0.4636   2.4653  
+## 
+## Coefficients:
+##                      Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)        -3.7391233  1.6052230  -2.329 0.019841 *  
+## SEXO                1.3672239  0.3170565   4.312 1.62e-05 ***
+## TIPO_DOLOR_TORAX    1.0365159  0.1755062   5.906 3.51e-09 ***
+## PRESION_ARTERIAL    0.0010092  0.0081799   0.123 0.901809    
+## COLESTEROL          0.0001034  0.0027892   0.037 0.970441    
+## NIVEL_DE_AZUCAR     1.4315653  0.3213654   4.455 8.40e-06 ***
+## ECG_EN_REPOSO       0.1695613  0.1510045   1.123 0.261484    
+## FREC_CARDIACA_MAX  -0.0132493  0.0053744  -2.465 0.013691 *  
+## ANGINA_x_EJERCICIO  0.9887369  0.2889107   3.422 0.000621 ***
+## OLDPEAK             0.3031768  0.1508919   2.009 0.044513 *  
+## PENDIENTE_ST        1.8443446  0.2498882   7.381 1.57e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 896.26  on 649  degrees of freedom
+## Residual deviance: 442.58  on 639  degrees of freedom
+## AIC: 464.58
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+Existe colinealidad en todas la variables menos en: FREC\_CARDIACA\_MAX,
+ANGINA\_x\_EJERCICIO, OLDPEAK y PENDIENTE\_ST
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{training2 }\OtherTok{=}\NormalTok{ training }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{SEXO,}\SpecialCharTok{{-}}\NormalTok{TIPO\_DOLOR\_TORAX, }\SpecialCharTok{{-}}\NormalTok{PRESION\_ARTERIAL, }\SpecialCharTok{{-}}\NormalTok{COLESTEROL, }\SpecialCharTok{{-}}\NormalTok{NIVEL\_DE\_AZUCAR, }\SpecialCharTok{{-}}\NormalTok{ECG\_EN\_REPOSO)}
+\NormalTok{ModlgF}\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(E\_CARDIACA}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}\AttributeTok{data=}\NormalTok{training2, }\AttributeTok{family=}\NormalTok{binomial)}
+\FunctionTok{summary}\NormalTok{(ModlgF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = E_CARDIACA ~ ., family = binomial, data = training2)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.2307  -0.5666   0.2488   0.5422   2.2897  
+## 
+## Coefficients:
+##                     Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)        -0.788651   1.161330  -0.679 0.497079    
+## EDAD                0.029939   0.013153   2.276 0.022831 *  
+## FREC_CARDIACA_MAX  -0.017371   0.005019  -3.461 0.000538 ***
+## ANGINA_x_EJERCICIO  1.242050   0.254904   4.873  1.1e-06 ***
+## OLDPEAK             0.351152   0.140126   2.506 0.012212 *  
+## PENDIENTE_ST        1.878777   0.219396   8.563  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 896.26  on 649  degrees of freedom
+## Residual deviance: 533.76  on 644  degrees of freedom
+## AIC: 545.76
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+Se observa que todas las variables explicativas son significativas con
+un nivel de significación del 5\%
+
+\hypertarget{predicciones-con-con-casos-del-dataframe}{%
+\paragraph{Predicciones con con casos del
+dataframe}\label{predicciones-con-con-casos-del-dataframe}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred\_1 }\OtherTok{\textless{}{-}}\FunctionTok{predict}\NormalTok{ (ModlgF, datos\_final[}\DecValTok{1}\NormalTok{,], }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"La probabilidad de que el primer usuario tenga una enfermedad cardiaca es del: "}\NormalTok{, pred\_1}\SpecialCharTok{*}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## La probabilidad de que el primer usuario tenga una enfermedad cardiaca es del:  7.051109
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred\_14 }\OtherTok{\textless{}{-}}\FunctionTok{predict}\NormalTok{ (ModlgF, datos\_final[}\DecValTok{14}\NormalTok{,], }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"La probabilidad de que el usuario 14 tenga una enfermedad cardiaca es del: "}\NormalTok{, pred\_14}\SpecialCharTok{*}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## La probabilidad de que el usuario 14 tenga una enfermedad cardiaca es del:  84.79263
+\end{verbatim}
+
+Nos damos cuenta de que la probabilidad obtenida es muy acertada a si
+esos usuarios han tenido o no enfermedad cardiaca.
+
+\hypertarget{influye-el-sexo-en-tener-una-enfermedad-cardiaca-contraste-de-hipuxf3tesis}{%
+\subsection{¿Influye el sexo en tener una enfermedad cardiaca?
+(Contraste de
+hipótesis)}\label{influye-el-sexo-en-tener-una-enfermedad-cardiaca-contraste-de-hipuxf3tesis}}
+
+Vamos a realizar una prueba estadistica para establecer un contraste de
+hipótesis sobre dos muestras (una con presión arterial alta y otra con
+presión arterial normal) y ver cual de ellas tiene mayor probabilidades
+de sufrir enfermedad cardiaca.
+
+\hypertarget{hipuxf3tesis-nula-y-la-alternativa}{%
+\subsubsection{Hipótesis nula y la
+alternativa}\label{hipuxf3tesis-nula-y-la-alternativa}}
+
+H0 : Enf.Cardiaca\_Mujer = Enf.Cardiaca\_Hombre
+
+H1 : Enf.Cardiaca\_Mujer != Enf.Cardiaca\_Hombre
+
+\hypertarget{preparaciuxf3n-datos}{%
+\subsubsection{Preparación datos}\label{preparaciuxf3n-datos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hombres }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final[datos\_final}\SpecialCharTok{$}\NormalTok{SEXO}\SpecialCharTok{==}\DecValTok{1}\NormalTok{,]}
+\NormalTok{mujeres }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final[datos\_final}\SpecialCharTok{$}\NormalTok{SEXO}\SpecialCharTok{==}\DecValTok{0}\NormalTok{,]}
+
+\FunctionTok{var.test}\NormalTok{( }\FunctionTok{as.numeric}\NormalTok{(hombres}\SpecialCharTok{$}\NormalTok{E\_CARDIACA),  }\FunctionTok{as.numeric}\NormalTok{(mujeres}\SpecialCharTok{$}\NormalTok{E\_CARDIACA) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  F test to compare two variances
+## 
+## data:  as.numeric(hombres$E_CARDIACA) and as.numeric(mujeres$E_CARDIACA)
+## F = 1.2869, num df = 646, denom df = 164, p-value = 0.04968
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  1.000355 1.626469
+## sample estimates:
+## ratio of variances 
+##           1.286949
+\end{verbatim}
+
+El resultado del test muestra diferencias significativas entre varianzas
+(p=0.04968). Por tanto, aplicaremos un test de dos muestras
+independientes sobre la media con varianzas desconocidas diferentes.
+
+\hypertarget{cuxe1lculo}{%
+\subsubsection{Cálculo}\label{cuxe1lculo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{( }\FunctionTok{as.numeric}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{SEXO), }\FunctionTok{as.numeric}\NormalTok{(datos\_final}\SpecialCharTok{$}\NormalTok{E\_CARDIACA), }\AttributeTok{alternative=}\StringTok{"greater"}\NormalTok{, }\AttributeTok{conf.level=}\FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  as.numeric(datos_final$SEXO) and as.numeric(datos_final$E_CARDIACA)
+## t = 11.016, df = 1554, p-value < 2.2e-16
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  0.2105546       Inf
+## sample estimates:
+## mean of x mean of y 
+## 0.7967980 0.5492611
+\end{verbatim}
+
+\hypertarget{interpretaciuxf3n-del-test}{%
+\subsubsection{Interpretación del
+test}\label{interpretaciuxf3n-del-test}}
+
+Existen diferencias significativas en tener enfermedad cardiaca entre
+los hombres y la mujeres (p=2.2e-16) por lo que se encuentra fuera de la
+zona de aceptación de la hipótesis nula, es decir, se acepta la
+hipótesis alternativa.
+
+\hypertarget{modelo-arbol-de-decision}{%
+\subsection{Modelo Arbol de Decision}\label{modelo-arbol-de-decision}}
+
+Podemos elaborar un arbol de decisión, para ver que variables tienen más
+influencia en la enfermedad cardiaca y establecer las reglas que definen
+dicha variable.
+
+\hypertarget{test-estaduxedsticos-de-significancia}{%
+\subsubsection{Test estadísticos de
+significancia}\label{test-estaduxedsticos-de-significancia}}
+
+Antes de proceder a la clasificación de los parámetros de pacientes con
+más probabilidades de sufrir enfermedad cardiaca, deberemos de hacer una
+selección previa de las caracteristicas a utilizar en nuestro modelo.
+
+Para ello nos vamos a ayudar de una matriz de correlación con el
+objetivo de confirmar las conclusiones en cuanto a correlación de
+variables obtenidas en el apartado anterior.
+
+Para aplicar los modelos de arbol de decision debemos de discretizar las
+variables COLESTEROL y FREC CARDIACA MAXIMA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Backup dataset inicial:}
+\NormalTok{datos\_final\_orig }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final}
+
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{COLESTEROL =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{  COLESTEROL }\SpecialCharTok{\textless{}} \DecValTok{100} \SpecialCharTok{\textasciitilde{}} \DecValTok{0}\NormalTok{,}
+\NormalTok{  (COLESTEROL }\SpecialCharTok{\textgreater{}=} \DecValTok{100} \SpecialCharTok{\&}\NormalTok{ COLESTEROL }\SpecialCharTok{\textless{}} \DecValTok{200}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{  (COLESTEROL }\SpecialCharTok{\textgreater{}=} \DecValTok{200} \SpecialCharTok{\&}\NormalTok{ COLESTEROL }\SpecialCharTok{\textless{}} \DecValTok{300}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{  (COLESTEROL }\SpecialCharTok{\textgreater{}=} \DecValTok{300} \SpecialCharTok{\&}\NormalTok{ COLESTEROL }\SpecialCharTok{\textless{}} \DecValTok{400}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+\NormalTok{  (COLESTEROL }\SpecialCharTok{\textgreater{}=} \DecValTok{400} \SpecialCharTok{\&}\NormalTok{ COLESTEROL }\SpecialCharTok{\textless{}} \DecValTok{500}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{4}\NormalTok{,}
+\NormalTok{  COLESTEROL }\SpecialCharTok{\textgreater{}=} \DecValTok{600} \SpecialCharTok{\textasciitilde{}} \DecValTok{5}\NormalTok{,}
+\NormalTok{  ))}
+
+
+\NormalTok{datos\_final }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{FREC\_CARDIACA\_MAX =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{  FREC\_CARDIACA\_MAX }\SpecialCharTok{\textless{}} \DecValTok{50} \SpecialCharTok{\textasciitilde{}} \DecValTok{0}\NormalTok{,}
+\NormalTok{  (FREC\_CARDIACA\_MAX }\SpecialCharTok{\textgreater{}=} \DecValTok{50} \SpecialCharTok{\&}\NormalTok{ FREC\_CARDIACA\_MAX }\SpecialCharTok{\textless{}} \DecValTok{80}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{  (FREC\_CARDIACA\_MAX }\SpecialCharTok{\textgreater{}=} \DecValTok{80} \SpecialCharTok{\&}\NormalTok{ FREC\_CARDIACA\_MAX }\SpecialCharTok{\textless{}} \DecValTok{110}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{  (FREC\_CARDIACA\_MAX }\SpecialCharTok{\textgreater{}=} \DecValTok{110} \SpecialCharTok{\&}\NormalTok{ FREC\_CARDIACA\_MAX }\SpecialCharTok{\textless{}} \DecValTok{140}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+\NormalTok{  (FREC\_CARDIACA\_MAX }\SpecialCharTok{\textgreater{}=} \DecValTok{140} \SpecialCharTok{\&}\NormalTok{ FREC\_CARDIACA\_MAX }\SpecialCharTok{\textless{}} \DecValTok{170}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{4}\NormalTok{,}
+\NormalTok{  (FREC\_CARDIACA\_MAX }\SpecialCharTok{\textgreater{}=} \DecValTok{170} \SpecialCharTok{\&}\NormalTok{ FREC\_CARDIACA\_MAX }\SpecialCharTok{\textless{}} \DecValTok{200}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{5}\NormalTok{,}
+\NormalTok{  FREC\_CARDIACA\_MAX }\SpecialCharTok{\textgreater{}=} \DecValTok{200} \SpecialCharTok{\textasciitilde{}} \DecValTok{6}\NormalTok{,}
+\NormalTok{  ))}
+
+
+\CommentTok{\# Convertimos todas las variables a tipo factor}
+\NormalTok{datos\_final[] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(datos\_final, factor)}
+
+\CommentTok{\# Analizamos las correlaciones de todos las caracteristicas de tipo categoricas con "E. CARDIACA"}
+\CommentTok{\# Lo añadimos a una tabla}
+
+\NormalTok{datos\_corr.Phi }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+\NormalTok{datos\_corr.CramerV }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+\NormalTok{datos\_corr.nombre }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+
+\NormalTok{vector\_tipos[}\DecValTok{8}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"character"}
+\NormalTok{vector\_tipos[}\DecValTok{5}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"character"}
+
+\NormalTok{ind }\OtherTok{\textless{}{-}} \DecValTok{1}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(datos\_final))}
+\NormalTok{\{}
+  
+  \ControlFlowTok{if}\NormalTok{(i }\SpecialCharTok{!=} \StringTok{"E\_CARDIACA"}\NormalTok{)}
+\NormalTok{  \{}
+\NormalTok{    tabla\_cruzada }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(datos\_final[i])), datos\_final}\SpecialCharTok{$}\NormalTok{E\_CARDIACA)}
+\NormalTok{    datos\_corr.CramerV }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(datos\_corr.CramerV, }\FunctionTok{CramerV}\NormalTok{(tabla\_cruzada))}
+\NormalTok{    datos\_corr.Phi }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(datos\_corr.Phi, }\FunctionTok{Phi}\NormalTok{(tabla\_cruzada))}
+\NormalTok{    datos\_corr.nombre }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(datos\_corr.nombre, i)}
+\NormalTok{  \}}
+  
+  \ControlFlowTok{if}\NormalTok{ (vector\_tipos[ind] }\SpecialCharTok{!=} \StringTok{\textquotesingle{}numeric\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \{}
+    \CommentTok{\# Solo pintamos las variables categoricas ya que con las de tipo numerico no se aprecian los valores}
+    \FunctionTok{plot}\NormalTok{(tabla\_cruzada, }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{,}\StringTok{"\#008000"}\NormalTok{), }\AttributeTok{main =} \FunctionTok{paste0}\NormalTok{(i, }\StringTok{" vs. E. CARDIACA"}\NormalTok{))}
+\NormalTok{  \}}
+  
+\NormalTok{  ind }\OtherTok{\textless{}{-}}\NormalTok{ ind }\SpecialCharTok{+} \DecValTok{1}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-1.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-2.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-3.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-4.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-5.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-6.pdf}
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-59-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{nombre=}\FunctionTok{as.character}\NormalTok{(datos\_corr.nombre),}
+               \AttributeTok{CamerV=}\FunctionTok{as.numeric}\NormalTok{(datos\_corr.CramerV),}
+               \AttributeTok{Phi=}\FunctionTok{as.numeric}\NormalTok{(datos\_corr.Phi))}
+
+\NormalTok{df\_CramerV }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{do.call}\NormalTok{(cbind, n\_list)))}
+\FunctionTok{print}\NormalTok{(df\_CramerV[}\FunctionTok{order}\NormalTok{(df\_CramerV}\SpecialCharTok{$}\NormalTok{Phi, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                nombre            CamerV               Phi
+## 11       PENDIENTE_ST 0.633914979247456 0.633914979247456
+## 3    TIPO_DOLOR_TORAX 0.560309860170942 0.560309860170942
+## 10            OLDPEAK 0.520727759286187 0.520727759286187
+## 9  ANGINA_x_EJERCICIO 0.513768132124416 0.513768132124416
+## 1                EDAD 0.404380273871888 0.404380273871888
+## 8   FREC_CARDIACA_MAX 0.398095648097636 0.398095648097636
+## 4    PRESION_ARTERIAL 0.331282489356957 0.331282489356957
+## 2                SEXO 0.317570321818606 0.317570321818606
+## 6     NIVEL_DE_AZUCAR 0.283413646865563 0.283413646865563
+## 5          COLESTEROL  0.17862988864165  0.17862988864165
+## 7       ECG_EN_REPOSO 0.115604279173622 0.115604279173622
+\end{verbatim}
+
+Obtenemos las siguientes conclusiones del dataset:
+
+\begin{itemize}
+\item
+  En cuanto al Sexo, las Mujeres tienen menos probabilidad de sufrir una
+  enfermedad cardiaca.
+\item
+  En cuanto al tipo de dolor de Torax, los pacientes que sufren de dolor
+  tipo Asintomáticos son los que pese a lo que se pdoría pensar tienen
+  más probabilidades de sufrir enfermedad cardiaca.
+\item
+  COLESTEROL: Vemos que cuando el colesterol está en valores
+  comprendidos entre 100-200 y 300-400 hay más posibilidades de
+  enfermedad cardiaca que en valores entre 200-300, probablemente porque
+  existan medicación para pacientes con dichas enfermedades que se
+  enfocan en reducir el colesterol
+\item
+  FREC CARDIACA MAXIMA hay correlación negativa con la enfermedad
+  cardiaca es decir contra menor frecuencia más posibilidades de sufrir
+  enfermedad cardiaca.
+\item
+  En cuanto al ECG en Reposo, tenemos que hay más probabilidades de
+  Enfermedad Cardiaca cuando esta variable toma el valor 1 (ST
+  -\textgreater{} Tiene anormalidad de la onda ST-T (inversiones de la
+  onda T y/o elevación o depresión del ST \textgreater{} 0.05 mV))
+\item
+  Angina por Ejercicio -\textgreater{} Cuando esta toma el valor 1 (es
+  decir hay angina inducida por ejercicio) hay más probabilidades de
+  Enfermedad Cardiaca.
+\item
+  En cuanto a la variable Pendiente ST, si esta indica valor 1 y 2, hay
+  una alta probabilidad de sufrir enfermedad cardíaca.
+\end{itemize}
+
+\hypertarget{prueba-de-la-c-de-cruxe1mer}{%
+\subsubsection{Prueba de la C de
+Crámer}\label{prueba-de-la-c-de-cruxe1mer}}
+
+Valores de la V de Cramér
+(\url{https://en.wikipedia.org/wiki/Cramér\%27s_V}) y Phi
+(\url{https://en.wikipedia.org/wiki/Phi_coefficient}) entre 0.1 y 0.3
+nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se
+puede considerar una asociación media. Finalmente, si los valores fueran
+superiores a 0.5 la asociación estadística entre las variables sería
+alta.
+
+Podemos observar dentro del dataframe: df\_cramerV que las variables
+PENDIENTES ST, COLESTEROL, TIPO DOLOR TORAX, FREC CARDIACA MAX y OLDPEAK
+tienen correlación alta con E. CARDIACA.
+
+Usaremos dichas variables para la obtención del Arbol de decisión, se
+podria utilizar un número mayor de variables, pero podría hacerse mucho
+complejo (con muchas reglas de decisión)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# caracteristicas con significancia estadistica:}
+\NormalTok{nombres\_columnas }\OtherTok{\textless{}{-}}\NormalTok{ df\_CramerV}\SpecialCharTok{$}\NormalTok{nombre[df\_CramerV}\SpecialCharTok{$}\NormalTok{Phi }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{]}
+\NormalTok{nombres\_columnas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "TIPO_DOLOR_TORAX"   "ANGINA_x_EJERCICIO" "OLDPEAK"           
+## [4] "PENDIENTE_ST"
+\end{verbatim}
+
+\hypertarget{aplicaciuxf3n-del-modelo-decision-tree-arbol-de-decisiuxf3n}{%
+\subsubsection{Aplicación del modelo Decision Tree (Arbol de
+decisión)}\label{aplicaciuxf3n-del-modelo-decision-tree-arbol-de-decisiuxf3n}}
+
+Aplicamos el modelo Decision Tree sobre las 3 caracteristicas que hemos
+obtenido en el test de significacia estadistica de Cramer V.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Reducimos el datset}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(datos\_final))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\NormalTok{i }\SpecialCharTok{\%in\%}\NormalTok{ nombres\_columnas)}
+\NormalTok{  \{}
+    \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{i }\SpecialCharTok{==} \StringTok{"E\_CARDIACA"}\NormalTok{)}
+\NormalTok{    \{}
+\NormalTok{      datos\_final}\SpecialCharTok{$}\NormalTok{i }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Separamos conjunto de test y de entrenamiento con una proporción 33\%
+Test 66\% Training.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{666}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final}\SpecialCharTok{$}\NormalTok{E\_CARDIACA }\CommentTok{\# Variable objetivo}
+\NormalTok{X }\OtherTok{\textless{}{-}}\NormalTok{ datos\_final[nombres\_columnas] }\CommentTok{\# Variables predictoras}
+
+\NormalTok{split\_prop }\OtherTok{\textless{}{-}} \DecValTok{3}
+\NormalTok{indexes }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(X), }\AttributeTok{size=}\FunctionTok{floor}\NormalTok{(((split\_prop}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{split\_prop)}\SpecialCharTok{*}\FunctionTok{nrow}\NormalTok{(X)))}
+\NormalTok{train\_X }\OtherTok{\textless{}{-}}\NormalTok{ X[indexes,]}
+\NormalTok{train\_y }\OtherTok{\textless{}{-}}\NormalTok{ y[indexes]}
+\NormalTok{test\_X }\OtherTok{\textless{}{-}}\NormalTok{ X[}\SpecialCharTok{{-}}\NormalTok{indexes,]}
+\NormalTok{test\_y }\OtherTok{\textless{}{-}}\NormalTok{ y[}\SpecialCharTok{{-}}\NormalTok{indexes]}
+\end{Highlighting}
+\end{Shaded}
+
+Comprobamos que las variables train\_y y test\_y estén balanceadas
+reflejo de la variable y.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"y:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "y:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   0   1 
+## 366 446
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"train\_y:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "train_y:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(train\_y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   0   1 
+## 249 292
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"test\_y:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "test_y:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(test\_y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   0   1 
+## 117 154
+\end{verbatim}
+
+Hacemos lo mismo con las variales train\_crX y test\_crX y X
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"X:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "X:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(X)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  TIPO_DOLOR_TORAX ANGINA_x_EJERCICIO    OLDPEAK    PENDIENTE_ST
+##  1:166            0:479              0      :336   0:359       
+##  2:195            1:333              1      : 78   1:405       
+##  3:451                               2      : 67   2: 48       
+##                                      1.5    : 49               
+##                                      3      : 27               
+##                                      1.2    : 23               
+##                                      (Other):232
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"train\_X:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "train_X:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(train\_X)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  TIPO_DOLOR_TORAX ANGINA_x_EJERCICIO    OLDPEAK    PENDIENTE_ST
+##  1:114            0:327              0      :227   0:246       
+##  2:129            1:214              1      : 49   1:260       
+##  3:298                               2      : 44   2: 35       
+##                                      1.5    : 35               
+##                                      3      : 18               
+##                                      1.2    : 15               
+##                                      (Other):153
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"test\_X:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "test_X:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(test\_X)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  TIPO_DOLOR_TORAX ANGINA_x_EJERCICIO    OLDPEAK    PENDIENTE_ST
+##  1: 52            0:152              0      :109   0:113       
+##  2: 66            1:119              1      : 29   1:145       
+##  3:153                               2      : 23   2: 13       
+##                                      1.5    : 14               
+##                                      3      :  9               
+##                                      1.2    :  8               
+##                                      (Other): 79
+\end{verbatim}
+
+Se crea el árbol de decisión usando los datos de entrenamiento (no hay
+que olvidar que la variable outcome es de tipo factor):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree }\OtherTok{\textless{}{-}}\NormalTok{ C50}\SpecialCharTok{::}\FunctionTok{C5.0}\NormalTok{(train\_X, train\_y, }\AttributeTok{rules=}\ConstantTok{TRUE}\NormalTok{ )}
+\FunctionTok{summary}\NormalTok{(tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## C5.0.default(x = train_X, y = train_y, rules = TRUE)
+## 
+## 
+## C5.0 [Release 2.07 GPL Edition]      Sat Jan 07 09:29:48 2023
+## -------------------------------
+## 
+## Class specified by attribute `outcome'
+## 
+## Read 541 cases (5 attributes) from undefined.data
+## 
+## Rules:
+## 
+## Rule 1: (160/7, lift 2.1)
+##  TIPO_DOLOR_TORAX in {1, 2}
+##  PENDIENTE_ST = 0
+##  ->  class 0  [0.951]
+## 
+## Rule 2: (193/20, lift 1.9)
+##  OLDPEAK in {-1.1, -0.5, -0.1, 0, 0.2, 0.3, 0.4, 0.6, 0.7, 1.1, 1.2, 1.9,
+##                     2.3, 3}
+##  PENDIENTE_ST = 0
+##  ->  class 0  [0.892]
+## 
+## Rule 3: (140/15, lift 1.6)
+##  TIPO_DOLOR_TORAX = 3
+##  OLDPEAK in {-1, -0.7, 0.1, 0.5, 0.8, 0.9, 1, 1.4, 1.5, 1.6, 1.8, 2, 2.8}
+##  ->  class 1  [0.887]
+## 
+## Rule 4: (295/50, lift 1.5)
+##  PENDIENTE_ST in {1, 2}
+##  ->  class 1  [0.828]
+## 
+## Default class: 1
+## 
+## 
+## Evaluation on training data (541 cases):
+## 
+##          Rules     
+##    ----------------
+##      No      Errors
+## 
+##       4   77(14.2%)   <<
+## 
+## 
+##     (a)   (b)    <-classified as
+##    ----  ----
+##     193    56    (a): class 0
+##      21   271    (b): class 1
+## 
+## 
+##  Attribute usage:
+## 
+##   94.09% PENDIENTE_ST
+##   61.55% OLDPEAK
+##   55.45% TIPO_DOLOR_TORAX
+## 
+## 
+## Time: 0.0 secs
+\end{verbatim}
+
+El modelo decision tree explica con dos reglas la probabilidad de sufrir
+una enfermedad cardiaca en función de las variables: TIPO DOLOR TORAX,
+COLESTEROL FREC CARDÍACA MÁX, OLDPEAK, PENDIENTE ST. + Regla: 1
+-\textgreater{} TIPO DE DOLOR DE TORAX con valores entre \{1, 2\} y
+PENDIENTE\_ST \textless- 0 No tienen probabilidad de sufrir enfermadad
+cardiaca. + Regla: 2 -\textgreater{} OLDPEAK entre \{-1.1 y 3\} con
+PENDIENTE\_ST \textless- 0 No tienen probabilidad de sufrir Enfremedad
+Cardiaca. + Regla: 3 -\textgreater{} TIPO\_DOLOR\_TORAX \textless- 3 y
+OLDPEAK entre \{-1, 2.8\} Tienen probabilidad de padecer enfermedad
+cardiaca. + Regla 4 -\textgreater{} entre \{1,2\} -\textgreater{} Tienen
+probabilidad de tener enfermedad cardiaca.
+
+El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa
+de error de 14.2 \% es decir es capaz de explicar el 82.6 \% de los
+casos.
+
+De manera más gráfica:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model }\OtherTok{\textless{}{-}}\NormalTok{ C50}\SpecialCharTok{::}\FunctionTok{C5.0}\NormalTok{(train\_X, train\_y)}
+\FunctionTok{plot}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-66-1.pdf}
+
+Como podemos observar de manara visual el modelo basado en arbol de
+decisión, solo tiene en cuenta la variable ``PENDIENTE\_ST'', para
+decidir entre si un paciente es propenso a sufrir una enfermedad
+cardiaca o no.
+
+\hypertarget{evaluaciuxf3n-del-modelo-arbol-de-decision}{%
+\subsubsection{Evaluación del modelo arbol de
+decision}\label{evaluaciuxf3n-del-modelo-arbol-de-decision}}
+
+Una vez tenemos el modelo, podemos comprobar su calidad prediciendo la
+clase para los datos de prueba que nos hemos reservado al principio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predicted\_model }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{( tree, test\_X, }\AttributeTok{type=}\StringTok{"class"}\NormalTok{ )}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"La precisión del árbol es: \%.4f \%\%"}\NormalTok{,}\DecValTok{100}\SpecialCharTok{*}\FunctionTok{sum}\NormalTok{(predicted\_model }\SpecialCharTok{==}\NormalTok{ test\_y) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(predicted\_model)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "La precisión del árbol es: 83.7638 %"
+\end{verbatim}
+
+Cuando hay pocas clases, la calidad de la predicción se puede analizar
+mediante una matriz de confusión que identifica los tipos de errores
+cometidos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat\_conf }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(test\_y, }\AttributeTok{Predicted=}\NormalTok{predicted\_model)}
+\NormalTok{mat\_conf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Predicted
+## test_y   0   1
+##      0  85  32
+##      1  12 142
+\end{verbatim}
+
+De la matriz de confusión observamos los siguientes valores:
+
+Verdaderos Negativos (E. CARDIACA): 85 Verdaderos Positivos (E.
+CARDIACA): 142 Falsos Negativos (E. CARDIACA): 32 Falsos Positivos (E.
+CARDIACA): 12
+
+El modelo podria mejorarse sesgando a minimizar los falos negativos, ya
+que no queremos que se nos escapen del diagnostico pacientes que puedan
+desarrollar una enfermedad cardiaca.
+
+\hypertarget{random-forest}{%
+\subsection{Random Forest}\label{random-forest}}
+
+Nos interesa saber para las predicciones que variable son las que tienen
+más influencia. Así, probaremos con un enfoque algorítmico de Random
+Forest y obtendremos métricas de interpretabilidad con la librería IML
+(\url{https://cran.r-project.org/web/packages/iml/iml.pdf}). As:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(train\_X)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "TIPO_DOLOR_TORAX"   "ANGINA_x_EJERCICIO" "OLDPEAK"           
+## [4] "PENDIENTE_ST"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train.data }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(train\_X ,train\_y))}
+\FunctionTok{colnames}\NormalTok{(train.data)[}\DecValTok{5}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"E\_CARDIACA"}
+\NormalTok{rf }\OtherTok{\textless{}{-}}  \FunctionTok{randomForest}\NormalTok{(E\_CARDIACA }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ train.data, }\AttributeTok{ntree =} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{X }\OtherTok{\textless{}{-}}\NormalTok{ train.data[}\FunctionTok{which}\NormalTok{(}\FunctionTok{names}\NormalTok{(train.data) }\SpecialCharTok{!=} \StringTok{"E\_CARDIACA"}\NormalTok{)]}
+\NormalTok{predictor }\OtherTok{\textless{}{-}}\NormalTok{ Predictor}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(rf, }\AttributeTok{data =}\NormalTok{ X, }\AttributeTok{y =}\NormalTok{ train.data}\SpecialCharTok{$}\NormalTok{E\_CARDIACA) }
+\NormalTok{imp }\OtherTok{\textless{}{-}}\NormalTok{ FeatureImp}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(predictor, }\AttributeTok{loss =} \StringTok{"ce"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(imp)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-69-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{imp}\SpecialCharTok{$}\NormalTok{results}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              feature importance.05 importance importance.95 permutation.error
+## 1       PENDIENTE_ST      2.860714   2.946429      3.071429         0.3049908
+## 2            OLDPEAK      1.807143   2.053571      2.225000         0.2125693
+## 3   TIPO_DOLOR_TORAX      1.503571   1.589286      1.739286         0.1645102
+## 4 ANGINA_x_EJERCICIO      1.182143   1.267857      1.346429         0.1312384
+\end{verbatim}
+
+Podemos medir y graficar la importancia de cada variable para las
+predicciones del random forest con \emph{FeatureImp}. La medida se basa
+funciones de pérdida de rendimiento que en nuestro caso será con el
+objetivo de clasificación (``ce'').
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OtherTok{\textless{}{-}}\NormalTok{ train.data[}\FunctionTok{which}\NormalTok{(}\FunctionTok{names}\NormalTok{(train.data) }\SpecialCharTok{!=} \StringTok{"E\_CARDIACA"}\NormalTok{)]}
+\NormalTok{predictor }\OtherTok{\textless{}{-}}\NormalTok{ Predictor}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(rf, }\AttributeTok{data =}\NormalTok{ X, }\AttributeTok{y =}\NormalTok{ train.data}\SpecialCharTok{$}\NormalTok{E\_CARDIACA) }
+\NormalTok{imp }\OtherTok{\textless{}{-}}\NormalTok{ FeatureImp}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(predictor, }\AttributeTok{loss =} \StringTok{"ce"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(imp)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-70-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{imp}\SpecialCharTok{$}\NormalTok{results}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              feature importance.05 importance importance.95 permutation.error
+## 1       PENDIENTE_ST      2.843636   3.090909      3.287273         0.3142329
+## 2            OLDPEAK      2.021818   2.145455      2.276364         0.2181146
+## 3   TIPO_DOLOR_TORAX      1.581818   1.618182      1.749091         0.1645102
+## 4 ANGINA_x_EJERCICIO      1.276364   1.327273      1.363636         0.1349353
+\end{verbatim}
+
+Precisión del modelo Random Forest
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extraido de la matriz de confusion}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"La precsión del modelo randomforest es: "}\NormalTok{,}
+\NormalTok{             (}\FunctionTok{as.numeric}\NormalTok{(rf}\SpecialCharTok{$}\NormalTok{confusion[}\DecValTok{1}\NormalTok{,][}\DecValTok{1}\NormalTok{]) }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{as.numeric}\NormalTok{(rf}\SpecialCharTok{$}\NormalTok{confusion[}\DecValTok{1}\NormalTok{,][}\DecValTok{1}\NormalTok{]) }\SpecialCharTok{+}
+                                                   \FunctionTok{as.numeric}\NormalTok{(rf}\SpecialCharTok{$}\NormalTok{confusion[}\DecValTok{1}\NormalTok{,][}\DecValTok{2}\NormalTok{]))) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "La precsión del modelo randomforest es: 75.5020080321285"
+\end{verbatim}
+
+Podemos observar el grado de importancia de las variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OtherTok{\textless{}{-}}\NormalTok{ train.data[}\FunctionTok{which}\NormalTok{(}\FunctionTok{names}\NormalTok{(train.data) }\SpecialCharTok{!=} \StringTok{"E\_CARDIACA"}\NormalTok{)]}
+\NormalTok{predictor\_cr }\OtherTok{\textless{}{-}}\NormalTok{ Predictor}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(rf, }\AttributeTok{data =}\NormalTok{ X, }\AttributeTok{y =}\NormalTok{ train.data}\SpecialCharTok{$}\NormalTok{E\_CARDIACA) }
+
+
+\NormalTok{effs }\OtherTok{\textless{}{-}}\NormalTok{ FeatureEffects}\SpecialCharTok{$}\FunctionTok{new}\NormalTok{(predictor\_cr)}
+\FunctionTok{plot}\NormalTok{(effs)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-72-1.pdf}
+
+Parece ser que para el modelo de clasificación Random Forest la variable
+que toma mayor importancia es OLDPEAK.
+
+Podemos verlo de manera textual:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf}\SpecialCharTok{$}\NormalTok{importance}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    MeanDecreaseGini
+## TIPO_DOLOR_TORAX           42.92313
+## ANGINA_x_EJERCICIO         21.40851
+## OLDPEAK                    47.57807
+## PENDIENTE_ST               79.24776
+\end{verbatim}
+
+Otros modelos basados en arboles de decision:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree\_2 }\OtherTok{\textless{}{-}} \FunctionTok{rpart}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ train\_y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ train\_X)}
+\NormalTok{tree\_2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## n= 541 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##  1) root 541 249 1 (0.46025878 0.53974122)  
+##    2) PENDIENTE_ST=0 246  47 0 (0.80894309 0.19105691)  
+##      4) TIPO_DOLOR_TORAX=1,2 160   7 0 (0.95625000 0.04375000) *
+##      5) TIPO_DOLOR_TORAX=3 86  40 0 (0.53488372 0.46511628)  
+##       10) OLDPEAK=0,0.2,0.3,0.6,1.2,2.3 54  14 0 (0.74074074 0.25925926) *
+##       11) OLDPEAK=-1,-0.7,0.1,0.5,0.8,0.9,1,1.4,1.5,1.6,1.8,2,2.8 32   6 1 (0.18750000 0.81250000) *
+##    3) PENDIENTE_ST=1,2 295  50 1 (0.16949153 0.83050847)  
+##      6) TIPO_DOLOR_TORAX=1,2 83  35 1 (0.42168675 0.57831325)  
+##       12) OLDPEAK=0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1,1.3,1.4,1.5,1.6,2.4,3,3.5 39  13 0 (0.66666667 0.33333333) *
+##       13) OLDPEAK=0,1.2,1.7,1.8,2,2.2,2.5,2.6,2.9,3.6 44   9 1 (0.20454545 0.79545455) *
+##      7) TIPO_DOLOR_TORAX=3 212  15 1 (0.07075472 0.92924528) *
+\end{verbatim}
+
+Visualizamos el modelo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rpart.plot}\NormalTok{(tree\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PRA2_CODIGO_files/figure-latex/unnamed-chunk-75-1.pdf}
+El modelo inicialmente se fija en la variable PENDIENTE\_ST tanto como
+si es 0 como si es 1 se fija en TIPO\_DOLOR\_TORX (en cualquier caso se
+fija en los valores 1, 2 de dicha variable), después en funcion del
+rango de valores de OLDPEAK.
+
+La probabilidades de sifrir enfermedad cardiaca son menores con
+PENDIENTE\_ST=0, tanto en el caso en el que TIPO\_DOLOR\_TORAX esté en
+rango de valores de \{1,2\} al igual de que TIPO\_DOLOR\_TORAX no este
+en dicho rango, si se cumple que OLDPEAK esté en el rango \{0-2.3\}. En
+el otro caso habrá probabilidad alta de enfermedad cardiaca.
+
+Para el caso de PENDIENTE\_ST distinto a 0, y TIPO\_DOLOR\_TORAX en
+rango \{1,2\} si OLDPEAK está comprendido en rango \{0-3.5\} habrá pocas
+probabilidades de ENFERMEDAD CARDIACA, para los demás casos habrá altas
+probabilidades de enfermedad cardiaca.
+
+\hypertarget{conclusiones}{%
+\section{Conclusiones}\label{conclusiones}}
+
+\end{document}
