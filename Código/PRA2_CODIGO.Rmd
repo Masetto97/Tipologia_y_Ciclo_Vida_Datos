@@ -3,10 +3,6 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
-  word_document: default
-  pdf_document:
-    highlight: zenburn
-    toc: yes
   html_document:
     highlight: default
     number_sections: yes
@@ -15,6 +11,10 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  word_document: default
 ---
 
 <style>
@@ -1071,15 +1071,11 @@ La probabilidades de sifrir enfermedad cardiaca son menores con PENDIENTE_ST=0, 
 
 Para el caso de PENDIENTE_ST distinto a 0, y TIPO_DOLOR_TORAX en rango {1,2} si OLDPEAK está comprendido en rango {0-3.5} habrá pocas probabilidades de ENFERMEDAD CARDIACA, para los demás casos habrá altas probabilidades de enfermedad cardiaca.
 
-
-```{r message= FALSE, warning=FALSE}
-
-```
-
-
-```{r message= FALSE, warning=FALSE}
-
-```
-
 # Conclusiones
+
+Tras realizar con el conjunto de datos distintas pruebas estadísticas y distintos modelos, nos damos cuenta de que todas las variables son necesarias para detectar enfermedades cardiacas. No obstante, dependiendo del modelo, no todas hay que usarlas.
+
+Con los diversos modelos, hemos explorado distintas formas de predicción, como, por ejemplo, en las pruebas del modelo de regresión logística, los resultados de las pruebas han estado muy bien para comprobar las eficacia de dicho modelo. Por otro lado, los árboles de decisión la precisión también es muy buena.
+
+En conclusión, con este análisis de datos se contestan las preguntas planteadas inicialmente, y se da unos modelos predictivos para detectar futuros casos.
 
