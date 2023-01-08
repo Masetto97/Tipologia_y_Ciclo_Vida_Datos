@@ -3,6 +3,9 @@ title: '¿Cómo realizar la limpieza y análisis de datos?'
 author: "Autores: Eduardo Mora González y Diego Sánchez De La Fuente"
 date: "Enero 2023"
 output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
   html_document:
     highlight: default
     number_sections: yes
@@ -11,9 +14,6 @@ output:
     toc_depth: 2
     includes:
       in_header: 75.584-PEC-header.html
-  pdf_document:
-    highlight: zenburn
-    toc: yes
   word_document: default
 ---
 
@@ -540,9 +540,9 @@ cor_datos <- cor(datos_final)
 cor_datos
 ```
 
-```{r message= FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 #Representación de las correlaciones
-corrplot(cor_datos, method = "pie", type="upper")
+corrplot(cor_datos, type="upper", method='pie')
 ```
 
 ## Análisis de componentes principales (PCA)
@@ -817,6 +817,9 @@ Para ello nos vamos a ayudar de una matriz de correlación con el objetivo de co
 
 Para aplicar los modelos de arbol de decision debemos de discretizar las variables COLESTEROL y FREC CARDIACA MAXIMA.
 
+
+
+
 ```{r message= FALSE, warning=FALSE}
 # Backup dataset inicial:
 datos_final_orig <- datos_final
@@ -845,6 +848,21 @@ datos_final <- datos_final %>% mutate(FREC_CARDIACA_MAX = case_when(
 # Convertimos todas las variables a tipo factor
 datos_final[] <- lapply(datos_final, factor)
 
+# Vector de etiquetas
+vector_etiquetas = list(
+  c("Mujeres","Hombres"),
+  c("ATA", "NAP", "ASY"),
+  c("[0,100]","[100,200]", "[200,300]", "[300,400]", "[400,500]", "[500,600]", ">600"),
+  c("Normal","ST", "LVH"),
+  c("<50","[50,80]","[80,110]","[110,140]","[150,170]","[170,200]", ">200"),
+  c("N", "S"),
+  c("Asc", "Plano", "Desc")
+)
+```
+
+
+
+```{r message= FALSE, warning=FALSE}
 # Analizamos las correlaciones de todos las caracteristicas de tipo categoricas con "E. CARDIACA"
 # Lo añadimos a una tabla
 
@@ -856,6 +874,7 @@ vector_tipos[8] <- "character"
 vector_tipos[5] <- "character"
 
 ind <- 1
+ind_eti <- 1
 for (i in colnames(datos_final))
 {
   
@@ -870,7 +889,10 @@ for (i in colnames(datos_final))
   if (vector_tipos[ind] != 'numeric')
   {
     # Solo pintamos las variables categoricas ya que con las de tipo numerico no se aprecian los valores
-    plot(tabla_cruzada, col = c("black","#008000"), main = paste0(i, " vs. E. CARDIACA"))
+    plot(tabla_cruzada,
+         col = c("black","#008000"), xlab = vector_etiquetas[ind_eti],
+         main = paste0(i, " vs. E. CARDIACA"))
+    ind_eti = ind_eti + 1
   }
   
   ind <- ind + 1
