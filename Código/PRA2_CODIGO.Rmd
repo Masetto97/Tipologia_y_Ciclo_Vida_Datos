@@ -29,21 +29,44 @@ knitr::opts_chunk$set(echo = TRUE)
 Instalamos y cargamos las librerías necesarias.
 
 ```{r message= FALSE, warning=FALSE}
-if (!require('readr')) install.packages('readr'); library('readr')
-if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
-if (!require('DataExplorer')) install.packages('DataExplorer'); library('DataExplorer')
-if (!require('corrplot')) install.packages("corrplot"); library(corrplot)
-if (!require('factoextra')) install.packages("factoextra"); library(factoextra)
-if (!require('dplyr')) install.packages("dplyr"); library(dplyr)
-if (!require('DescTools')) install.packages("DescTools"); library(DescTools)
-if (!require('regclass')) install.packages("regclass"); library(regclass)
-if(!require('randomForest')) install.packages('randomForest',repos='http://cran.us.r-project.org'); library(randomForest)
-if(!require('iml')) install.packages('iml', repos='http://cran.us.r-project.org'); library(iml)
-if(!require("tidyverse"))install.packages("DeskTools");library("tidyverse")
+if (!require('readr')) install.packages('readr');
+library('readr')
+if (!require('ggplot2')) install.packages('ggplot2'); 
+library('ggplot2')
+if (!require('DataExplorer')) install.packages('DataExplorer');
+library('DataExplorer')
+if (!require('corrplot')) install.packages("corrplot");
+library(corrplot)
+if (!require('factoextra')) install.packages("factoextra");
+library(factoextra)
+if (!require('dplyr')) install.packages("dplyr");
+library(dplyr)
+if (!require('DescTools')) install.packages("DescTools");
+library(DescTools)
+if (!require('regclass')) install.packages("regclass");
+library(regclass)
+if(!require('randomForest'))
+{
+  install.packages('randomForest',repos='http://cran.us.r-project.org');
+}
+library(randomForest)
+if(!require('iml'))
+{
+  install.packages('iml', repos='http://cran.us.r-project.org');
+}
+library(iml)
+if(!require("tidyverse"))install.packages("DeskTools");
+library("tidyverse")
 if(!require("rpart")) install.packages("rpart");library("rpart")
-if(!require("rpart.plot")) install.packages("rpart.plot"); library("rpart.plot")
-if(!require("caret"))install.packages("caret");library("caret")
-if(!require('patchwork'))install.packages('patchwork',repos='http://cran.us.r-project.org');library(patchwork)
+if(!require("rpart.plot")) install.packages("rpart.plot");
+library("rpart.plot")
+if(!require("caret"))install.packages("caret");
+library("caret")
+if(!require('patchwork'))
+{
+  install.packages('patchwork',repos='http://cran.us.r-project.org');
+}
+library(patchwork)
 ```
 
 # Dataset
