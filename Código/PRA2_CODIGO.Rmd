@@ -1006,7 +1006,7 @@ El modelo decision tree explica con dos reglas la probabilidad de sufrir una enf
   + Regla: 1 -> TIPO DE DOLOR DE TORAX con valores entre {1, 2} y PENDIENTE_ST <- 0 No tienen probabilidad de sufrir enfermadad cardiaca.
   + Regla: 2 -> OLDPEAK entre {-1.1 y 3} con PENDIENTE_ST <- 0 No tienen probabilidad de sufrir Enfremedad Cardiaca.
   + Regla: 3 -> TIPO_DOLOR_TORAX <- 3 y OLDPEAK entre {-1, 2.8} Tienen probabilidad de padecer enfermedad cardiaca.
-  + Regla 4 -> entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
+  + Regla: 4 -> PENDIENTE_ST entre {1,2} -> Tienen probabilidad de tener enfermedad cardiaca.
 
 El modelo solo usa la variable predictora PENDIENTE ST, y tiene una tasa de error de 14.2 % es decir es capaz de explicar el 82.6 % de los casos.
 
@@ -1041,7 +1041,7 @@ De la matriz de confusión observamos los siguientes valores:
   + Falsos Negativos (E. CARDIACA): 32
   + Falsos Positivos (E. CARDIACA): 12
 
-El modelo podria mejorarse sesgando a minimizar los falos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
+El modelo podria mejorarse sesgando a minimizar los falsos negativos, ya que no queremos que se nos escapen del diagnostico pacientes que puedan desarrollar una enfermedad cardiaca.
 
 ## Random Forest
 
@@ -1062,13 +1062,7 @@ imp$results
 
 Podemos medir y graficar la importancia de cada variable para las predicciones del random forest con *FeatureImp*. La medida se basa funciones de pérdida de rendimiento que en nuestro caso será con el objetivo de clasificación ("ce").
 
-```{r message= FALSE, warning=FALSE}
-X <- train.data[which(names(train.data) != "E_CARDIACA")]
-predictor <- Predictor$new(rf, data = X, y = train.data$E_CARDIACA) 
-imp <- FeatureImp$new(predictor, loss = "ce")
-plot(imp)
-imp$results
-```
+
 
 Precisión del modelo Random Forest
 ```{r message= FALSE, warning=FALSE}
@@ -1089,13 +1083,15 @@ effs <- FeatureEffects$new(predictor_cr)
 plot(effs)
 ```
 
-Parece ser que para el modelo de clasificación Random Forest la variable que toma mayor importancia es OLDPEAK.
+Parece ser que para el modelo de clasificación Random Forest y este método la variable que toma mayor importancia es OLDPEAK.
 
-Podemos verlo de manera textual:
+Podemos verlo de manera textual utilizando MeanDecreaseGini (Disminución media de GINI):
 
 ```{r message= FALSE, warning=FALSE}
 rf$importance
 ```
+Con este método obtenemos de nuevo PENDIENTE_ST con la variable más significativa.
+
 
 Otros modelos basados en arboles de decision:
 
