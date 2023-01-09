@@ -25,6 +25,7 @@ Explicación de cada variable:
 
 ## Descripción de los ficheros y su ubicación dentro del proyecto
 
+<pre>
 - **Ruta raiz del proyecto**
 -     **Memoria.docx:** Documento formato word con la memoria del proyecto y la resolución de las preguntas de la practica
 -     **Memoria.pdf:**  Documento formato pdf con la memoria del proyecto y la resolución de las preguntas de la practica
@@ -38,3 +39,4 @@ Explicación de cada variable:
 -         **Tipolog-a-y-ciclo-de-vida-de-los-datos.Rproj:** Fichero de proyecto de R
 -         **fichero_original_datos.csv:** Fichero CSV con los datos del dataset original
 -         **heart_dissease_data_clean.csv:** Fichero CSV con los datos del tablón analitico es decir la entrada a nuestro modelo.
+</pre>
