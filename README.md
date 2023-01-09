@@ -25,3 +25,16 @@ Explicación de cada variable:
 
 ## Descripción de los ficheros y su ubicación dentro del proyecto
 
+- **Ruta raiz del proyecto**
+-     **Memoria.docx:** Documento formato word con la memoria del proyecto y la resolución de las preguntas de la practica
+-     **Memoria.pdf:**  Documento formato pdf con la memoria del proyecto y la resolución de las preguntas de la practica
+-     **README.MD:** Este fichero
+-     **Tipologia_y_Ciclo_Vida_Datos.Rproj:** Fichero del proyecto de R.
+-     **Código:** Carpeta con el código en R y los ficheros csv del dataset
+-         **75.584-PEC-header.html:** Fichero HTML para generar la cabecera
+-         **PRA2_CODIGO.Rmd:** Fichero markdown de R con el código fuente del proyecto
+-         **PRA2_CODIGO.html:** HTML generado tras renderizar el fichero markdown del codigo fuente en R
+-         **PRA2_CODIGO.pdf:** PDF generado tras renderizar el fichero markdown del codigo fuente en R
+-         **Tipolog-a-y-ciclo-de-vida-de-los-datos.Rproj:** Fichero de proyecto de R
+-         **fichero_original_datos.csv:** Fichero CSV con los datos del dataset original
+-         **heart_dissease_data_clean.csv:** Fichero CSV con los datos del tablón analitico es decir la entrada a nuestro modelo.
