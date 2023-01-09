@@ -924,7 +924,7 @@ Obtenemos las siguientes conclusiones del dataset:
 
   + En cuanto a la variable Pendiente ST, si esta indica valor 1 y 2, hay una alta probabilidad de sufrir enfermedad cardíaca. 
 
-### Prueba de la C de Crámer
+### Prueba de la V de Crámer
 
 Valores de la V de Cramér ([https://en.wikipedia.org/wiki/Cramér%27s_V](https://en.wikipedia.org/wiki/Cramér%27s_V){.uri}) y Phi (<https://en.wikipedia.org/wiki/Phi_coefficient>) entre 0.1 y 0.3 nos indican que la asociación estadística es baja, y entre 0.3 y 0.5 se puede considerar una asociación media. Finalmente, si los valores fueran superiores a 0.5 la asociación estadística entre las variables sería alta.
 
